@@ -1,0 +1,52 @@
+#sidenav-main {
+    height: 100vh; // El navbar ocupará toda la altura de la ventana
+    background-color: #ffffff; // Color de fondo 
+    box-shadow: 0 4px 8px rgb(138, 137, 137); // Añade una sombra para destacar
+  
+    .navbar {
+      padding-top: 20px; // Espacio superior adicional
+      padding-bottom: 20px; // Espacio inferior adicional
+    }
+  
+    // Estilo para la marca
+    .navbar-brand {
+      padding-top: 15px;
+      padding-bottom: 15px;
+  
+      .navbar-brand-img {
+        max-height: 100px; // Tamaño de la imagen de marca (ajústalo según tus preferencias)
+      }
+    }
+  
+    // Estilo para los enlaces de navegación
+    .nav-link {
+      font-size: 1.2em; // Aumenta el tamaño de fuente de los enlaces
+      padding: 15px 20px; // Añade más espacio alrededor de los enlaces
+      color: #333; // Color del texto de los enlaces
+      display: flex;
+      align-items: center;
+  
+      &:hover {
+        color: #007bff; // Cambia el color al pasar el mouse
+      }
+  
+      i {
+        margin-right: 10px; // Espacio entre el icono y el texto
+        font-size: 1.3em; // Aumenta el tamaño del icono
+      }
+    }
+  
+    // Estilo para la sección de documentación
+    h6.navbar-heading {
+      font-size: 1.1em; // Tamaño de fuente para el encabezado
+      margin-top: 20px;
+      color: #6c757d; // Color del texto
+    }
+  
+    .navbar-nav.mb-md-3 .nav-item .nav-link {
+      font-size: 1em;
+      padding: 10px 15px;
+      color: #555;
+    }
+  }
+  

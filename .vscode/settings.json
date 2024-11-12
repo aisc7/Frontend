@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.middleClickBehavior": "paste",
+    "editor.cursorBlinking": "smooth",
+    "editor.fontSize": 18
+}

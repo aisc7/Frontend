@@ -12,8 +12,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-import { ListComponent } from './pages/Administrator/list/list.component';
-import { ManageComponent } from './pages/cuota/manage/manage.component';
+import { SecurityService } from './services/security.service';
+
 
 
 @NgModule({
@@ -24,16 +24,10 @@ import { ManageComponent } from './pages/cuota/manage/manage.component';
     ComponentsModule,
     NgbModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  declarations: [
-    AppComponent,
-    AdminLayoutComponent,
-    AuthLayoutComponent,
-    ListComponent,
-    ManageComponent
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
+  providers: [SecurityService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

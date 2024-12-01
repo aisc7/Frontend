@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BatchRoutingModule } from './batch-routing.module';
 import { ManageComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ListComponent } from './list/list.component';
   ],
   imports: [
     CommonModule,
-    BatchRoutingModule
+    BatchRoutingModule,
+   ReactiveFormsModule
   ]
 })
 export class BatchModule { }

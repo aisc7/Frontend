@@ -5,3 +5,4 @@ describe('Administrator', () => {
     expect(new Administrator()).toBeTruthy();
   });
 });
+

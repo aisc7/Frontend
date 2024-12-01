@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AdministratorRoutingModule } from './administrator-routing.module';
 import { ListComponent } from './list/list.component';
 import { ManageComponent } from './manage/manage.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { ManageComponent } from './manage/manage.component';
   ],
   imports: [
     CommonModule,
-    AdministratorRoutingModule
+    AdministratorRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class AdministratorModule { }

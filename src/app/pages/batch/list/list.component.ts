@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { Batch } from 'src/app/models/batch.model';
+import { BatchService } from 'src/app/services/batch.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list',
@@ -9,34 +10,55 @@ import { Batch } from 'src/app/models/batch.model';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  private apiUrl = 'http://localhost:3333/batches';
-  batches: Batch[] = [];
+  batches: Batch[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private batchService: BatchService, private router: Router) {
+    console.log('Constructor');
+    this.batches = [];
+  }
 
   ngOnInit(): void {
-    this.list().subscribe((data: Batch[]) => {
+    console.log('Ng');
+    this.list();
+  }
+
+  list() {
+    this.batchService.list().subscribe((data) => {
       this.batches = data;
     });
   }
 
-  list(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.apiUrl);
+  delete(id: number) {
+    Swal.fire({
+      title: 'Eliminación',
+      text: 'Está seguro que quiere eliminar este registro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'No, cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.batchService.delete(id).subscribe((data) => {
+          this.ngOnInit();
+          Swal.fire({
+            title: 'Eliminado',
+            text: 'Se ha eliminado correctamente',
+            icon: 'success',
+          });
+        });
+      }
+    });
   }
 
-  create(data: Partial<Batch>): Observable<Batch> {
-    return this.http.post<Batch>(this.apiUrl, data);
+  create() {
+    this.router.navigate(['batches/create']);
   }
 
-  get(id: number): Observable<Batch> {
-    return this.http.get<Batch>(`${this.apiUrl}/${id}`);
+  view(id: number) {
+    this.router.navigate(['batches/view', id]);
   }
 
-  update(id: number, data: Partial<Batch>): Observable<Batch> {
-    return this.http.put<Batch>(`${this.apiUrl}/${id}`, data);
-  }
-
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  update(id: number) {
+    this.router.navigate(['batches/update', id]);
   }
 }

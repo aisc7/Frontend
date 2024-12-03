@@ -12,7 +12,7 @@
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
       <li class="nav-item" ngbDropdown placement="bottom-right">
-        <a class="nav-link nav-link-icon" role="button" ngbDropdownToggle>
+        <a class="nav-link nav-link-icon" role="button" ngbDropdownToggle title="Notifications">
           <i class="ni ni-bell-55"></i>
         </a>
         <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
@@ -90,7 +90,9 @@
       <!-- Navigation -->
       <ul class="navbar-nav">
           <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-              <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
+              <a *ngIf="(securityService.existSession()?1:0) == menuItem.type || menuItem.type2" routerLink="" >
+                  <i class="ni {{menuItem.icon}}"></i>
+                  {{menuItem.title}}
                   <i class="ni {{menuItem.icon}}"></i>
                   {{menuItem.title}}
               </a>

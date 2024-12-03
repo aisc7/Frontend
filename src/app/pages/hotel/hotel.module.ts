@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HotelRoutingModule } from './hotel-routing.module';
 import { ManageComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,8 @@ import { ListComponent } from './list/list.component';
   ],
   imports: [
     CommonModule,
-    HotelRoutingModule
+    HotelRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class HotelModule { }

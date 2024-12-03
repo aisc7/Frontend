@@ -1,7 +1,7 @@
 import { Cuota } from './cuota.model';
 import { Route } from './route.model';
 import { Vehiculo } from './vehiculo.model';
-import { Customer } from './customer.model';
+import { Customer } from './costumer.model';
 
 export class Contract {
     id: number;

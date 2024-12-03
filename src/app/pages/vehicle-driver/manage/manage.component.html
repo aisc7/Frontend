@@ -1,1 +1,49 @@
-<p>manage works!</p>
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8"></div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Conductor de Vehículo</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Conductor de Vehículo</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Conductor de Vehículo</h3>
+        </div>
+        <form class="form" [formGroup]="vehicleDriverForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <label>Vehículo ID:</label>
+              </div>
+              <div class="col-8">
+                <input type="number" class="form-control" formControlName="vehicleId" title="Vehículo ID" placeholder="Ingrese el ID del vehículo">
+                <div *ngIf="getTheFormGroup.vehicleId.errors && (getTheFormGroup.vehicleId.dirty || getTheFormGroup.vehicleId.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.vehicleId.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Conductor ID:</label>
+              </div>
+              <div class="col-8">
+                <input type="number" class="form-control" formControlName="driverId" title="Conductor ID" placeholder="Ingrese el ID del conductor">
+                <div *ngIf="getTheFormGroup.driverId.errors && (getTheFormGroup.driverId.dirty || getTheFormGroup.driverId.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.driverId.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear</button>
+                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { VehiculoRoutingModule } from './vehiculo-routing.module';
 import { ListComponent } from './list/list.component';
 import { ManageComponent } from './manage/manage.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,8 @@ import { ManageComponent } from './manage/manage.component';
   ],
   imports: [
     CommonModule,
-    VehiculoRoutingModule
+    VehiculoRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class VehiculoModule { }

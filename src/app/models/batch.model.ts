@@ -1,6 +1,6 @@
 import { Product } from './product.model';
 import { Route } from './route.model';
-import { AddreRouteOrder } from './addrerouteorder.model';
+import { AddreRouteOrder } from './addre-route-order.model';
 
 export class Batch {
     id: number;

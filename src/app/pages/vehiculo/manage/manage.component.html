@@ -1,1 +1,84 @@
-<p>manage works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+        </div>
+        <form class="form" [formGroup]="vehicleForm">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <label>ID:</label>
+              </div>
+              <div class="col-8">
+                <p>{{vehicleId}}</p>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Placa:</label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" formControlName="plate" title="Placa" placeholder="Ingrese la Placa">
+                <div *ngIf="getTheFormGroup.plate.errors && (getTheFormGroup.plate.dirty || getTheFormGroup.plate.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.plate.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Marca:</label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" formControlName="brand" title="Marca" placeholder="Ingrese la Marca">
+                <div *ngIf="getTheFormGroup.brand.errors && (getTheFormGroup.brand.dirty || getTheFormGroup.brand.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.brand.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Modelo:</label>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" formControlName="model" title="Modelo" placeholder="Ingrese el Modelo">
+                <div *ngIf="getTheFormGroup.model.errors && (getTheFormGroup.model.dirty || getTheFormGroup.model.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.model.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4">
+                <label>Año:</label>
+              </div>
+              <div class="col-8">
+                <input type="number" class="form-control" formControlName="year" title="Año" placeholder="Ingrese el Año">
+                <div *ngIf="getTheFormGroup.year.errors && (getTheFormGroup.year.dirty || getTheFormGroup.year.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.year.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()"> Crear </button>
+                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()"> Actualizar </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Distribution Centers</h3>
+        </div>
+        <div class="card-body">
+          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Fecha de Creación</th>
+                <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let center of distributionCenters">
+                <td>{{ center.id }}</td>
+                <td>{{ center.name }}</td>
+                <td>{{ center.creationDate }}</td>
+                <td>
+                  <button type="button" class="btn btn-info" (click)="view(center.id)">Ver</button>
+                  <button type="button" class="btn btn-warning" (click)="update(center.id)">Editar</button>
+                  <button type="button" class="btn btn-dark" (click)="delete(center.id)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

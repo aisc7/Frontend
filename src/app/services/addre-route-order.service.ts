@@ -1,9 +1,33 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { AddreRouteOrder } from "../models/addre-route-order.model";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AddreRouteOrderService {
+  constructor(private http: HttpClient) {}
 
-  constructor() { }
+  list(): Observable<AddreRouteOrder[]> {
+    return this.http.get<AddreRouteOrder[]>(`${environment.url_ms_businessAKJ}/addre-route-orders`);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.url_ms_businessAKJ}/addre-route-orders/${id}`);
+  }
+
+  get(id: number): Observable<AddreRouteOrder> {
+    return this.http.get<AddreRouteOrder>(`${environment.url_ms_businessAKJ}/addre-route-orders/${id}`);
+  }
+
+  create(addreRouteOrder: AddreRouteOrder): Observable<AddreRouteOrder> {
+    delete addreRouteOrder.id;
+    return this.http.post<AddreRouteOrder>(`${environment.url_ms_businessAKJ}/addre-route-orders`, addreRouteOrder);
+  }
+
+  update(id: number, addreRouteOrder: AddreRouteOrder): Observable<AddreRouteOrder> {
+    return this.http.put<AddreRouteOrder>(`${environment.url_ms_businessAKJ}/addre-route-orders/${id}`, addreRouteOrder);
+  }
 }

@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false, 
-  url_ms_businessAKJ: "http/localhost:3333",
-  url_ms_securityAKJ: "http/localhost:8080",
-  url_ms_notificationAKJ: "http/localhost:5000",
-  url_ms_paymentAKJ: "http/localhost:5002"
+  url_ms_businessAKJ: "http://localhost:3333",
+  url_ms_securityAKJ: "http://localhost:8080",
+  url_ms_notificationAKJ: "http://localhost:5000",
+  url_ms_paymentAKJ: "http://localhost:5002"
 };
 
 /*

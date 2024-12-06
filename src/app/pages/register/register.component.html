@@ -17,42 +17,35 @@
 </div>
 <!-- Page content -->
 <div class="container mt--8 pb-5">
-  <!-- Table -->
   <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
       <div class="card bg-secondary shadow border-0">
-        <div class="card-header bg-transparent pb-5">
-          <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
-          <div class="text-center">
-            <a href="javascript:void(0)" class="btn btn-neutral btn-icon mr-4">
-              <span class="btn-inner--icon"><img src="assets/img/icons/common/github.svg" alt="Github icon"></span>
-              <span class="btn-inner--text">Github</span>
-            </a>
-            <a href="javascript:void(0)" class="btn btn-neutral btn-icon">
-              <span class="btn-inner--icon"><img src="assets/img/icons/common/google.svg" alt="Google icon"></span>
-              <span class="btn-inner--text">Google</span>
-            </a>
-          </div>
-        </div>
         <div class="card-body px-lg-5 py-lg-5">
           <div class="text-center text-muted mb-4">
-            <small>Or sign up with credentials</small>
+            <small>Sign up with credentials</small>
           </div>
-          <form role="form">
-            <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
+          <form role="form" [formGroup]="registerForm" (ngSubmit)="register()">
+            <div class="form-group mb-3">
+              <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                 </div>
-                <input class="form-control" placeholder="Name" type="text">
+                <input class="form-control" placeholder="Name" type="text" formControlName="name">
+                <div *ngIf="formControls.name.errors && (formControls.name.dirty || formControls.name.touched)" class="text-danger">
+                  <small *ngIf="formControls.name.errors.required">Name is required.</small>
+                </div>
               </div>
             </div>
-            <div class="form-group">
-              <div class="input-group input-group-alternative mb-3">
+            <div class="form-group mb-3">
+              <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
-                <input class="form-control" placeholder="Email" type="email">
+                <input class="form-control" placeholder="Email" type="email" formControlName="email">
+                <div *ngIf="formControls.email.errors && (formControls.email.dirty || formControls.email.touched)" class="text-danger">
+                  <small *ngIf="formControls.email.errors.required">Email is required.</small>
+                  <small *ngIf="formControls.email.errors.email">Invalid email format.</small>
+                </div>
               </div>
             </div>
             <div class="form-group">
@@ -60,24 +53,25 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                <input class="form-control" placeholder="Password" type="password">
-              </div>
-            </div>
-            <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>
-            <div class="row my-4">
-              <div class="col-12">
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                  <label class="custom-control-label" for="customCheckRegister">
-                    <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
-                  </label>
+                <input class="form-control" placeholder="Password" type="password" formControlName="password">
+                <div *ngIf="formControls.password.errors && (formControls.password.dirty || formControls.password.touched)" class="text-danger">
+                  <small *ngIf="formControls.password.errors.required">Password is required.</small>
+                  <small *ngIf="formControls.password.errors.minlength">Password must be at least 6 characters long.</small>
                 </div>
               </div>
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-primary mt-4">Create account</button>
+              <button type="submit" class="btn btn-primary my-4">Create account</button>
             </div>
           </form>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-6">
+          <a href="javascript:void(0)" class="text-light"><small>Forgot password?</small></a>
+        </div>
+        <div class="col-6 text-right">
+          <a href="javascript:void(0)" class="text-light"><small>Sign in</small></a>
         </div>
       </div>
     </div>

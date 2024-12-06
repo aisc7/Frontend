@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user.model';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -21,20 +20,39 @@ export class SecurityService {
   * @param infoUsuario JSON con la información de correo y contraseña
   * @returns Respuesta HTTP la cual indica si el usuario tiene permiso de acceso
   */
-  login(user: User): Observable<any> {
-    return this.http.post<any>(`${environment.url_ms_securityAKJ}/api/public/security/login`, user);
+  login(theUser: User):Observable<any>{
+    let headers = new HttpHeaders();
+    return this.http.post<string>
+    (`${environment.url_ms_securityAKJ}/login`, theUser, 
+      { headers, responseType: 'text' as 'json' } );
   }
+  register(theUser: User): Observable<any> {
+    let headers = new HttpHeaders();
+    return this.http.post<any>(
+      `${environment.url_ms_securityAKJ}/users`, 
+      theUser,
+      { headers }
+    );
+  }
+  
+  getUserFromToken(token: string):Observable<User>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                   .set('Authorization', `Bearer ${token}`);
+    return this.http.get<User>(`${environment.url_ms_securityAKJ}/api/public/security/token-validation`, { headers });
+  }
+
+  
   /*
   Guardar la información de usuario en el local storage
   */
   saveSession(dataSesion: any) {
     let data: User = {
-      _id: dataSesion["user"]["_id"],
-      name: dataSesion["user"]["name"],
-      email: dataSesion["user"]["email"],
+      _id: dataSesion._id,
+      name: dataSesion.name,
+      email: dataSesion.email,
       password: "",
-      //role:dataSesion["user"]["role"],
-      token: dataSesion["token"]
+      token: dataSesion.token,
+      role: dataSesion.role
     };
     localStorage.setItem('sesion', JSON.stringify(data));
     this.setUser(data);
@@ -60,10 +78,10 @@ export class SecurityService {
     * que tiene la función activa y servirá
     * para acceder a la información del token
 *//*  */
-  public get activeUserSession(): User {
-    return this.theUser.value;
-  }
-
+public get activeUserSession(): User {
+  const sessionData = localStorage.getItem('sesion');
+  return sessionData ? JSON.parse(sessionData) : new User();
+}
 
   /**
   * Permite cerrar la sesión del usuario

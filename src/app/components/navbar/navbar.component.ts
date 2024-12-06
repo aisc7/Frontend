@@ -5,6 +5,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SecurityService } from 'src/app/services/security.service';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
   selector: "app-navbar",
@@ -22,7 +23,8 @@ export class NavbarComponent implements OnInit {
     location: Location,
     private element: ElementRef,
     private router: Router,
-    private securityService: SecurityService
+    private securityService: SecurityService,
+    private webSocketService : WebSocketService
   ) {
     this.location = location;
   }
@@ -33,6 +35,10 @@ export class NavbarComponent implements OnInit {
     this.subsciption = this.securityService.getUser().subscribe((data) => {
       this.user = data;
     });
+     this.webSocketService.setNameEvent("new-message");
+      this.webSocketService.callback.subscribe((data) => {
+        console.log(data);
+      })
   }
   getTitle() {
     var titlee = this.location.prepareExternalUrl(this.location.path());

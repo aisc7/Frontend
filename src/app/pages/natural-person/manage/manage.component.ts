@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 export class ManageComponent implements OnInit {
   naturalPersonForm: FormGroup;
   naturalPersonId: number;
+  naturalPerson: NaturalPerson
   mode: number;
   trySend: boolean = false;
 
@@ -23,6 +24,8 @@ export class ManageComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.configFormGroup();
+    this.trySend = false
+    this.naturalPerson= new NaturalPerson
   }
 
   ngOnInit(): void {

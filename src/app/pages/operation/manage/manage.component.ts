@@ -23,6 +23,7 @@ export class ManageComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.configFormGroup();
+    
   }
 
   ngOnInit(): void {

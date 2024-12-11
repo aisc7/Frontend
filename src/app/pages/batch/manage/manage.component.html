@@ -1,4 +1,5 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
+
 <!-- Page content -->
 <div class="container-fluid mt--7">
   <div class="row">
@@ -11,7 +12,8 @@
         </div>
         <form class="form" [formGroup]="batchForm">
           <div class="card-body">
-            <div class="row">
+            <!-- ID -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label>ID:</label>
               </div>
@@ -19,36 +21,97 @@
                 <p>{{batchId}}</p>
               </div>
             </div>
-            <br />
-            <div class="row">
+
+            <!-- Cantidad -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label>Nombre:</label>
+                <label>Cantidad:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre del lote">
-                <div *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.name.errors.required" class="msnError">Requerido</strong>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="quantity"
+                  title="Cantidad"
+                  placeholder="Ingrese Cantidad"
+                />
+                <div
+                  *ngIf="getTheFormGroup.quantity.errors && (getTheFormGroup.quantity.dirty || getTheFormGroup.quantity.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.quantity.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
-            <br />
-            <div class="row">
+
+            <!-- Ruta ID -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label>Descripción:</label>
+                <label>Ruta ID:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción del lote">
-                <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="routeId"
+                  title="Ruta ID"
+                  placeholder="Ingrese Ruta ID"
+                />
+                <div
+                  *ngIf="getTheFormGroup.routeId.errors && (getTheFormGroup.routeId.dirty || getTheFormGroup.routeId.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.routeId.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
-            <br />
+
+            <!-- Dirección Ruta ID -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label>Dirección Ruta ID:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="addrerouteId"
+                  title="Dirección Ruta ID"
+                  placeholder="Ingrese Dirección Ruta ID"
+                />
+                <div
+                  *ngIf="getTheFormGroup.addrerouteId.errors && (getTheFormGroup.addrerouteId.dirty || getTheFormGroup.addrerouteId.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.addrerouteId.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()"> Crear </button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()"> Actualizar </button>
+              <div class="col-8 d-flex justify-content-between">
+                <!-- Crear (Modo 2) -->
+                <button 
+                  *ngIf="mode == 2" 
+                  type="button" 
+                  class="btn btn-success" 
+                  (click)="create()"> 
+                  Crear 
+                </button>
+
+                <!-- Actualizar (Modo 3) -->
+                <button 
+                  *ngIf="mode == 3" 
+                  type="button" 
+                  class="btn btn-primary" 
+                  (click)="update()"> 
+                  Actualizar 
+                </button>
+
+                <!-- Eliminar (Modo 1) -->
+                <button 
+                  *ngIf="mode == 1" 
+                  type="button" 
+                  class="btn btn-danger" 
+                  (click)="delete(batchId)"> 
+                  Eliminar 
+                </button>
               </div>
             </div>
           </div>

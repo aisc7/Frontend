@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageDistributionCenterComponent implements OnInit {
   distributionCenterForm: FormGroup;
   distributionCenterId: number;
   mode: number;
@@ -26,19 +27,27 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.distributionCenterId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.distributionCenterId) {
-      this.distributionCenterService.get(this.distributionCenterId).subscribe((data: DistributionCenter) => {
-        this.distributionCenterForm.patchValue(data);
-      });
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    } else if (currentUrl.includes("delete")) {
+      this.mode = 4;
+    }
+  
+    if (this.route.snapshot.params.id) {
+      this.distributionCenterId = this.route.snapshot.params.id;
+      this.getDistributionCenter(this.distributionCenterId);
     }
   }
 
   configFormGroup() {
     this.distributionCenterForm = this.theFormBuilder.group({
       name: ['', Validators.required],
-      address: ['', Validators.required]
+      location: ['', Validators.required]
     });
   }
 
@@ -46,11 +55,17 @@ export class ManageComponent implements OnInit {
     return this.distributionCenterForm.controls;
   }
 
+  getDistributionCenter(id: number) {
+    this.distributionCenterService.get(id).subscribe((data) => {
+      this.distributionCenterForm.patchValue(data);
+    });
+  }
+
   create() {
     this.trySend = true;
     if (this.distributionCenterForm.valid) {
       this.distributionCenterService.create(this.distributionCenterForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El Centro de Distribución ha sido creado correctamente', 'success');
+        Swal.fire('Creado', 'El centro de distribución ha sido creado correctamente', 'success');
         this.router.navigate(['/distribution-centers']);
       });
     }
@@ -60,9 +75,15 @@ export class ManageComponent implements OnInit {
     this.trySend = true;
     if (this.distributionCenterForm.valid) {
       this.distributionCenterService.update(this.distributionCenterId, this.distributionCenterForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El Centro de Distribución ha sido actualizado correctamente', 'success');
+        Swal.fire('Actualizado', 'El centro de distribución ha sido actualizado correctamente', 'success');
         this.router.navigate(['/distribution-centers']);
       });
     }
+  }
+  delete () {
+    this.distributionCenterService.delete(this.distributionCenterId).subscribe(() => {
+      Swal.fire('Eliminado', 'El centro de distribución ha sido eliminado correctamente', 'success');
+      this.router.navigate(['/distribution-centers']);
+    });
   }
 }

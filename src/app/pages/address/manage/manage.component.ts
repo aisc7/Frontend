@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageAddressComponent implements OnInit {
   addressForm: FormGroup;
   addressId: number;
   mode: number;
@@ -26,12 +27,20 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addressId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.addressId) {
-      this.addressService.get(this.addressId).subscribe((data: Address) => {
-        this.addressForm.patchValue(data);
-      });
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    } else if (currentUrl.includes("delete")) { 
+      this.mode = 4;
+    }
+  
+    if (this.route.snapshot.params.id) {
+      this.addressId = this.route.snapshot.params.id;
+      this.getAddress(this.addressId);
     }
   }
 
@@ -47,6 +56,12 @@ export class ManageComponent implements OnInit {
 
   get getTheFormGroup() {
     return this.addressForm.controls;
+  }
+
+  getAddress(id: number) {
+    this.addressService.get(id).subscribe((data) => {
+      this.addressForm.patchValue(data);
+    });
   }
 
   create() {

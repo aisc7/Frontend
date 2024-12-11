@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageVehicleComponent implements OnInit {
   vehicleForm: FormGroup;
   vehicleId: number;
   mode: number;
@@ -18,7 +19,7 @@ export class ManageComponent implements OnInit {
 
   constructor(
     private theFormBuilder: FormBuilder,
-    private vehiculoService: VehiculoService,
+    private vehicleService: VehiculoService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -29,7 +30,7 @@ export class ManageComponent implements OnInit {
     this.vehicleId = this.route.snapshot.params['id'];
     this.mode = this.route.snapshot.params['mode'];
     if (this.vehicleId) {
-      this.vehiculoService.get(this.vehicleId).subscribe((data: Vehiculo) => {
+      this.vehicleService.get(this.vehicleId).subscribe((data: Vehiculo) => {
         this.vehicleForm.patchValue(data);
       });
     }
@@ -37,10 +38,9 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.vehicleForm = this.theFormBuilder.group({
-      plate: ['', Validators.required],
-      brand: ['', Validators.required],
+      make: ['', Validators.required],
       model: ['', Validators.required],
-      year: ['', [Validators.required, Validators.min(1900)]]
+      year: ['', Validators.required]
     });
   }
 
@@ -51,9 +51,9 @@ export class ManageComponent implements OnInit {
   create() {
     this.trySend = true;
     if (this.vehicleForm.valid) {
-      this.vehiculoService.create(this.vehicleForm.value).subscribe(() => {
+      this.vehicleService.create(this.vehicleForm.value).subscribe(() => {
         Swal.fire('Creado', 'El Vehículo ha sido creado correctamente', 'success');
-        this.router.navigate(['/vehiculos']);
+        this.router.navigate(['/vehicles']);
       });
     }
   }
@@ -61,9 +61,9 @@ export class ManageComponent implements OnInit {
   update() {
     this.trySend = true;
     if (this.vehicleForm.valid) {
-      this.vehiculoService.update(this.vehicleId, this.vehicleForm.value).subscribe(() => {
+      this.vehicleService.update(this.vehicleId, this.vehicleForm.value).subscribe(() => {
         Swal.fire('Actualizado', 'El Vehículo ha sido actualizado correctamente', 'success');
-        this.router.navigate(['/vehiculos']);
+        this.router.navigate(['/vehicles']);
       });
     }
   }

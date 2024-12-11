@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+export class ManageCategoryProductComponent implements OnInit {
   categoryProductForm: FormGroup;
   categoryProductId: number;
   mode: number;
@@ -26,18 +26,28 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categoryProductId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.categoryProductId) {
-      this.categoryProductService.get(this.categoryProductId).subscribe((data: CategoryProduct) => {
-        this.categoryProductForm.patchValue(data);
-      });
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    }else if (currentUrl.includes("delete")) {
+      this.mode = 4;
+    }
+    console.log('mode:', this.mode);
+  
+    if (this.route.snapshot.params.id) {
+      this.categoryProductId = this.route.snapshot.params.id;
+      this.getCategoryProduct(this.categoryProductId);
     }
   }
 
   configFormGroup() {
     this.categoryProductForm = this.theFormBuilder.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required]
     });
   }
 
@@ -45,11 +55,17 @@ export class ManageComponent implements OnInit {
     return this.categoryProductForm.controls;
   }
 
+  getCategoryProduct(id: number) {
+    this.categoryProductService.get(id).subscribe((data) => {
+      this.categoryProductForm.patchValue(data);
+    });
+  }
+
   create() {
     this.trySend = true;
     if (this.categoryProductForm.valid) {
       this.categoryProductService.create(this.categoryProductForm.value).subscribe(() => {
-        Swal.fire('Creado', 'La Categoría de Producto ha sido creada correctamente', 'success');
+        Swal.fire('Creado', 'El producto de categoría ha sido creado correctamente', 'success');
         this.router.navigate(['/category-products']);
       });
     }
@@ -59,7 +75,16 @@ export class ManageComponent implements OnInit {
     this.trySend = true;
     if (this.categoryProductForm.valid) {
       this.categoryProductService.update(this.categoryProductId, this.categoryProductForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'La Categoría de Producto ha sido actualizada correctamente', 'success');
+        Swal.fire('Actualizado', 'El producto de categoría ha sido actualizado correctamente', 'success');
+        this.router.navigate(['/category-products']);
+      });
+    }
+  }
+  delete () {
+    this.trySend = true;
+    if (this.categoryProductForm.valid) {
+      this.categoryProductService.delete(this.categoryProductId).subscribe(() => {
+        Swal.fire('Eliminado', 'El producto de categoría ha sido eliminado correctamente', 'success');
         this.router.navigate(['/category-products']);
       });
     }

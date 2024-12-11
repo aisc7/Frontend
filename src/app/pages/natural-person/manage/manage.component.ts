@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NaturalPersonService } from './../../../services/natural-person.service';
-import { NaturalPerson } from 'src/app/models/natural-person.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,7 +9,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageNaturalPersonComponent implements OnInit {
   naturalPersonForm: FormGroup;
   naturalPersonId: number;
   mode: number;
@@ -26,24 +26,39 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.naturalPersonId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.naturalPersonId) {
-      this.naturalPersonService.get(this.naturalPersonId).subscribe((data: NaturalPerson) => {
-        this.naturalPersonForm.patchValue(data);
-      });
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    } else if (currentUrl.includes("delete")) {
+      this.mode = 4;
+    }
+  
+    if (this.route.snapshot.params.id) {
+      this.naturalPersonId = this.route.snapshot.params.id;
+      this.getNaturalPerson(this.naturalPersonId);
     }
   }
 
   configFormGroup() {
     this.naturalPersonForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      document: ['', Validators.required]
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      birthDate: ['', Validators.required]
     });
   }
 
   get getTheFormGroup() {
     return this.naturalPersonForm.controls;
+  }
+
+  getNaturalPerson(id: number) {
+    this.naturalPersonService.get(id).subscribe((data) => {
+      this.naturalPersonForm.patchValue(data);
+    });
   }
 
   create() {
@@ -64,5 +79,11 @@ export class ManageComponent implements OnInit {
         this.router.navigate(['/natural-persons']);
       });
     }
+  }
+  delete () {
+    this.naturalPersonService.delete(this.naturalPersonId).subscribe(() => {
+      Swal.fire('Eliminado', 'La Persona Natural ha sido eliminada correctamente', 'success');
+      this.router.navigate(['/natural-persons']);
+    });
   }
 }

@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageCustomerComponent implements OnInit {
   customerForm: FormGroup;
   customerId: number;
   mode: number;
@@ -26,19 +27,28 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.customerId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.customerId) {
-      this.customerService.get(this.customerId).subscribe((data: Customer) => {
-        this.customerForm.patchValue(data);
-      });
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    } else if (currentUrl.includes("delete")) { 
+      this.mode = 4;
+    }
+  
+    if (this.route.snapshot.params.id) {
+      this.customerId = this.route.snapshot.params.id;
+      this.getCustomer(this.customerId);
     }
   }
 
   configFormGroup() {
     this.customerForm = this.theFormBuilder.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required]
     });
   }
 
@@ -46,11 +56,17 @@ export class ManageComponent implements OnInit {
     return this.customerForm.controls;
   }
 
+  getCustomer(id: number) {
+    this.customerService.get(id).subscribe((data) => {
+      this.customerForm.patchValue(data);
+    });
+  }
+
   create() {
     this.trySend = true;
     if (this.customerForm.valid) {
       this.customerService.create(this.customerForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El Cliente ha sido creado correctamente', 'success');
+        Swal.fire('Creado', 'El cliente ha sido creado correctamente', 'success');
         this.router.navigate(['/customers']);
       });
     }
@@ -60,9 +76,15 @@ export class ManageComponent implements OnInit {
     this.trySend = true;
     if (this.customerForm.valid) {
       this.customerService.update(this.customerId, this.customerForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El Cliente ha sido actualizado correctamente', 'success');
+        Swal.fire('Actualizado', 'El cliente ha sido actualizado correctamente', 'success');
         this.router.navigate(['/customers']);
       });
     }
+  }
+  delete () {
+    this.customerService.delete(this.customerId).subscribe(() => {
+      Swal.fire('Eliminado', 'El cliente ha sido eliminado correctamente', 'success');
+      this.router.navigate(['/customers']);
+    });
   }
 }

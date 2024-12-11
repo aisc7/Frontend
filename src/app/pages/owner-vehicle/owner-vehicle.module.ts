@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { OwnerVehicleRoutingModule } from './owner-vehicle-routing.module';
-import { ManageComponent } from './manage/manage.component';
+import { ManageOwnerVehicleComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    ManageComponent,
+    ManageOwnerVehicleComponent, // Corregido el nombre
     ListComponent
   ],
   imports: [
     CommonModule,
-    OwnerVehicleRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OwnerVehicleRoutingModule
   ]
 })
-export class OwnerVehicleModule { }
+export class OnwerVehicleModule { }

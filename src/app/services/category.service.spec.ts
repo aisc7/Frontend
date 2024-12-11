@@ -1,4 +1,4 @@
-import { Category } from './category.service';
+import { Category } from '.';
 
 describe('Category', () => {
   it('should create an instance', () => {

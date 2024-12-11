@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
+import { ManageDepartmentComponent } from './manage/manage.component';
 
 const routes: Routes = [
   { path: "list", component: ListComponent },
-  { path: "create", component: ManageComponent },
-  { path: "update/:id", component: ManageComponent },
-  { path: "view/:id", component: ManageComponent }
+  { path: "create", component: ManageDepartmentComponent }, // Create department
+  { path: "update/:id", component: ManageDepartmentComponent }, // Update department
+  {path: "delete/:id", component: ManageDepartmentComponent}, // Delete department
+  { path: "view/:id", component: ManageDepartmentComponent }, // View department
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

@@ -1,0 +1,54 @@
+.container-fluid {
+    display: flex; /* Habilita Flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    min-height: 100vh; /* Ocupa toda la altura de la ventana */
+  }
+  
+  .card {
+    background-color: rgba(255, 255, 255, 0.8); /* Blanco translúcido con 80% opacidad */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    max-width: 900px; /* Limita el ancho máximo de la tarjeta */
+    padding: 20px; /* Espaciado interno */
+  }
+  
+  .table {
+    text-align: center; /* Centra el contenido dentro de la tabla */
+  }
+  
+  .table th, 
+  .table td {
+    vertical-align: middle; /* Centra verticalmente el contenido */
+  }
+  
+  .card-header {
+    text-align: center; /* Centra el encabezado */
+    font-weight: bold; /* Resalta el texto */
+    font-size: 1.5rem; /* Tamaño de fuente */
+    background: transparent; /* Fondo transparente */
+    border-bottom: none; /* Sin borde inferior */
+  }
+  
+  .btn-dark {
+    background-color: #343a40;
+    border-color: #343a40;
+    color: #fff;
+  
+    &:hover {
+      background-color: #23272b;
+      border-color: #1d2124;
+    }
+  }
+  
+  .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+  
+    &:hover {
+      background-color: #e0a800;
+      border-color: #d39e00;
+    }
+  }
+  

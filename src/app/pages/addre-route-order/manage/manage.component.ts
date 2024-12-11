@@ -26,12 +26,21 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addreRouteOrderId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.addreRouteOrderId) {
-      this.addreRouteOrderService.get(this.addreRouteOrderId).subscribe((data: AddreRouteOrder) => {
-        this.addreRouteOrderForm.patchValue(data);
-      });
+    // Analiza y parte la ruta
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    }else if (currentUrl.includes("delete")) {
+      this.mode = 4;
+    }
+  
+    if (this.route.snapshot.params.id) {
+      this.addreRouteOrderId = this.route.snapshot.params.id;
+      this.getAddreRouteOrder(this.addreRouteOrderId);
     }
   }
 
@@ -44,6 +53,12 @@ export class ManageComponent implements OnInit {
 
   get getTheFormGroup() {
     return this.addreRouteOrderForm.controls;
+  }
+
+  getAddreRouteOrder(id: number) {
+    this.addreRouteOrderService.get(id).subscribe((data) => {
+      this.addreRouteOrderForm.patchValue(data);
+    });
   }
 
   create() {

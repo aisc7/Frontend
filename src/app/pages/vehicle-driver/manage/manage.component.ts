@@ -10,9 +10,9 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
-  vehicleDriverForm: FormGroup;
-  vehicleDriverId: number;
+export class ManageVehiculoDriverComponent implements OnInit {
+  vehiculoDriverForm: FormGroup;
+  vehiculoDriverId: number;
   mode: number;
   trySend: boolean = false;
 
@@ -26,42 +26,42 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.vehicleDriverId = this.route.snapshot.params['id'];
+    this.vehiculoDriverId = this.route.snapshot.params['id'];
     this.mode = this.route.snapshot.params['mode'];
-    if (this.vehicleDriverId) {
-      this.vehicleDriverService.get(this.vehicleDriverId).subscribe((data: VehicleDriver) => {
-        this.vehicleDriverForm.patchValue(data);
+    if (this.vehiculoDriverId) {
+      this.vehicleDriverService.get(this.vehiculoDriverId).subscribe((data: VehicleDriver) => {
+        this.vehiculoDriverForm.patchValue(data);
       });
     }
   }
 
   configFormGroup() {
-    this.vehicleDriverForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      license: ['', Validators.required]
+    this.vehiculoDriverForm = this.theFormBuilder.group({
+      driverId: ['', Validators.required],
+      vehicleId: ['', Validators.required]
     });
   }
 
   get getTheFormGroup() {
-    return this.vehicleDriverForm.controls;
+    return this.vehiculoDriverForm.controls;
   }
 
   create() {
     this.trySend = true;
-    if (this.vehicleDriverForm.valid) {
-      this.vehicleDriverService.create(this.vehicleDriverForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El Conductor de Vehículo ha sido creado correctamente', 'success');
-        this.router.navigate(['/vehicle-drivers']);
+    if (this.vehiculoDriverForm.valid) {
+      this.vehicleDriverService.create(this.vehiculoDriverForm.value).subscribe(() => {
+        Swal.fire('Creado', 'El Conductor del Vehículo ha sido creado correctamente', 'success');
+        this.router.navigate(['/vehiculo-drivers']);
       });
     }
   }
 
   update() {
     this.trySend = true;
-    if (this.vehicleDriverForm.valid) {
-      this.vehicleDriverService.update(this.vehicleDriverId, this.vehicleDriverForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El Conductor de Vehículo ha sido actualizado correctamente', 'success');
-        this.router.navigate(['/vehicle-drivers']);
+    if (this.vehiculoDriverForm.valid) {
+      this.vehicleDriverService.update(this.vehiculoDriverId, this.vehiculoDriverForm.value).subscribe(() => {
+        Swal.fire('Actualizado', 'El Conductor del Vehículo ha sido actualizado correctamente', 'success');
+        this.router.navigate(['/vehiculo-drivers']);
       });
     }
   }

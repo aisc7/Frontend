@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
-
+import { ManageRestaurantComponent } from './manage/manage.component';  
 const routes: Routes = [
   { path: "list", component: ListComponent },
-  { path: "create", component: ManageComponent },
-  { path: "update/:id", component: ManageComponent },
-  { path: "view/:id", component: ManageComponent }
+  { path: "create", component: ManageRestaurantComponent },  
+  { path: "update/:id", component: ManageRestaurantComponent }, 
+  {path: "delete/:id", component: ManageRestaurantComponent},
+  { path: "view/:id", component: ManageRestaurantComponent }   
 ];
 
 @NgModule({

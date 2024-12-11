@@ -1,4 +1,4 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
 <!-- Page content -->
 <div class="container-fluid mt--7">
   <div class="row">
@@ -8,9 +8,11 @@
           <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+          <h3 *ngIf="mode == 4" class="mb-0">Eliminar</h3>
         </div>
         <form class="form" [formGroup]="categoryForm">
           <div class="card-body">
+            <!-- ID -->
             <div class="row">
               <div class="col-4">
                 <label>ID:</label>
@@ -20,35 +22,47 @@
               </div>
             </div>
             <br />
+
+            <!-- Nombre -->
             <div class="row">
               <div class="col-4">
                 <label>Nombre:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre de la categoría">
+                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre de la categoría">
+                <p *ngIf="mode == 1">{{ categoryForm.get('name')?.value }}</p>
                 <div *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
                   <strong *ngIf="getTheFormGroup.name.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Descripción -->
             <div class="row">
               <div class="col-4">
                 <label>Descripción:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción de la categoría">
+                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción de la categoría">
+                <p *ngIf="mode == 1">{{ categoryForm.get('description')?.value }}</p>
                 <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
                   <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
+                <!-- Crear -->
                 <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()"> Crear </button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()"> Actualizar </button>
+                <!-- Actualizar -->
+                <button *ngIf="mode == 3" type="button" class="btn btn-primary btn-block" (click)="update()"> Actualizar </button>
+                <!-- Eliminar -->
+                <button *ngIf="mode == 4" type="button" class="btn btn-danger btn-block" (click)="delete()"> Eliminar </button>
               </div>
             </div>
           </div>
@@ -57,3 +71,4 @@
     </div>
   </div>
 </div>
+

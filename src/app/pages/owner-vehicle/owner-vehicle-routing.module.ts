@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
+import { ManageOwnerVehicleComponent } from './manage/manage.component'; // Adjust path accordingly
 
 const routes: Routes = [
   { path: "list", component: ListComponent },
-  { path: "create", component: ManageComponent },
-  { path: "update/:id", component: ManageComponent },
-  { path: "view/:id", component: ManageComponent }
+  { path: "create", component: ManageOwnerVehicleComponent },
+  { path: "view/:id", component: ManageOwnerVehicleComponent },
+  {path: "delete/:id", component: ManageOwnerVehicleComponent}, 
+  { path: "update/:id", component: ManageOwnerVehicleComponent }
 ];
 
 @NgModule({

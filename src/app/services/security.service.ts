@@ -22,9 +22,8 @@ export class SecurityService {
   */
   login(theUser: User):Observable<any>{
     let headers = new HttpHeaders();
-    return this.http.post<string>
-    (`${environment.url_ms_securityAKJ}/login`, theUser, 
-      { headers, responseType: 'text' as 'json' } );
+    return this.http.post<any>
+    (`${environment.url_ms_securityAKJ}/login`, theUser );
   }
   register(theUser: User): Observable<any> {
     let headers = new HttpHeaders();

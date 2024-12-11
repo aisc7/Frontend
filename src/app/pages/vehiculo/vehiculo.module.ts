@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { VehiculoRoutingModule } from './vehiculo-routing.module';
-import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
+import { VehicleRoutingModule } from './vehiculo-routing.module';  // Importa el módulo de rutas para vehículos
+import { ListComponent } from './list/list.component';            // Componente para listar vehículos
+import { ManageVehicleComponent } from './manage/manage.component'; // Componente para gestionar vehículos (crear/actualizar)
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    ListComponent,
-    ManageComponent
+    ListComponent,                              // Componente para listar vehículos
+    ManageVehicleComponent                      // Componente para gestionar un vehículo (crear/actualizar)
   ],
   imports: [
-    CommonModule,
-    VehiculoRoutingModule,
-    ReactiveFormsModule
+    CommonModule,                               // Importa CommonModule
+    VehicleRoutingModule,                       // Importa las rutas para la gestión de vehículos
+    ReactiveFormsModule                         // Importa ReactiveFormsModule para trabajar con formularios reactivos
   ]
 })
-export class VehiculoModule { }
+export class VehicleModule { }

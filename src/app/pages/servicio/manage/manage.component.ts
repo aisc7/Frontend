@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServicioService } from './../../../services/servicio.service';
 import { Servicio } from 'src/app/models/servicio.model';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+export class ManageServicioComponent implements OnInit {
   servicioForm: FormGroup;
   servicioId: number;
   mode: number;

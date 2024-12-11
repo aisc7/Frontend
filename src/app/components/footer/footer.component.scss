@@ -1,0 +1,9 @@
+/* Fondo traslúcido para el footer */
+.footer.bg-translucent {
+    background-color: rgba(255, 255, 255, 0.75); /* Blanco con 75% de opacidad */
+    -webkit-backdrop-filter: blur(5px); /* Efecto de desenfoque para Safari */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    border-top: 1px solid rgba(0, 0, 0, 0.1); /* Línea sutil en el borde superior */
+    padding: 1rem 0; /* Espaciado interno */
+  }
+  

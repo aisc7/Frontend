@@ -13,7 +13,7 @@ export class ListComponent implements OnInit {
   conductors: Conductor[];
 
   constructor(private conductorService: ConductorService, private router: Router) {
-    console.log('Constructor');
+    console.log('Constructor');false
     this.conductors = [];
   }
 

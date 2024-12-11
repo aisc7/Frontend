@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+export class ManageRestaurantComponent implements OnInit {
   restaurantForm: FormGroup;
   restaurantId: number;
   mode: number;

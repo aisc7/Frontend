@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageOwnerVehicleComponent implements OnInit {
   ownerVehicleForm: FormGroup;
   ownerVehicleId: number;
   mode: number;
@@ -26,19 +27,25 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ownerVehicleId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.ownerVehicleId) {
-      this.ownerVehicleService.get(this.ownerVehicleId).subscribe((data: OwnerVehicle) => {
-        this.ownerVehicleForm.patchValue(data);
-      });
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    }
+  
+    if (this.route.snapshot.params.id) {
+      this.ownerVehicleId = this.route.snapshot.params.id;
+      this.getOwnerVehicle(this.ownerVehicleId);
     }
   }
 
   configFormGroup() {
     this.ownerVehicleForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      document: ['', Validators.required]
+      ownerId: ['', Validators.required],
+      vehicleId: ['', Validators.required]
     });
   }
 
@@ -46,11 +53,17 @@ export class ManageComponent implements OnInit {
     return this.ownerVehicleForm.controls;
   }
 
+  getOwnerVehicle(id: number) {
+    this.ownerVehicleService.get(id).subscribe((data) => {
+      this.ownerVehicleForm.patchValue(data);
+    });
+  }
+
   create() {
     this.trySend = true;
     if (this.ownerVehicleForm.valid) {
       this.ownerVehicleService.create(this.ownerVehicleForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El Propietario de Vehículo ha sido creado correctamente', 'success');
+        Swal.fire('Creado', 'El vehículo del propietario ha sido creado correctamente', 'success');
         this.router.navigate(['/owner-vehicles']);
       });
     }
@@ -60,7 +73,7 @@ export class ManageComponent implements OnInit {
     this.trySend = true;
     if (this.ownerVehicleForm.valid) {
       this.ownerVehicleService.update(this.ownerVehicleId, this.ownerVehicleForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El Propietario de Vehículo ha sido actualizado correctamente', 'success');
+        Swal.fire('Actualizado', 'El vehículo del propietario ha sido actualizado correctamente', 'success');
         this.router.navigate(['/owner-vehicles']);
       });
     }

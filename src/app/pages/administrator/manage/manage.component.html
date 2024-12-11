@@ -1,55 +1,90 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
 <div class="container-fluid mt--7">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+  <!-- Tabla y Formulario para Administradores -->
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
+          <h3 *ngIf="mode === 1" class="mb-0">Administradores</h3>
+          <h3 *ngIf="mode === 2" class="mb-0">Crear Administrador</h3>
+          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Administrador</h3>
         </div>
-        <form class="form" [formGroup]="administratorForm">
+
+        <!-- Tabla de Administradores (Solo en modo Visualizar) -->
+        <div *ngIf="mode === 1" class="card-body">
+          <table class="table align-items-center table-flush">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Usuario ID</th>
+                <th>Servicio ID</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let admin of administrators">
+                <td>{{ admin.id }}</td>
+                <td>{{ admin.userId }}</td>
+                <td>{{ admin.servicioId }}</td>
+                <td>
+                  <button class="btn btn-primary btn-sm" (click)="edit(admin.id)">Editar</button>
+                  <button class="btn btn-danger btn-sm" (click)="delete(admin.id)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Formulario para Crear o Editar Administrador (En modo Crear o Editar) -->
+        <form *ngIf="mode !== 1" [formGroup]="administratorForm">
           <div class="card-body">
-            <div class="row">
-              <div class="col-4">
-                <label>Id:</label>
-              </div>
-              <div class="col-8">
-                <p>{{administratorId}}</p>
-              </div>
-            </div>
-            <br />
-            <div class="row">
+            <!-- Usuario ID -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label>Usuario ID:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="userId" title="Usuario ID" placeholder="Enter Usuario ID">
-                <div *ngIf="getTheFormGroup.userId.errors && (getTheFormGroup.userId.dirty || getTheFormGroup.userId.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.userId.errors.required" class="msnError">Requerido</strong>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="userId"
+                  placeholder="Ingrese Usuario ID"
+                />
+                <div *ngIf="getFieldError('userId')">
+                  <strong class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
-            <br />
-            <div class="row">
+
+            <!-- Servicio ID -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label>Servicio ID:</label>
               </div>
               <div class="col-8">
-                <input type="number" class="form-control" formControlName="servicioId" title="Servicio ID" placeholder="Enter Servicio ID">
-                <div *ngIf="getTheFormGroup.servicioId.errors && (getTheFormGroup.servicioId.dirty || getTheFormGroup.servicioId.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.servicioId.errors.required" class="msnError">Requerido</strong>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="servicioId"
+                  placeholder="Ingrese Servicio ID"
+                />
+                <div *ngIf="getFieldError('servicioId')">
+                  <strong class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
-            <br />
+
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()"> Crear </button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()"> Actualizar </button>
+              <div class="col-8 d-flex justify-content-between">
+                <!-- Crear -->
+                <button *ngIf="mode === 2" type="button" class="btn btn-success" (click)="create()">Crear</button>
+                <!-- Actualizar -->
+                <button *ngIf="mode === 3" type="button" class="btn btn-primary" (click)="update()">Actualizar</button>
+                <!-- Eliminar -->
+                <button *ngIf="mode === 1" type="button" class="btn btn-danger" (click)="delete()">Eliminar</button>
+                <!-- Cancelar -->
+                <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
               </div>
             </div>
           </div>
@@ -58,3 +93,4 @@
     </div>
   </div>
 </div>
+

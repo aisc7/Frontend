@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+export class ManageAdministratorComponent implements OnInit {
   administratorForm: FormGroup;
   administratorId: number;
   mode: number;
@@ -26,24 +26,39 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.administratorId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.administratorId) {
-      this.administratorService.get(this.administratorId).subscribe((data: Administrator) => {
-        this.administratorForm.patchValue(data);
-      });
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    } else if (currentUrl.includes("delete")) {
+      this.mode = 4;
+    }
+  
+    if (this.route.snapshot.params.id) {
+      this.administratorId = this.route.snapshot.params.id;
+      this.getAdministrator(this.administratorId);
     }
   }
 
   configFormGroup() {
     this.administratorForm = this.theFormBuilder.group({
-      userId: ['', Validators.required],
-      servicioId: ['', Validators.required]
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
     });
   }
 
   get getTheFormGroup() {
     return this.administratorForm.controls;
+  }
+
+  getAdministrator(id: number) {
+    this.administratorService.get(id).subscribe((data) => {
+      this.administratorForm.patchValue(data);
+    });
   }
 
   create() {
@@ -64,5 +79,26 @@ export class ManageComponent implements OnInit {
         this.router.navigate(['/administrators']);
       });
     }
+  }
+  delete(id: number) {
+    Swal.fire({
+      title: "Eliminación",
+      text: "Está seguro que quiere eliminar este registro?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Si, eliminar",
+      cancelButtonText: "No,cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.administratorService.delete(id).subscribe(data => {
+          Swal.fire({
+            title: "Eliminado",
+            text: "Se ha eliminado correctamente",
+            icon: "success"
+          });
+        })
+
+      }
+    });
   }
 }

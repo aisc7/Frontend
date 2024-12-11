@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageDepartmentComponent implements OnInit {
   departmentForm: FormGroup;
   departmentId: number;
   mode: number;
@@ -26,18 +27,27 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.departmentId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.departmentId) {
-      this.departmentService.get(this.departmentId).subscribe((data: Department) => {
-        this.departmentForm.patchValue(data);
-      });
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    } else if (currentUrl.includes("delete")) {
+      this.mode = 4;
+    }
+  
+    if (this.route.snapshot.params.id) {
+      this.departmentId = this.route.snapshot.params.id;
+      this.getDepartment(this.departmentId);
     }
   }
 
   configFormGroup() {
     this.departmentForm = this.theFormBuilder.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required]
     });
   }
 
@@ -45,11 +55,17 @@ export class ManageComponent implements OnInit {
     return this.departmentForm.controls;
   }
 
+  getDepartment(id: number) {
+    this.departmentService.get(id).subscribe((data) => {
+      this.departmentForm.patchValue(data);
+    });
+  }
+
   create() {
     this.trySend = true;
     if (this.departmentForm.valid) {
       this.departmentService.create(this.departmentForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El Departamento ha sido creado correctamente', 'success');
+        Swal.fire('Creado', 'El departamento ha sido creado correctamente', 'success');
         this.router.navigate(['/departments']);
       });
     }
@@ -59,9 +75,15 @@ export class ManageComponent implements OnInit {
     this.trySend = true;
     if (this.departmentForm.valid) {
       this.departmentService.update(this.departmentId, this.departmentForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El Departamento ha sido actualizado correctamente', 'success');
+        Swal.fire('Actualizado', 'El departamento ha sido actualizado correctamente', 'success');
         this.router.navigate(['/departments']);
       });
     }
+  }
+  delete () {
+    this.departmentService.delete(this.departmentId).subscribe(() => {
+      Swal.fire('Eliminado', 'El departamento ha sido eliminado correctamente', 'success');
+      this.router.navigate(['/departments']);
+    });
   }
 }

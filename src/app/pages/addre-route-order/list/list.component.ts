@@ -55,6 +55,7 @@ export class ListComponent implements OnInit {
   }
 
   view(id: number) {
+    console.log('View');
     this.router.navigate(['addre-route-orders/view', id]);
   }
 

@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageShiftComponent implements OnInit {
   shiftForm: FormGroup;
   shiftId: number;
   mode: number;

@@ -30,4 +30,7 @@ export class AddreRouteOrderService {
   update(id: number, addreRouteOrder: AddreRouteOrder): Observable<AddreRouteOrder> {
     return this.http.put<AddreRouteOrder>(`${environment.url_ms_businessAKJ}/addre-route-orders/${id}`, addreRouteOrder);
   }
+  view(id: number): Observable<AddreRouteOrder> {
+    return this.http.get<AddreRouteOrder>(`${environment.url_ms_businessAKJ}/addre-route-orders/${id}`);
+  }
 }

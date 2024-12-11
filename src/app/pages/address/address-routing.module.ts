@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ManageAddressComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
+import * as path from 'path';
 
 const routes: Routes = [
-  { path: "list", component: ListComponent },
-  { path: "create", component: ManageComponent },
-  { path: "update/:id", component: ManageComponent },
-  { path: "view/:id", component: ManageComponent }
+  {path: "list", component: ListComponent },              // Ruta para listar direcciones
+  { path: "create", component: ManageAddressComponent },              // Ruta para crear dirección
+  { path: "update/:id", component: ManageAddressComponent },          // Ruta para actualizar dirección
+  {path: "delete/:id", component: ManageAddressComponent},            // Ruta para eliminar dirección
+  { path: "view/:id", component: ManageAddressComponent },            // Ruta para ver detalles de una dirección
 ];
 
 @NgModule({

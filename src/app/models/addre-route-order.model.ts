@@ -3,7 +3,7 @@ import { Route } from './route.model';
 import { Batch } from './batch.model';
 
 export class AddreRouteOrder {
-    id: number;
+    id?: number;
     addressId: number;
     routeId: number;
     createdAt: Date;

@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CategoryRoutingModule } from './category-routing.module';
+import { ManageCategoryComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    ListComponent,
-    ManageComponent
+    ManageCategoryComponent,
+    ListComponent
   ],
   imports: [
     CommonModule,
     CategoryRoutingModule,
-    ReactiveFormsModule
+   ReactiveFormsModule
   ]
 })
 export class CategoryModule { }

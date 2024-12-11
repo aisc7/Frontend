@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { DuenoRoutingModule } from './dueno-routing.module';
-import { ManageComponent } from './manage/manage.component';
-import { ListComponent } from './list/list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { DuenoRoutingModule } from './dueno-routing.module';
+import { ManageDuenoComponent } from './manage/manage.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   declarations: [
-    ManageComponent,
+    ManageDuenoComponent,
     ListComponent
   ],
   imports: [

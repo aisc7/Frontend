@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+export class ManageSpentComponent implements OnInit {
   spentForm: FormGroup;
   spentId: number;
   mode: number;
@@ -38,7 +38,7 @@ export class ManageComponent implements OnInit {
   configFormGroup() {
     this.spentForm = this.theFormBuilder.group({
       description: ['', Validators.required],
-      amount: ['', [Validators.required, Validators.min(0)]]
+      amount: ['', Validators.required]
     });
   }
 

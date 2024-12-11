@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
+import { ManageBatchComponent } from './manage/manage.component'; // Componente de gestión de lotes
 
 const routes: Routes = [
-  { path: "list", component: ListComponent },
-  { path: "create", component: ManageComponent },
-  { path: "update/:id", component: ManageComponent },
-  { path: "view/:id", component: ManageComponent }
+  {path: "list", component: ManageBatchComponent },                   // Ruta para listar lotes
+  { path: "create", component: ManageBatchComponent },                // Ruta para crear lote
+  { path: "update/:id", component: ManageBatchComponent },            // Ruta para actualizar lote
+  {path: "delete/:id", component: ManageBatchComponent},              // Ruta para eliminar lote
+  { path: "view/:id", component: ManageBatchComponent },              // Ruta para ver detalles de un lote
 ];
 
 @NgModule({

@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ManageVehiculoDriverComponent } from './manage.component';  
 
-import { ManageComponent } from './manage.component';
-
-describe('ManageComponent', () => {
-  let component: ManageComponent;
-  let fixture: ComponentFixture<ManageComponent>;
+describe('ManageVehiculoDriverComponent', () => { 
+  let component: ManageVehiculoDriverComponent;
+  let fixture: ComponentFixture<ManageVehiculoDriverComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManageComponent ]
+      declarations: [ ManageVehiculoDriverComponent ] 
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ManageComponent);
+    fixture = TestBed.createComponent(ManageVehiculoDriverComponent);  
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

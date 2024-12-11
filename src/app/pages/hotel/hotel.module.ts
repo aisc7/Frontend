@@ -2,19 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HotelRoutingModule } from './hotel-routing.module';
-import { ManageComponent } from './manage/manage.component';
+import { ManageHotelComponent } from './manage/manage.component';
 import { ListComponent } from './list/list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
 @NgModule({
   declarations: [
-    ManageComponent,
+    ManageHotelComponent,
     ListComponent
   ],
   imports: [
     CommonModule,
     HotelRoutingModule,
-    ReactiveFormsModule
+   ReactiveFormsModule
   ]
 })
 export class HotelModule { }

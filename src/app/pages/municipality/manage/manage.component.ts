@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageMunicipalityComponent implements OnInit {
   municipalityForm: FormGroup;
   municipalityId: number;
   mode: number;
@@ -26,18 +27,27 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.municipalityId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
-    if (this.municipalityId) {
-      this.municipalityService.get(this.municipalityId).subscribe((data: Municipality) => {
-        this.municipalityForm.patchValue(data);
-      });
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1;
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2;
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3;
+    } else if (currentUrl.includes("delete")) {
+      this.mode = 4;
+    }
+  
+    if (this.route.snapshot.params.id) {
+      this.municipalityId = this.route.snapshot.params.id;
+      this.getMunicipality(this.municipalityId);
     }
   }
 
   configFormGroup() {
     this.municipalityForm = this.theFormBuilder.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      state: ['', Validators.required]
     });
   }
 
@@ -45,11 +55,17 @@ export class ManageComponent implements OnInit {
     return this.municipalityForm.controls;
   }
 
+  getMunicipality(id: number) {
+    this.municipalityService.get(id).subscribe((data) => {
+      this.municipalityForm.patchValue(data);
+    });
+  }
+
   create() {
     this.trySend = true;
     if (this.municipalityForm.valid) {
       this.municipalityService.create(this.municipalityForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El Municipio ha sido creado correctamente', 'success');
+        Swal.fire('Creado', 'El municipio ha sido creado correctamente', 'success');
         this.router.navigate(['/municipalities']);
       });
     }
@@ -59,9 +75,15 @@ export class ManageComponent implements OnInit {
     this.trySend = true;
     if (this.municipalityForm.valid) {
       this.municipalityService.update(this.municipalityId, this.municipalityForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El Municipio ha sido actualizado correctamente', 'success');
+        Swal.fire('Actualizado', 'El municipio ha sido actualizado correctamente', 'success');
         this.router.navigate(['/municipalities']);
       });
     }
+  }
+  delete () {
+    this.municipalityService.delete(this.municipalityId).subscribe(() => {
+      Swal.fire('Eliminado', 'El municipio ha sido eliminado correctamente', 'success');
+      this.router.navigate(['/municipalities']);
+    });
   }
 }

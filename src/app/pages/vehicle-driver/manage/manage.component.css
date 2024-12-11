@@ -1,0 +1,27 @@
+/* Centrado vertical y horizontal */
+.row.justify-content-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Altura mínima del contenedor */
+  }
+  
+  /* Fondo traslúcido */
+  .bg-translucent {
+    background-color: rgba(255, 255, 255, 0.8); /* Blanco con 80% de opacidad */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  /* Estilo adicional para inputs y errores */
+  .msnError {
+    color: red;
+    font-size: 0.875rem; /* Tamaño de fuente pequeño */
+  }
+  
+  input.form-control {
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+  }
+  

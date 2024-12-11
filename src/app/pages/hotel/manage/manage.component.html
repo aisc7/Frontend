@@ -1,4 +1,5 @@
-<div class="header bg-gradient-info pb-8 pt-5 pt-md-8"></div>
+<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
 <div class="container-fluid mt--7">
   <div class="row">
     <div class="col">
@@ -10,6 +11,7 @@
         </div>
         <form class="form" [formGroup]="hotelForm">
           <div class="card-body">
+            <!-- ID -->
             <div class="row">
               <div class="col-4">
                 <label>ID:</label>
@@ -19,6 +21,8 @@
               </div>
             </div>
             <br />
+
+            <!-- Nombre -->
             <div class="row">
               <div class="col-4">
                 <label>Nombre:</label>
@@ -31,23 +35,41 @@
               </div>
             </div>
             <br />
+
+            <!-- Ubicación -->
             <div class="row">
               <div class="col-4">
-                <label>Ubicación ID:</label>
+                <label>Ubicación:</label>
               </div>
               <div class="col-8">
-                <input type="number" class="form-control" formControlName="locationId" title="Ubicación ID" placeholder="Ingrese el ID de ubicación">
-                <div *ngIf="getTheFormGroup.locationId.errors && (getTheFormGroup.locationId.dirty || getTheFormGroup.locationId.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.locationId.errors.required" class="msnError">Requerido</strong>
+                <input type="text" class="form-control" formControlName="location" title="Ubicación" placeholder="Ingrese la ubicación del hotel">
+                <div *ngIf="getTheFormGroup.location.errors && (getTheFormGroup.location.dirty || getTheFormGroup.location.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.location.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Descripción -->
+            <div class="row">
+              <div class="col-4">
+                <label>Descripción:</label>
+              </div>
+              <div class="col-8">
+                <textarea class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción del hotel"></textarea>
+                <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Botón Crear/Actualizar -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar</button>
+                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear Hotel</button>
+                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar Hotel</button>
               </div>
             </div>
           </div>

@@ -56,6 +56,7 @@ export class ListComponent implements OnInit {
 
   view(id: number) {
     this.router.navigate(['duenos/view', id]);
+    console.log('View');
   }
 
   update(id: number) {

@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
+import { ManageCategoryProductComponent } from './manage/manage.component';
 
 const routes: Routes = [
   { path: "list", component: ListComponent },
-  { path: "create", component: ManageComponent },
-  { path: "update/:id", component: ManageComponent },
-  { path: "view/:id", component: ManageComponent }
+  { path: "create", component: ManageCategoryProductComponent }, // Create category product
+  { path: "update/:id", component: ManageCategoryProductComponent }, // Update category product
+  {path: "delete/:id", component: ManageCategoryProductComponent}, // Delete category product
+  { path: "view/:id", component: ManageCategoryProductComponent }, // View category product
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

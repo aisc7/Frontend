@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-export class ManageComponent implements OnInit {
+
+export class ManageSeguroComponent implements OnInit {
   seguroForm: FormGroup;
   seguroId: number;
   mode: number;
@@ -38,7 +39,7 @@ export class ManageComponent implements OnInit {
   configFormGroup() {
     this.seguroForm = this.theFormBuilder.group({
       name: ['', Validators.required],
-      type: ['', Validators.required]
+      policyNumber: ['', Validators.required]
     });
   }
 

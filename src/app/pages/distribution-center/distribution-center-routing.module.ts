@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
-import { ManageComponent } from './manage/manage.component';
+import { ManageDistributionCenterComponent } from './manage/manage.component'; // Adjust path accordingly
 
 const routes: Routes = [
   { path: "list", component: ListComponent },
-  { path: "create", component: ManageComponent },
-  { path: "update/:id", component: ManageComponent },
-  { path: "view/:id", component: ManageComponent }
+  { path: "create", component: ManageDistributionCenterComponent },
+  { path: "view/:id", component: ManageDistributionCenterComponent },
+  {path: "delete/:id", component: ManageDistributionCenterComponent},
+  { path: "update/:id", component: ManageDistributionCenterComponent }
 ];
 
 @NgModule({

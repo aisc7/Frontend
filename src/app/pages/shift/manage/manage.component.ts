@@ -27,8 +27,16 @@ export class ManageShiftComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.shiftId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1; // Modo de ver
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2; // Modo de crear
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3; // Modo de actualizar
+    } else if (currentUrl.includes("delete")) {
+      this.mode = 4; // Modo de eliminar
+    }
     if (this.shiftId) {
       this.shiftService.get(this.shiftId).subscribe((data: Shift) => {
         this.shiftForm.patchValue(data);

@@ -1,44 +1,52 @@
-<div class="header bg-gradient-info pb-8 pt-5 pt-md-8"></div>
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
       <div class="card shadow">
         <div class="card-header border-0">
           <h3 *ngIf="mode == 1" class="mb-0">Visualizar Servicio</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear Servicio</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Servicio</h3>
+          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Servicio</h3>
         </div>
         <form class="form" [formGroup]="servicioForm">
           <div class="card-body">
+            <!-- Nombre del Servicio -->
             <div class="row">
               <div class="col-4">
                 <label>Nombre del Servicio:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="serviceName" title="Nombre del Servicio" placeholder="Ingrese el nombre del servicio">
+                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="serviceName" title="Nombre del Servicio" placeholder="Ingrese el nombre del servicio">
+                <p *ngIf="mode == 1">{{ servicioForm.value.serviceName }}</p>
                 <div *ngIf="getTheFormGroup.serviceName.errors && (getTheFormGroup.serviceName.dirty || getTheFormGroup.serviceName.touched || trySend)">
                   <strong *ngIf="getTheFormGroup.serviceName.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+            
+            <!-- Descripción -->
             <div class="row">
               <div class="col-4">
                 <label>Descripción:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción del servicio">
+                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción del servicio">
+                <p *ngIf="mode == 1">{{ servicioForm.value.description }}</p>
                 <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
                   <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+            
+            <!-- Botones de acción -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
                 <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear</button>
                 <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar</button>
+                <button *ngIf="mode == 4" type="button" class="btn btn-danger btn-block" (click)="delete()">Eliminar</button>
               </div>
             </div>
           </div>

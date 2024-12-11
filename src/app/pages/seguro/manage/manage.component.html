@@ -1,16 +1,17 @@
-<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
 <!-- Page content -->
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
+  <div class="row justify-content-center"> <!-- Centrado horizontalmente -->
+    <div class="col-12 col-md-8"> <!-- Limita el tamaño en pantallas grandes -->
+      <div class="card shadow bg-translucent"> <!-- Fondo translúcido con desenfoque -->
         <div class="card-header border-0">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Seguro</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Seguro</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Seguro</h3>
+          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Seguro</h3>
         </div>
         <form class="form" [formGroup]="seguroForm">
           <div class="card-body">
+            <!-- ID -->
             <div class="row">
               <div class="col-4">
                 <label>ID:</label>
@@ -20,35 +21,44 @@
               </div>
             </div>
             <br />
+
+            <!-- Nombre -->
             <div class="row">
               <div class="col-4">
                 <label>Nombre:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre del seguro">
+                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre del seguro">
+                <p *ngIf="mode == 1">{{ seguroForm.value.name }}</p>
                 <div *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
                   <strong *ngIf="getTheFormGroup.name.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Número de Póliza -->
             <div class="row">
               <div class="col-4">
-                <label>Tipo:</label>
+                <label>Número de Póliza:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="type" title="Tipo" placeholder="Ingrese el tipo de seguro">
-                <div *ngIf="getTheFormGroup.type.errors && (getTheFormGroup.type.dirty || getTheFormGroup.type.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.type.errors.required" class="msnError">Requerido</strong>
+                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="policyNumber" title="Número de Póliza" placeholder="Ingrese el número de póliza">
+                <p *ngIf="mode == 1">{{ seguroForm.value.policyNumber }}</p>
+                <div *ngIf="getTheFormGroup.policyNumber.errors && (getTheFormGroup.policyNumber.dirty || getTheFormGroup.policyNumber.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.policyNumber.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Botones para Crear/Actualizar/Eliminar -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()"> Crear </button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()"> Actualizar </button>
+                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear </button>
+                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar </button>
+                <button *ngIf="mode == 4" type="button" class="btn btn-danger btn-block" (click)="delete()">Eliminar </button>
               </div>
             </div>
           </div>

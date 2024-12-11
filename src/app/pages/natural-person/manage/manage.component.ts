@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class ManageNaturalPersonComponent implements OnInit {
   naturalPersonForm: FormGroup;
   naturalPersonId: number;
-  mode: number;
+  mode: number; // Modo de operación: 1- Visualizar, 2- Crear, 3- Actualizar
   trySend: boolean = false;
 
   constructor(
@@ -27,16 +27,25 @@ export class ManageNaturalPersonComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
-      this.mode = 1;
-    } else if (currentUrl.includes("create")) {
-      this.mode = 2;
-    } else if (currentUrl.includes("update")) {
-      this.mode = 3;
-    } else if (currentUrl.includes("delete")) {
-      this.mode = 4;
+
+    switch (true) {
+      case currentUrl.includes("view"):
+        this.mode = 1;
+        break;
+      case currentUrl.includes("create"):
+        this.mode = 2;
+        break;
+      case currentUrl.includes("update"):
+        this.mode = 3;
+        break;
+      case currentUrl.includes("delete"):
+        this.mode = 4;
+        break;
+      default:
+        this.mode = 2; // Si no se encuentra ningún modo en la URL, asumimos que es Crear
+        break;
     }
-  
+
     if (this.route.snapshot.params.id) {
       this.naturalPersonId = this.route.snapshot.params.id;
       this.getNaturalPerson(this.naturalPersonId);
@@ -45,9 +54,8 @@ export class ManageNaturalPersonComponent implements OnInit {
 
   configFormGroup() {
     this.naturalPersonForm = this.theFormBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      birthDate: ['', Validators.required]
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
     });
   }
 
@@ -80,7 +88,8 @@ export class ManageNaturalPersonComponent implements OnInit {
       });
     }
   }
-  delete () {
+
+  delete() {
     this.naturalPersonService.delete(this.naturalPersonId).subscribe(() => {
       Swal.fire('Eliminado', 'La Persona Natural ha sido eliminada correctamente', 'success');
       this.router.navigate(['/natural-persons']);

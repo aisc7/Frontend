@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-
 export class ManageVehicleComponent implements OnInit {
   vehicleForm: FormGroup;
   vehicleId: number;
@@ -27,8 +26,18 @@ export class ManageVehicleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.vehicleId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1; // Modo de ver
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2; // Modo de crear
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3; // Modo de actualizar
+    } else if (currentUrl.includes("delete")) {
+      this.mode = 4; // Modo de eliminar
+    }
+
+    this.vehicleId = this.route.snapshot.params['id']; // Obtener el id desde la ruta
     if (this.vehicleId) {
       this.vehicleService.get(this.vehicleId).subscribe((data: Vehiculo) => {
         this.vehicleForm.patchValue(data);
@@ -38,7 +47,7 @@ export class ManageVehicleComponent implements OnInit {
 
   configFormGroup() {
     this.vehicleForm = this.theFormBuilder.group({
-      make: ['', Validators.required],
+      plate: ['', Validators.required],
       model: ['', Validators.required],
       year: ['', Validators.required]
     });
@@ -66,5 +75,24 @@ export class ManageVehicleComponent implements OnInit {
         this.router.navigate(['/vehicles']);
       });
     }
+  }
+
+  delete() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡Este vehículo será eliminado!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.vehicleService.delete(this.vehicleId).subscribe(() => {
+          Swal.fire('Eliminado', 'El vehículo ha sido eliminado', 'success');
+          this.router.navigate(['/vehicles']);
+        });
+      }
+    });
   }
 }

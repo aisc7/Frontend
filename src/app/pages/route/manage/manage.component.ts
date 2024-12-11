@@ -25,9 +25,17 @@ export class ManageRouteComponent implements OnInit {
     this.configFormGroup();
   }
 
-  ngOnInit(): void {
-    this.routeId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
+    ngOnInit(): void {
+      const currentUrl = this.route.snapshot.url.join("/");
+      if (currentUrl.includes("view")) {
+        this.mode = 1; // Modo de ver
+      } else if (currentUrl.includes("create")) {
+        this.mode = 2; // Modo de crear
+      } else if (currentUrl.includes("update")) {
+        this.mode = 3; // Modo de actualizar
+      } else if (currentUrl.includes("delete")) {
+        this.mode = 4; // Modo de eliminar
+      }
     if (this.routeId) {
       this.routeService.get(this.routeId).subscribe((data: Route) => {
         this.routeForm.patchValue(data);

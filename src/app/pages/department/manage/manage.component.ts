@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-
 export class ManageDepartmentComponent implements OnInit {
   departmentForm: FormGroup;
   departmentId: number;
@@ -37,7 +36,7 @@ export class ManageDepartmentComponent implements OnInit {
     } else if (currentUrl.includes("delete")) {
       this.mode = 4;
     }
-  
+
     if (this.route.snapshot.params.id) {
       this.departmentId = this.route.snapshot.params.id;
       this.getDepartment(this.departmentId);
@@ -47,7 +46,7 @@ export class ManageDepartmentComponent implements OnInit {
   configFormGroup() {
     this.departmentForm = this.theFormBuilder.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      countryId: ['', Validators.required]
     });
   }
 
@@ -61,26 +60,37 @@ export class ManageDepartmentComponent implements OnInit {
     });
   }
 
-  create() {
+  handleAction() {
     this.trySend = true;
     if (this.departmentForm.valid) {
-      this.departmentService.create(this.departmentForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El departamento ha sido creado correctamente', 'success');
-        this.router.navigate(['/departments']);
-      });
+      switch (this.mode) {
+        case 2:  // Crear
+          this.create();
+          break;
+        case 3:  // Actualizar
+          this.update();
+          break;
+        default:
+          break;
+      }
     }
   }
 
-  update() {
-    this.trySend = true;
-    if (this.departmentForm.valid) {
-      this.departmentService.update(this.departmentId, this.departmentForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El departamento ha sido actualizado correctamente', 'success');
-        this.router.navigate(['/departments']);
-      });
-    }
+  create() {
+    this.departmentService.create(this.departmentForm.value).subscribe(() => {
+      Swal.fire('Creado', 'El departamento ha sido creado correctamente', 'success');
+      this.router.navigate(['/departments']);
+    });
   }
-  delete () {
+
+  update() {
+    this.departmentService.update(this.departmentId, this.departmentForm.value).subscribe(() => {
+      Swal.fire('Actualizado', 'El departamento ha sido actualizado correctamente', 'success');
+      this.router.navigate(['/departments']);
+    });
+  }
+
+  delete() {
     this.departmentService.delete(this.departmentId).subscribe(() => {
       Swal.fire('Eliminado', 'El departamento ha sido eliminado correctamente', 'success');
       this.router.navigate(['/departments']);

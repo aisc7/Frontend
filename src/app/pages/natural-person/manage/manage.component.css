@@ -1,27 +1,91 @@
 /* Centrado vertical y horizontal */
 .row.justify-content-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Altura mínima del contenedor */
-  }
-  
-  /* Fondo traslúcido */
-  .bg-translucent {
-    background-color: rgba(255, 255, 255, 0.8); /* Blanco con 80% de opacidad */
-    backdrop-filter: blur(5px); /* Efecto de desenfoque */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
-  }
-  
-  /* Estilo adicional para inputs y errores */
-  .msnError {
-    color: red;
-    font-size: 0.875rem; /* Tamaño de fuente pequeño */
-  }
-  
-  input.form-control {
-    border: 1px solid #ccc; /* Borde gris claro */
-    border-radius: 5px; /* Bordes redondeados */
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Altura mínima del contenedor */
+}
+
+/* Fondo traslúcido con desenfoque */
+.bg-translucent {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Estilos para la tabla */
+table.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+
+table.table-bordered {
+  border: 1px solid #ddd;
+}
+
+table.table-striped tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+table.table-bordered td,
+table.table-bordered th {
+  padding: 10px;
+  text-align: left;
+}
+
+table.table-striped th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Estilo adicional para inputs y errores */
+.msnError {
+  color: red;
+  font-size: 0.875rem;
+}
+
+input.form-control {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+textarea.form-control {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  height: 100px;
+}
+
+.card-body .row {
+  margin-bottom: 1rem;
+}
+
+button.btn {
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+button.btn-success {
+  background-color: #28a745;
+  border: none;
+  color: white;
+}
+
+button.btn-success:hover {
+  background-color: #218838;
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+}
+
+button.btn-danger:hover {
+  background-color: #c82333;
+}

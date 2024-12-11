@@ -68,8 +68,9 @@
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear Hotel</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar Hotel</button>
+                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="handleAction()">Crear Hotel</button>
+                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="handleAction()">Actualizar Hotel</button>
+                <button *ngIf="mode == 4" type="button" class="btn btn-danger btn-block" (click)="handleAction()">Eliminar Hotel</button>
               </div>
             </div>
           </div>

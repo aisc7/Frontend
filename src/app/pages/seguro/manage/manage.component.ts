@@ -27,8 +27,17 @@ export class ManageSeguroComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.seguroId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1; // Modo de ver
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2; // Modo de crear
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3; // Modo de actualizar
+    } else if (currentUrl.includes("delete")) {
+      this.mode = 4; // Modo de eliminar
+    }
+
     if (this.seguroId) {
       this.seguroService.get(this.seguroId).subscribe((data: Seguro) => {
         this.seguroForm.patchValue(data);
@@ -65,5 +74,24 @@ export class ManageSeguroComponent implements OnInit {
         this.router.navigate(['/seguros']);
       });
     }
+  }
+
+  delete() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡Este seguro será eliminado!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.seguroService.delete(this.seguroId).subscribe(() => {
+          Swal.fire('Eliminado', 'El seguro ha sido eliminado', 'success');
+          this.router.navigate(['/seguros']);
+        });
+      }
+    });
   }
 }

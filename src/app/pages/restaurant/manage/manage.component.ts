@@ -26,8 +26,17 @@ export class ManageRestaurantComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.restaurantId = this.route.snapshot.params['id'];
-    this.mode = this.route.snapshot.params['mode'];
+    const currentUrl = this.route.snapshot.url.join("/");
+    if (currentUrl.includes("view")) {
+      this.mode = 1; // Modo de ver
+    } else if (currentUrl.includes("create")) {
+      this.mode = 2; // Modo de crear
+    } else if (currentUrl.includes("update")) {
+      this.mode = 3; // Modo de actualizar
+    } else if (currentUrl.includes("delete")) {
+      this.mode = 4; // Modo de eliminar
+    }
+    // Si estamos en modo actualización o eliminación, cargamos el restaurante
     if (this.restaurantId) {
       this.restaurantService.get(this.restaurantId).subscribe((data: Restaurant) => {
         this.restaurantForm.patchValue(data);
@@ -64,5 +73,24 @@ export class ManageRestaurantComponent implements OnInit {
         this.router.navigate(['/restaurants']);
       });
     }
+  }
+
+  delete() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡Este restaurante será eliminado!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.restaurantService.delete(this.restaurantId).subscribe(() => {
+          Swal.fire('Eliminado', 'El restaurante ha sido eliminado', 'success');
+          this.router.navigate(['/restaurants']);
+        });
+      }
+    });
   }
 }

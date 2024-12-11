@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryProductService } from './../../../services/category-product.service';
-import { CategoryProduct } from 'src/app/models/category-product.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,8 +11,8 @@ import Swal from 'sweetalert2';
 })
 export class ManageCategoryProductComponent implements OnInit {
   categoryProductForm: FormGroup;
-  categoryProductId: number;
-  mode: number;
+  categoryProductId: number | null = null;
+  mode: number = 2;
   trySend: boolean = false;
 
   constructor(
@@ -27,19 +26,10 @@ export class ManageCategoryProductComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
-      this.mode = 1;
-    } else if (currentUrl.includes("create")) {
-      this.mode = 2;
-    } else if (currentUrl.includes("update")) {
-      this.mode = 3;
-    }else if (currentUrl.includes("delete")) {
-      this.mode = 4;
-    }
-    console.log('mode:', this.mode);
-  
+    this.mode = this.getModeFromUrl(currentUrl);
+
     if (this.route.snapshot.params.id) {
-      this.categoryProductId = this.route.snapshot.params.id;
+      this.categoryProductId = +this.route.snapshot.params.id;
       this.getCategoryProduct(this.categoryProductId);
     }
   }
@@ -47,12 +37,22 @@ export class ManageCategoryProductComponent implements OnInit {
   configFormGroup() {
     this.categoryProductForm = this.theFormBuilder.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      productId: ['', Validators.required],
+      categoryId: ['', Validators.required]
     });
   }
 
   get getTheFormGroup() {
     return this.categoryProductForm.controls;
+  }
+
+  getModeFromUrl(url: string): number {
+    if (url.includes("view")) return 1;
+    if (url.includes("create")) return 2;
+    if (url.includes("update")) return 3;
+    if (url.includes("delete")) return 4;
+    return 2; // Default: Crear
   }
 
   getCategoryProduct(id: number) {
@@ -61,32 +61,53 @@ export class ManageCategoryProductComponent implements OnInit {
     });
   }
 
-  create() {
+  handleAction() {
     this.trySend = true;
-    if (this.categoryProductForm.valid) {
-      this.categoryProductService.create(this.categoryProductForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El producto de categoría ha sido creado correctamente', 'success');
-        this.router.navigate(['/category-products']);
-      });
-    }
-  }
 
-  update() {
-    this.trySend = true;
-    if (this.categoryProductForm.valid) {
-      this.categoryProductService.update(this.categoryProductId, this.categoryProductForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El producto de categoría ha sido actualizado correctamente', 'success');
-        this.router.navigate(['/category-products']);
-      });
+    if (!this.categoryProductForm.valid) {
+      Swal.fire('Error', 'Por favor, complete todos los campos obligatorios.', 'error');
+      return;
     }
-  }
-  delete () {
-    this.trySend = true;
-    if (this.categoryProductForm.valid) {
-      this.categoryProductService.delete(this.categoryProductId).subscribe(() => {
-        Swal.fire('Eliminado', 'El producto de categoría ha sido eliminado correctamente', 'success');
-        this.router.navigate(['/category-products']);
-      });
+
+    switch (this.mode) {
+      case 2:
+        this.categoryProductService.create(this.categoryProductForm.value).subscribe(() => {
+          Swal.fire('Creado', 'El producto de categoría ha sido creado correctamente.', 'success');
+          this.router.navigate(['/category-products']);
+        });
+        break;
+
+      case 3:
+        if (this.categoryProductId !== null) {
+          this.categoryProductService.update(this.categoryProductId, this.categoryProductForm.value).subscribe(() => {
+            Swal.fire('Actualizado', 'El producto de categoría ha sido actualizado correctamente.', 'success');
+            this.router.navigate(['/category-products']);
+          });
+        }
+        break;
+
+      case 1:
+        if (this.categoryProductId !== null) {
+          Swal.fire({
+            title: "Eliminar",
+            text: "¿Está seguro que desea eliminar este producto de categoría?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.categoryProductService.delete(this.categoryProductId).subscribe(() => {
+                Swal.fire('Eliminado', 'El producto de categoría ha sido eliminado correctamente.', 'success');
+                this.router.navigate(['/category-products']);
+              });
+            }
+          });
+        }
+        break;
+
+      default:
+        Swal.fire('Error', 'Modo no reconocido.', 'error');
     }
   }
 }

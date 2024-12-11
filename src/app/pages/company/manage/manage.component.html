@@ -1,54 +1,102 @@
-<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+  <!-- Table -->
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Empresa</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Empresa</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Empresa</h3>
+          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Empresa</h3>
         </div>
         <form class="form" [formGroup]="companyForm">
           <div class="card-body">
-            <div class="row">
+            <div class="row mb-3">
               <div class="col-4">
-                <label>ID:</label>
+                <label>Id:</label>
               </div>
               <div class="col-8">
-                <p>{{companyId}}</p>
+                <p>{{ companyId }}</p>
               </div>
             </div>
-            <br />
-            <div class="row">
+            <div class="row mb-3">
               <div class="col-4">
                 <label>Nombre:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre de la empresa">
-                <div *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  title="Nombre"
+                  placeholder="Ingrese Nombre"
+                />
+                <div
+                  *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
                   <strong *ngIf="getTheFormGroup.name.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
-            <br />
-            <div class="row">
+            <div class="row mb-3">
               <div class="col-4">
-                <label>Descripción:</label>
+                <label>Dirección:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción de la empresa">
-                <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="address"
+                  title="Dirección"
+                  placeholder="Ingrese Dirección"
+                />
+                <div
+                  *ngIf="getTheFormGroup.address.errors && (getTheFormGroup.address.dirty || getTheFormGroup.address.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.address.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
-            <br />
+            <div class="row mb-3">
+              <div class="col-4">
+                <label>Teléfono:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="phone"
+                  title="Teléfono"
+                  placeholder="Ingrese Teléfono"
+                />
+                <div
+                  *ngIf="getTheFormGroup.phone.errors && (getTheFormGroup.phone.dirty || getTheFormGroup.phone.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.phone.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
             <div class="row">
               <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()"> Crear </button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()"> Actualizar </button>
+              <div class="col-8 d-flex justify-content-between">
+                <button 
+                  *ngIf="mode == 2" 
+                  type="button" 
+                  class="btn btn-success" 
+                  (click)="handleAction()"> 
+                  Crear 
+                </button>
+                <button 
+                  *ngIf="mode == 3" 
+                  type="button" 
+                  class="btn btn-primary" 
+                  (click)="handleAction()"> 
+                  Actualizar 
+                </button>
+                <button 
+                  *ngIf="mode == 4" 
+                  type="button" 
+                  class="btn btn-danger" 
+                  (click)="handleAction()"> 
+                  Eliminar 
+                </button>
               </div>
             </div>
           </div>

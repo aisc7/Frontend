@@ -1,17 +1,16 @@
-<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header text-center">
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Contrato</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Contrato</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Contrato</h3>
         </div>
-        <form class="form" [formGroup]="contractForm">
+        <form [formGroup]="contractForm">
           <div class="card-body">
-            <div class="row">
+            <!-- ID -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label>ID:</label>
               </div>
@@ -19,36 +18,41 @@
                 <p>{{contractId}}</p>
               </div>
             </div>
-            <br />
-            <div class="row">
+
+            <!-- Tipo de contrato -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label>Tipo de contrato:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="contractType" title="Tipo de contrato" placeholder="Ingrese el tipo de contrato">
-                <div *ngIf="getTheFormGroup.contractType.errors && (getTheFormGroup.contractType.dirty || getTheFormGroup.contractType.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.contractType.errors.required" class="msnError">Requerido</strong>
+                <input type="text" class="form-control" formControlName="contractType" placeholder="Ingrese el tipo de contrato" 
+                       [readonly]="mode === 1" />
+                <div *ngIf="getTheFormGroup.contractType.invalid && (getTheFormGroup.contractType.dirty || getTheFormGroup.contractType.touched || trySend)">
+                  <strong class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
-            <br />
-            <div class="row">
+
+            <!-- Fecha inicio -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label>Fecha inicio:</label>
               </div>
               <div class="col-8">
-                <input type="date" class="form-control" formControlName="startDate" title="Fecha inicio" placeholder="Seleccione la fecha de inicio">
-                <div *ngIf="getTheFormGroup.startDate.errors && (getTheFormGroup.startDate.dirty || getTheFormGroup.startDate.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.startDate.errors.required" class="msnError">Requerido</strong>
+                <input type="date" class="form-control" formControlName="startDate" placeholder="Seleccione la fecha de inicio" 
+                       [readonly]="mode === 1" />
+                <div *ngIf="getTheFormGroup.startDate.invalid && (getTheFormGroup.startDate.dirty || getTheFormGroup.startDate.touched || trySend)">
+                  <strong class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
-            <br />
+
+            <!-- Acciones -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()"> Crear </button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()"> Actualizar </button>
+                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="handleAction()">Crear</button>
+                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="handleAction()">Actualizar</button>
               </div>
             </div>
           </div>
@@ -57,3 +61,4 @@
     </div>
   </div>
 </div>
+

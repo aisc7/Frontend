@@ -27,16 +27,8 @@ export class ManageCuotaComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
-      this.mode = 1;
-    } else if (currentUrl.includes("create")) {
-      this.mode = 2;
-    } else if (currentUrl.includes("update")) {
-      this.mode = 3;
-    } else if (currentUrl.includes("delete")) {
-      this.mode = 4;
-    }
-  
+    this.mode = currentUrl.includes("view") ? 1 : currentUrl.includes("create") ? 2 : currentUrl.includes("update") ? 3 : 4;
+    
     if (this.route.snapshot.params.id) {
       this.cuotaId = this.route.snapshot.params.id;
       this.getCuota(this.cuotaId);
@@ -46,7 +38,7 @@ export class ManageCuotaComponent implements OnInit {
   configFormGroup() {
     this.cuotaForm = this.theFormBuilder.group({
       amount: ['', Validators.required],
-      dueDate: ['', Validators.required]
+      paymentDate: ['', Validators.required]
     });
   }
 
@@ -60,26 +52,40 @@ export class ManageCuotaComponent implements OnInit {
     });
   }
 
-  create() {
+  handleAction() {
     this.trySend = true;
     if (this.cuotaForm.valid) {
-      this.cuotaService.create(this.cuotaForm.value).subscribe(() => {
-        Swal.fire('Creado', 'La cuota ha sido creada correctamente', 'success');
-        this.router.navigate(['/cuotas']);
-      });
+      switch (this.mode) {
+        case 2:
+          this.create();
+          break;
+        case 3:
+          this.update();
+          break;
+        case 4:
+          this.delete();
+          break;
+        default:
+          break;
+      }
     }
   }
 
-  update() {
-    this.trySend = true;
-    if (this.cuotaForm.valid) {
-      this.cuotaService.update(this.cuotaId, this.cuotaForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'La cuota ha sido actualizada correctamente', 'success');
-        this.router.navigate(['/cuotas']);
-      });
-    }
+  create() {
+    this.cuotaService.create(this.cuotaForm.value).subscribe(() => {
+      Swal.fire('Creado', 'La cuota ha sido creada correctamente', 'success');
+      this.router.navigate(['/cuotas']);
+    });
   }
-  delete () { 
+
+  update() {
+    this.cuotaService.update(this.cuotaId, this.cuotaForm.value).subscribe(() => {
+      Swal.fire('Actualizado', 'La cuota ha sido actualizada correctamente', 'success');
+      this.router.navigate(['/cuotas']);
+    });
+  }
+
+  delete() {
     this.cuotaService.delete(this.cuotaId).subscribe(() => {
       Swal.fire('Eliminado', 'La cuota ha sido eliminada correctamente', 'success');
       this.router.navigate(['/cuotas']);

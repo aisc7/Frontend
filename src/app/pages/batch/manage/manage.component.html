@@ -1,118 +1,38 @@
-<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
-
-<!-- Page content -->
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
+          <h3 class="mb-0">
+            {{ mode == 2 ? 'Crear Lote' : mode == 3 ? 'Actualizar Lote' : mode == 1 ? 'Eliminar Lote' : 'Gestión de Lote' }}
+          </h3>
         </div>
-        <form class="form" [formGroup]="batchForm">
+        <form [formGroup]="batchForm" novalidate>
           <div class="card-body">
-            <!-- ID -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>ID:</label>
-              </div>
-              <div class="col-8">
-                <p>{{batchId}}</p>
-              </div>
-            </div>
-
-            <!-- Cantidad -->
-            <div class="row mb-3">
-              <div class="col-4">
-                <label>Cantidad:</label>
+                <label for="name" class="form-label">Nombre del Lote:</label>
               </div>
               <div class="col-8">
                 <input
-                  type="number"
+                  id="name"
+                  type="text"
                   class="form-control"
-                  formControlName="quantity"
-                  title="Cantidad"
-                  placeholder="Ingrese Cantidad"
+                  formControlName="name"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.name.invalid"
                 />
-                <div
-                  *ngIf="getTheFormGroup.quantity.errors && (getTheFormGroup.quantity.dirty || getTheFormGroup.quantity.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.quantity.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.name.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
-
-            <!-- Ruta ID -->
-            <div class="row mb-3">
-              <div class="col-4">
-                <label>Ruta ID:</label>
-              </div>
-              <div class="col-8">
-                <input
-                  type="number"
-                  class="form-control"
-                  formControlName="routeId"
-                  title="Ruta ID"
-                  placeholder="Ingrese Ruta ID"
-                />
-                <div
-                  *ngIf="getTheFormGroup.routeId.errors && (getTheFormGroup.routeId.dirty || getTheFormGroup.routeId.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.routeId.errors.required" class="msnError">Requerido</strong>
-                </div>
-              </div>
-            </div>
-
-            <!-- Dirección Ruta ID -->
-            <div class="row mb-3">
-              <div class="col-4">
-                <label>Dirección Ruta ID:</label>
-              </div>
-              <div class="col-8">
-                <input
-                  type="number"
-                  class="form-control"
-                  formControlName="addrerouteId"
-                  title="Dirección Ruta ID"
-                  placeholder="Ingrese Dirección Ruta ID"
-                />
-                <div
-                  *ngIf="getTheFormGroup.addrerouteId.errors && (getTheFormGroup.addrerouteId.dirty || getTheFormGroup.addrerouteId.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.addrerouteId.errors.required" class="msnError">Requerido</strong>
-                </div>
-              </div>
-            </div>
-
-            <!-- Botones -->
-            <div class="row">
-              <div class="col-4"></div>
-              <div class="col-8 d-flex justify-content-between">
-                <!-- Crear (Modo 2) -->
-                <button 
-                  *ngIf="mode == 2" 
-                  type="button" 
-                  class="btn btn-success" 
-                  (click)="create()"> 
-                  Crear 
-                </button>
-
-                <!-- Actualizar (Modo 3) -->
-                <button 
-                  *ngIf="mode == 3" 
-                  type="button" 
-                  class="btn btn-primary" 
-                  (click)="update()"> 
-                  Actualizar 
-                </button>
-
-                <!-- Eliminar (Modo 1) -->
-                <button 
-                  *ngIf="mode == 1" 
-                  type="button" 
-                  class="btn btn-danger" 
-                  (click)="delete(batchId)"> 
-                  Eliminar 
-                </button>
-              </div>
+            <!-- Agrega más filas aquí para otros campos -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn btn-primary" (click)="handleAction()">
+                {{ mode == 2 ? 'Crear' : mode == 3 ? 'Actualizar' : mode == 1 ? 'Eliminar' : 'Acción' }}
+              </button>
+              <button type="button" class="btn btn-secondary" routerLink="/batches">Cancelar</button>
             </div>
           </div>
         </form>
@@ -120,3 +40,4 @@
     </div>
   </div>
 </div>
+

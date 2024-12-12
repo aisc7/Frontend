@@ -9,7 +9,7 @@ export class Address {
     number: string;
     neighborhood: string;
     reference: string;
-    municipalityId: number;
+    municipality_id: number;
     createdAt: Date;
     updatedAt: Date;
     municipality: Municipality;

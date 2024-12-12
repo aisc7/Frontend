@@ -8,11 +8,11 @@ export class Product {
     id: number;
     name: string;
     description: string;
-    batchId: number;
-    customerId: number;
+    batch_id: number;
+    customer_id: number;
     createdAt: Date;
     updatedAt: Date;
-    categoryProducts: CategoryProduct[];
+    categoryproducts: CategoryProduct[];
     categories: Category[];
     batch: Batch;
     customer: Customer;

@@ -6,8 +6,8 @@ export class Operation {
     id: number;
     startDate: Date;
     endDate: Date;
-    municipalityId: number;
-    vehiculoId: number;
+    municipality_id: number;
+    vehiculo_id: number;
     createdAt: Date;
     updatedAt: Date;
     municipality: Municipality;

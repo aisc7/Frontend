@@ -8,9 +8,9 @@ export class Spent {
     description: string;
     monto: number;
     date: Date;
-    servicioId: number;
-    conductorId: number;
-    duenoId: number;
+    servicio_id: number;
+    conductor_id: number;
+    dueno_id: number;
     createdAt: Date;
     updatedAt: Date;
     servicio: Servicio;

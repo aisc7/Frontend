@@ -10,14 +10,14 @@ import { Municipality } from './municipality.model';
 
 export class Vehiculo {
     id: number;
-    tipoVehiculo: string;
-    capacidadPeso: number;
-    capacidadVolumen: number;
+    tipo_vehiculo: string;
+    capacidad_peso: number;
+    capacidad_volumen: number;
     estado: string;
     createdAt: Date;
     updatedAt: Date;
-    vehicleDrivers: VehicleDriver[];
-    ownerVehicles: OwnerVehicle[];
+    vehicledrivers: VehicleDriver[];
+    ownervehicles: OwnerVehicle[];
     routes: Route[];
     seguros: Seguro[];
     operations: Operation[];

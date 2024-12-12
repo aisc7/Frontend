@@ -2,10 +2,10 @@ import { Conductor } from './conductor.model';
 
 export class Shift {
     id: number;
-    startTime: Date;
-    endTime: Date;
+    start_time: Date;
+    end_time: Date;
     location: string;
-    conductorId: number;
+    conductor_id: number;
     createdAt: Date;
     updatedAt: Date;
     conductor: Conductor;

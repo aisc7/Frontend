@@ -7,10 +7,9 @@ import { Servicio } from './servicio.model';
 
 export class Conductor {
     id: number;
-    userId: string;
-    email: string;
+    user_id: string;
     licencia: string;
-    tipoLicencia: string;
+    tipo_licencia: string;
     telefono: string;
     createdAt: Date;
     updatedAt: Date;

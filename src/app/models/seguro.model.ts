@@ -5,7 +5,7 @@ export class Seguro {
     compania: string;
     numeroPoliza: number;
     fechaVencimiento: Date;
-    vehiculoId: number;
+    vehiculo_id: number;
     createdAt: Date;
     updatedAt: Date;
     vehiculo: Vehiculo;

@@ -5,11 +5,11 @@ import { Customer } from './costumer.model';
 
 export class Contract {
     id: number;
-    fechaInicio: Date;
-    fechaFin: Date;
+    fecha_inicio: Date;
+    fecha_fin: Date;
     estado: string;
-    detallesServicio: string;
-    customerId: number;
+    detalles_servicio: string;
+    customer_id: number;
     createdAt: Date;
     updatedAt: Date;
     cuotas: Cuota[];

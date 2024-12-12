@@ -8,12 +8,12 @@ export class Municipality {
     id: number;
     name: string;
     description: string;
-    departmentId: number;
+    department_id: number;
     createdAt: Date;
     updatedAt: Date;
     department: Department;
     addresses: Address[];
-    distributionCenters: DistributionCenter[];
+    distributioncenters: DistributionCenter[];
     operations: Operation[];
     conductores: Vehiculo[];
 }

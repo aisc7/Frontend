@@ -3,10 +3,10 @@ import { Category } from './category.model';
 
 export class CategoryProduct {
     id: number;
-    fechaAsignacion: Date;
-    fechaDesasignacion: Date;
-    productId: number;
-    categoryId: number;
+    fecha_asignacion: Date;
+    fecha_desasignacion: Date;
+    product_id: number;
+    category_id: number;
     createdAt: Date;
     updatedAt: Date;
 }

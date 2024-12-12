@@ -99,13 +99,13 @@
                 <input
                   type="number"
                   class="form-control"
-                  formControlName="municipalityId"
+                  formControlName="municipality_id"
                   title="Municipio ID"
                   placeholder="Ingrese Municipio ID"
                 />
                 <div
-                  *ngIf="getTheFormGroup.municipalityId.errors && (getTheFormGroup.municipalityId.dirty || getTheFormGroup.municipalityId.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.municipalityId.errors.required" class="msnError">Requerido</strong>
+                  *ngIf="getTheFormGroup.municipality_id.errors && (getTheFormGroup.municipality_id.dirty || getTheFormGroup.municipality_id.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.municipality_id.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>

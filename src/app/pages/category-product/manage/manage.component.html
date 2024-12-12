@@ -46,36 +46,36 @@
             </div>
             <div class="row mb-3">
               <div class="col-4">
-                <label for="productId" class="form-label">ID del Producto:</label>
+                <label for="product_id" class="form-label">ID del Producto:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="productId"
+                  id="product_id"
                   type="text"
                   class="form-control"
-                  formControlName="productId"
+                  formControlName="product_id"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.productId.invalid"
+                  [class.is-invalid]="trySend && getTheFormGroup.product_id.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.productId.invalid" class="invalid-feedback">
+                <div *ngIf="trySend && getTheFormGroup.product_id.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>
               </div>
             </div>
             <div class="row mb-3">
               <div class="col-4">
-                <label for="categoryId" class="form-label">ID de Categoría:</label>
+                <label for="category_id" class="form-label">ID de Categoría:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="categoryId"
+                  id="category_id"
                   type="text"
                   class="form-control"
-                  formControlName="categoryId"
+                  formControlName="category_id"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.categoryId.invalid"
+                  [class.is-invalid]="trySend && getTheFormGroup.category_id.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.categoryId.invalid" class="invalid-feedback">
+                <div *ngIf="trySend && getTheFormGroup.category_id.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>
               </div>

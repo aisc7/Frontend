@@ -3,12 +3,12 @@ import { NaturalPerson } from './natural-person.model';
 
 export class Company {
   id: number;
-  companyType: string;
-  fiscalAddress: string;
-  customerId: number;
+  company_type: string;
+  fiscal_address: string;
+  customer_id: number;
   createdAt: Date;
   updatedAt: Date;
   customer: Customer;
-  naturalPeople: NaturalPerson;
+  NaturalPeople: NaturalPerson;
 
 }

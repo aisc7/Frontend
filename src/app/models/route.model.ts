@@ -6,12 +6,12 @@ import { Address } from './address.model';
 
 export class Route {
     id: number;
-    startingPlace: string;
-    endingPlace: string;
+    starting_place: string;
+    ending_place: string;
     distance: number;
-    deliveryDate: Date;
-    contractId: number;
-    vehiculoId: number;
+    delivery_date: Date;
+    contract_id: number;
+    vehiculo_id: number;
     createdAt: Date;
     updatedAt: Date;
     contract: Contract;

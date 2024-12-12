@@ -5,13 +5,13 @@ import { NaturalPerson } from './natural-person.model';
 
 export class Customer {
     id: number;
-    userId: string;
+    user_id: string;
     phone: string;
-    orderCount: number;
+    order_count: number;
     createdAt: Date;
     updatedAt: Date;
     contracts: Contract[];
     products: Product[];
     company: Company;
-    naturalPerson: NaturalPerson;
+    naturalperson: NaturalPerson;
 }

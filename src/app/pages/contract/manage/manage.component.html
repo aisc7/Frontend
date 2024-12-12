@@ -39,9 +39,9 @@
                 <label>Fecha inicio:</label>
               </div>
               <div class="col-8">
-                <input type="date" class="form-control" formControlName="startDate" placeholder="Seleccione la fecha de inicio" 
+                <input type="date" class="form-control" formControlName="fecha_inicio" placeholder="Seleccione la fecha de inicio" 
                        [readonly]="mode === 1" />
-                <div *ngIf="getTheFormGroup.startDate.invalid && (getTheFormGroup.startDate.dirty || getTheFormGroup.startDate.touched || trySend)">
+                <div *ngIf="getTheFormGroup.fecha_inicio.invalid && (getTheFormGroup.fecha_inicio.dirty || getTheFormGroup.fecha_inicio.touched || trySend)">
                   <strong class="msnError">Requerido</strong>
                 </div>
               </div>

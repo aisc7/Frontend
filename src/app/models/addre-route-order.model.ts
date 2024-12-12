@@ -4,8 +4,8 @@ import { Batch } from './batch.model';
 
 export class AddreRouteOrder {
     id?: number;
-    addressId: number;
-    routeId: number;
+    address_id: number;
+    route_id: number;
     createdAt: Date;
     updatedAt: Date;
     address: Address;

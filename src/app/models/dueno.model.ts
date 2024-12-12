@@ -5,8 +5,8 @@ import { Spent } from './spent.model';
 
 export class Dueno {
     id: number;
-    userId: string;
-    conductorId: number;
+    user_id: string;
+    conductor_id: number;
     createdAt: Date;
     updatedAt: Date;
     ownervehicles: OwnerVehicle[];

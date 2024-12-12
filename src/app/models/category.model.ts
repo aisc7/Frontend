@@ -6,6 +6,6 @@ export class Category {
     name: string;
     createdAt: Date;
     updatedAt: Date;
-    categoryProducts: CategoryProduct[];
+    categoryproducts: CategoryProduct[];
     products: Product[];
 }

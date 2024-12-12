@@ -6,8 +6,8 @@ export class OwnerVehicle {
     id: number;
     fechaAsignacion: Date;
     fechaDesasignacion: Date;
-    vehiculoId: number;
-    duenoId: number;
+    vehiculo_id: number;
+    dueno_id: number;
     createdAt: Date;
     updatedAt: Date;
     vehiculo: Vehiculo;

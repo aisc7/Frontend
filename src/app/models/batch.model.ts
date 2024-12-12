@@ -5,10 +5,10 @@ import { AddreRouteOrder } from './addre-route-order.model';
 export class Batch {
     id: number;
     quantity: number;
-    routeId: number;
-    addrerouteId: number;
+    route_id: number;
+    addreroute_id: number;
     createdAt: Date;
     products: Product[];
-    route: Route;
+    routes: Route;
     addreroute: AddreRouteOrder;
 }

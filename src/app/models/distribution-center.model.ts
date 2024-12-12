@@ -7,8 +7,8 @@ export class DistributionCenter {
   phone: string; // celular
   email: string; // correo electrónico
   capacity: number; // capacidad
-  addressId: number; // dirección
-  municipalityId: number; // municipio_id
+  address_id: number; // dirección
+  municipality_id: number; // municipio_id
   createdAt: Date;
   updatedAt: Date;
   address: Address;

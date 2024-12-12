@@ -46,7 +46,11 @@ export class ManageSpentComponent implements OnInit {
   configFormGroup() {
     this.spentForm = this.theFormBuilder.group({
       description: ['', Validators.required],
-      amount: ['', Validators.required]
+      monto: ['', Validators.required],
+      date: ['', Validators.required],
+      servicio_id: ['', Validators.required],
+      conductor_id: ['', Validators.required],
+      dueno_id: ['', Validators.required]
     });
   }
 

@@ -46,9 +46,9 @@ export class ManageCustomerComponent implements OnInit {
 
   configFormGroup() {
     this.customerForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required]
+      user_id: ['', Validators.required],
+      phone: ['', Validators.required],
+      order_count: ['', Validators.required],
     });
   }
 
@@ -81,10 +81,27 @@ export class ManageCustomerComponent implements OnInit {
       });
     }
   }
+
   delete () {
     this.customerService.delete(this.customerId).subscribe(() => {
       Swal.fire('Eliminado', 'El cliente ha sido eliminado correctamente', 'success');
       this.router.navigate(['/customers']);
     });
+  }
+
+  handleAction() {
+    switch (this.mode) {
+      case 2: // Crear
+        this.create();
+        break;
+      case 3: // Actualizar
+        this.update();
+        break;
+      case 4: // Eliminar
+        this.delete();
+        break;
+      default:
+        console.error('Acción no reconocida');
+    }
   }
 }

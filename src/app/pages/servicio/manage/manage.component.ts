@@ -47,8 +47,8 @@ export class ManageServicioComponent implements OnInit {
 
   configFormGroup() {
     this.servicioForm = this.theFormBuilder.group({
-      serviceName: ['', Validators.required],
-      description: ['', Validators.required]
+      descripcion: ['', Validators.required],
+      costo: ['', Validators.required]
     });
   }
 

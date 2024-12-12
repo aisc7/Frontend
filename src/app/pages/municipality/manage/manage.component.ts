@@ -47,7 +47,8 @@ export class ManageMunicipalityComponent implements OnInit {
   configFormGroup() {
     this.municipalityForm = this.theFormBuilder.group({
       name: ['', Validators.required],
-      state: ['', Validators.required]
+      description: ['', Validators.required],
+      department_id: ['', Validators.required]
     });
   }
 

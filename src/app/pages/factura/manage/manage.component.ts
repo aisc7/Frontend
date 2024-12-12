@@ -49,10 +49,11 @@ export class ManageFacturaComponent implements OnInit {
   // Configuración del formulario con validaciones
   configFormGroup() {
     this.facturaForm = this.theFormBuilder.group({
-      number: ['', Validators.required],
-      amount: ['', Validators.required],
-      date: ['', Validators.required],
-      customerId: ['', Validators.required]
+      fecha_emision: ['', Validators.required],
+      monto_total: ['', Validators.required],
+      estado: ['', Validators.required],
+      cuota_id: ['', Validators.required],
+      spent_id: ['', Validators.required]
     });
   }
 

@@ -19,60 +19,70 @@
                 <p>{{ companyId }}</p>
               </div>
             </div>
+
+            <!-- Campo Tipo de Empresa -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Nombre:</label>
+                <label for="company_type" class="form-label">Tipo de Empresa:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="company_type"
                   type="text"
                   class="form-control"
-                  formControlName="name"
-                  title="Nombre"
-                  placeholder="Ingrese Nombre"
+                  formControlName="company_type"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese Tipo de Empresa"
+                  [class.is-invalid]="trySend && getTheFormGroup.company_type.invalid"
                 />
-                <div
-                  *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.name.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.company_type.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
+            <!-- Campo Dirección Fiscal -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Dirección:</label>
+                <label for="fiscal_address" class="form-label">Dirección Fiscal:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="fiscal_address"
                   type="text"
                   class="form-control"
-                  formControlName="address"
-                  title="Dirección"
-                  placeholder="Ingrese Dirección"
+                  formControlName="fiscal_address"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese Dirección Fiscal"
+                  [class.is-invalid]="trySend && getTheFormGroup.fiscal_address.invalid"
                 />
-                <div
-                  *ngIf="getTheFormGroup.address.errors && (getTheFormGroup.address.dirty || getTheFormGroup.address.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.address.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.fiscal_address.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
+            <!-- Campo ID del Cliente -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Teléfono:</label>
+                <label for="customer_id" class="form-label">ID del Cliente:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="customer_id"
                   type="text"
                   class="form-control"
-                  formControlName="phone"
-                  title="Teléfono"
-                  placeholder="Ingrese Teléfono"
+                  formControlName="customer_id"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese ID del Cliente"
+                  [class.is-invalid]="trySend && getTheFormGroup.customer_id.invalid"
                 />
-                <div
-                  *ngIf="getTheFormGroup.phone.errors && (getTheFormGroup.phone.dirty || getTheFormGroup.phone.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.phone.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.customer_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8 d-flex justify-content-between">

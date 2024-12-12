@@ -36,10 +36,10 @@ export class ManageCategoryProductComponent implements OnInit {
 
   configFormGroup() {
     this.categoryProductForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      productId: ['', Validators.required],
-      categoryId: ['', Validators.required]
+      fecha_asignacion: ['', Validators.required],
+      fecha_designacion: ['', Validators.required],
+      producto_id: ['', Validators.required],
+      category_id: ['', Validators.required]
     });
   }
 

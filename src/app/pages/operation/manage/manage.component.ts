@@ -48,11 +48,13 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.operationForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required]
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      municipality_id: ['', Validators.required],
+      vehiculo_id: ['', Validators.required]
     });
   }
-
+  
   get getTheFormGroup() {
     return this.operationForm.controls;
   }

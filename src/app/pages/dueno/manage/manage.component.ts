@@ -45,9 +45,9 @@ export class ManageDuenoComponent implements OnInit {
 
   configFormGroup() {
     this.duenoForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      address: ['', Validators.required],
-      phone: ['', Validators.required]
+      user_id: ['', Validators.required],
+      conductor_id: ['', Validators.required],
+
     });
   }
 

@@ -9,59 +9,67 @@
         </div>
         <form [formGroup]="categoryProductForm" novalidate>
           <div class="card-body">
+            <!-- Campo Fecha Asignación -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="name" class="form-label">Nombre:</label>
+                <label for="fecha_asignacion" class="form-label">Fecha de Asignación:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="name"
-                  type="text"
+                  id="fecha_asignacion"
+                  type="date"
                   class="form-control"
-                  formControlName="name"
+                  formControlName="fecha_asignacion"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.name.invalid"
+                  [class.is-invalid]="trySend && getTheFormGroup.fecha_asignacion.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.name.invalid" class="invalid-feedback">
+                <div *ngIf="trySend && getTheFormGroup.fecha_asignacion.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
+            <!-- Campo Fecha Designación -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="description" class="form-label">Descripción:</label>
-              </div>
-              <div class="col-8">
-                <textarea
-                  id="description"
-                  class="form-control"
-                  formControlName="description"
-                  [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.description.invalid"
-                ></textarea>
-                <div *ngIf="trySend && getTheFormGroup.description.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-4">
-                <label for="product_id" class="form-label">ID del Producto:</label>
+                <label for="fecha_designacion" class="form-label">Fecha de Designación:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="product_id"
-                  type="text"
+                  id="fecha_designacion"
+                  type="date"
                   class="form-control"
-                  formControlName="product_id"
+                  formControlName="fecha_designacion"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.product_id.invalid"
+                  [class.is-invalid]="trySend && getTheFormGroup.fecha_designacion.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.product_id.invalid" class="invalid-feedback">
+                <div *ngIf="trySend && getTheFormGroup.fecha_designacion.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
+            <!-- Campo Producto ID -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="producto_id" class="form-label">ID del Producto:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="producto_id"
+                  type="text"
+                  class="form-control"
+                  formControlName="producto_id"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.producto_id.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.producto_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
+
+            <!-- Campo Categoría ID -->
             <div class="row mb-3">
               <div class="col-4">
                 <label for="category_id" class="form-label">ID de Categoría:</label>
@@ -80,6 +88,7 @@
                 </div>
               </div>
             </div>
+
             <div class="d-flex justify-content-between mt-4">
               <button type="button" class="btn btn-primary" (click)="handleAction()">
                 {{ mode == 2 ? 'Crear' : mode == 3 ? 'Actualizar' : mode == 1 ? 'Eliminar' : 'Acción' }}

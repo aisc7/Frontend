@@ -9,25 +9,66 @@
         </div>
         <form [formGroup]="batchForm" novalidate>
           <div class="card-body">
+            <!-- Campo Quantity -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="name" class="form-label">Nombre del Lote:</label>
+                <label for="quantity" class="form-label">Cantidad:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="name"
-                  type="text"
+                  id="quantity"
+                  type="number"
                   class="form-control"
-                  formControlName="name"
+                  formControlName="quantity"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.name.invalid"
+                  [class.is-invalid]="trySend && getTheFormGroup.quantity.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.name.invalid" class="invalid-feedback">
+                <div *ngIf="trySend && getTheFormGroup.quantity.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>
               </div>
             </div>
-            <!-- Agrega más filas aquí para otros campos -->
+
+            <!-- Campo RouteId -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="routeId" class="form-label">ID de Ruta:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="routeId"
+                  type="text"
+                  class="form-control"
+                  formControlName="routeId"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.routeId.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.routeId.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
+
+            <!-- Campo AddrRouteId -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="addrerouteId" class="form-label">ID de Ruta Alternativa:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="addrerouteId"
+                  type="text"
+                  class="form-control"
+                  formControlName="addrerouteId"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.addrerouteId.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.addrerouteId.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
+
             <div class="d-flex justify-content-between mt-4">
               <button type="button" class="btn btn-primary" (click)="handleAction()">
                 {{ mode == 2 ? 'Crear' : mode == 3 ? 'Actualizar' : mode == 1 ? 'Eliminar' : 'Acción' }}
@@ -40,4 +81,3 @@
     </div>
   </div>
 </div>
-

@@ -45,8 +45,12 @@ export class ManageRouteComponent implements OnInit {
 
   configFormGroup() {
     this.routeForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required]
+      starting_place: ['', Validators.required],
+      ending_place: ['', Validators.required], 
+      distance: ['', Validators.required],
+      delivery_time: ['', Validators.required],
+      contract_id: ['', Validators.required],
+      vehiculo_id: ['', Validators.required]
     });
   }
 

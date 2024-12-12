@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { VehicleDriverService } from './../../../services/vehicle-driver.service';
 import { VehicleDriver } from 'src/app/models/vehicle-driver.model';
 import Swal from 'sweetalert2';
+import { Conductor } from 'src/app/models/conductor.model';
 
 @Component({
   selector: 'app-manage',
@@ -45,8 +46,10 @@ export class ManageVehiculoDriverComponent implements OnInit {
 
   configFormGroup() {
     this.vehiculoDriverForm = this.theFormBuilder.group({
-      driverId: ['', Validators.required],
-      vehicleId: ['', Validators.required]
+      fecha_asignacion: ['', Validators.required],
+      fecha_desasignacion: ['', Validators.required],
+      vehiculo_id: ['', Validators.required],
+      conductor_id: ['', Validators.required]
     });
   }
 

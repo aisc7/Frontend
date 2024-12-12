@@ -10,36 +10,37 @@
         </div>
         <form class="form" [formGroup]="servicioForm">
           <div class="card-body">
-            <!-- Nombre del Servicio -->
+
+            <!-- Descripción del Servicio -->
             <div class="row">
               <div class="col-4">
-                <label>Nombre del Servicio:</label>
+                <label for="descripcion" class="form-label">Descripción:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="serviceName" title="Nombre del Servicio" placeholder="Ingrese el nombre del servicio">
-                <p *ngIf="mode == 1">{{ servicioForm.value.serviceName }}</p>
-                <div *ngIf="getTheFormGroup.serviceName.errors && (getTheFormGroup.serviceName.dirty || getTheFormGroup.serviceName.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.serviceName.errors.required" class="msnError">Requerido</strong>
+                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="descripcion" title="Descripción" placeholder="Ingrese la descripción del servicio">
+                <p *ngIf="mode == 1">{{ servicioForm.value.descripcion }}</p>
+                <div *ngIf="getTheFormGroup.descripcion.errors && (getTheFormGroup.descripcion.dirty || getTheFormGroup.descripcion.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.descripcion.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
-            
-            <!-- Descripción -->
+
+            <!-- Costo del Servicio -->
             <div class="row">
               <div class="col-4">
-                <label>Descripción:</label>
+                <label for="costo" class="form-label">Costo:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción del servicio">
-                <p *ngIf="mode == 1">{{ servicioForm.value.description }}</p>
-                <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
+                <input *ngIf="mode != 1" type="number" class="form-control" formControlName="costo" title="Costo" placeholder="Ingrese el costo del servicio">
+                <p *ngIf="mode == 1">{{ servicioForm.value.costo }}</p>
+                <div *ngIf="getTheFormGroup.costo.errors && (getTheFormGroup.costo.dirty || getTheFormGroup.costo.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.costo.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
-            
+
             <!-- Botones de acción -->
             <div class="row">
               <div class="col-4"></div>
@@ -49,6 +50,7 @@
                 <button *ngIf="mode == 4" type="button" class="btn btn-danger btn-block" (click)="delete()">Eliminar</button>
               </div>
             </div>
+
           </div>
         </form>
       </div>

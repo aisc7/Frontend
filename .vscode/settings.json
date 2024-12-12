@@ -1,5 +1,10 @@
 {
     "terminal.integrated.middleClickBehavior": "paste",
     "editor.cursorBlinking": "smooth",
-    "editor.fontSize": 18
+    "editor.fontSize": 18,
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#142D54",
+        "titleBar.activeBackground": "#1D4075",
+        "titleBar.activeForeground": "#F8FAFD"
+    }
 }

@@ -51,7 +51,6 @@ export class ManageComponent implements OnInit {
   configFormGroup() {
     this.conductorForm = this.theFormBuilder.group({
       user_id: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
       licencia: ['', Validators.required],
       tipo_licencia: ['', Validators.required],
       telefono: ['', Validators.required]

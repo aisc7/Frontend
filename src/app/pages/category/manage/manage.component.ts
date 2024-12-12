@@ -47,7 +47,6 @@ export class ManageCategoryComponent implements OnInit {
   configFormGroup() {
     this.categoryForm = this.theFormBuilder.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
     });
   }
 

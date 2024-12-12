@@ -36,9 +36,9 @@ export class ManageCompanyComponent implements OnInit {
 
   configFormGroup() {
     this.companyForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      address: ['', Validators.required],
-      phone: ['', Validators.required]
+      company_type: ['', Validators.required],
+      fiscal_address: ['', Validators.required],
+      costumer_id: ['', Validators.required]
     });
   }
 

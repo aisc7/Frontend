@@ -37,8 +37,11 @@ export class ManageCuotaComponent implements OnInit {
 
   configFormGroup() {
     this.cuotaForm = this.theFormBuilder.group({
-      amount: ['', Validators.required],
-      paymentDate: ['', Validators.required]
+      id: ['', Validators.required],
+      monto: ['', [Validators.required]],
+      fecha_vencimiento: ['', Validators.required],
+      estado_pago: ['', Validators.required],
+      contract_id: ['', Validators.required]
     });
   }
 

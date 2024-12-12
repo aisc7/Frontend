@@ -47,9 +47,10 @@ export class ManageVehicleComponent implements OnInit {
 
   configFormGroup() {
     this.vehicleForm = this.theFormBuilder.group({
-      plate: ['', Validators.required],
-      model: ['', Validators.required],
-      year: ['', Validators.required]
+      tipo_vehiculo: ['', Validators.required],
+      capacidad_peso: ['', Validators.required],
+      capacidad_volumen: ['', Validators.required],
+      estado: ['', Validators.required]
     });
   }
 

@@ -46,8 +46,8 @@ export class ManageRestaurantComponent implements OnInit {
 
   configFormGroup() {
     this.restaurantForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      address: ['', Validators.required]
+      starts: ['', Validators.required],
+      servicio_id: ['', Validators.required]
     });
   }
 

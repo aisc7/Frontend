@@ -47,8 +47,10 @@ export class ManageSeguroComponent implements OnInit {
 
   configFormGroup() {
     this.seguroForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      policyNumber: ['', Validators.required]
+      compania: ['', Validators.required],
+      numeroPoliza: ['', Validators.required],
+      fecha_vencimiento: ['', Validators.required],
+      vehiculo_id: ['', Validators.required]
     });
   }
 

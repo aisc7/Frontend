@@ -10,35 +10,114 @@
         </div>
         <form class="form" [formGroup]="vehiculoDriverForm">
           <div class="card-body">
+            <!-- Vehículo ID -->
             <div class="row">
               <div class="col-4">
-                <label for="vehicleId">Vehículo ID:</label>
+                <label for="vehiculoId">Vehículo ID:</label>
               </div>
               <div class="col-8">
-                <input id="vehicleId" type="number" class="form-control" formControlName="vehicleId" title="Vehículo ID" placeholder="Ingrese el ID del vehículo">
-                <div *ngIf="getTheFormGroup.vehicleId.errors && (getTheFormGroup.vehicleId.dirty || getTheFormGroup.vehicleId.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.vehicleId.errors.required" class="msnError">Requerido</strong>
+                <input 
+                  *ngIf="mode !== 1" 
+                  id="vehiculoId" 
+                  type="number" 
+                  class="form-control" 
+                  formControlName="vehiculo_id" 
+                  title="Vehículo ID" 
+                  placeholder="Ingrese el ID del vehículo"
+                >
+                <p *ngIf="mode === 1">{{ vehiculoDriverForm.value.vehiculo_id }}</p>
+                <div *ngIf="getTheFormGroup.vehiculo_id.errors && (getTheFormGroup.vehiculo_id.dirty || getTheFormGroup.vehiculo_id.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.vehiculo_id.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Conductor ID -->
             <div class="row">
               <div class="col-4">
-                <label for="driverId">Conductor ID:</label>
+                <label for="conductorId">Conductor ID:</label>
               </div>
               <div class="col-8">
-                <input id="driverId" type="number" class="form-control" formControlName="driverId" title="Conductor ID" placeholder="Ingrese el ID del conductor">
-                <div *ngIf="getTheFormGroup.driverId.errors && (getTheFormGroup.driverId.dirty || getTheFormGroup.driverId.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.driverId.errors.required" class="msnError">Requerido</strong>
+                <input 
+                  *ngIf="mode !== 1" 
+                  id="conductorId" 
+                  type="number" 
+                  class="form-control" 
+                  formControlName="conductor_id" 
+                  title="Conductor ID" 
+                  placeholder="Ingrese el ID del conductor"
+                >
+                <p *ngIf="mode === 1">{{ vehiculoDriverForm.value.conductor_id }}</p>
+                <div *ngIf="getTheFormGroup.conductor_id.errors && (getTheFormGroup.conductor_id.dirty || getTheFormGroup.conductor_id.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.conductor_id.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Fecha Asignación -->
+            <div class="row">
+              <div class="col-4">
+                <label for="fechaAsignacion">Fecha Asignación:</label>
+              </div>
+              <div class="col-8">
+                <input 
+                  *ngIf="mode !== 1" 
+                  id="fechaAsignacion" 
+                  type="date" 
+                  class="form-control" 
+                  formControlName="fecha_asignacion" 
+                  title="Fecha Asignación" 
+                  placeholder="Seleccione la fecha de asignación"
+                >
+                <p *ngIf="mode === 1">{{ vehiculoDriverForm.value.fecha_asignacion }}</p>
+                <div *ngIf="getTheFormGroup.fecha_asignacion.errors && (getTheFormGroup.fecha_asignacion.dirty || getTheFormGroup.fecha_asignacion.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.fecha_asignacion.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Fecha Desasignación -->
+            <div class="row">
+              <div class="col-4">
+                <label for="fechaDesasignacion">Fecha Desasignación:</label>
+              </div>
+              <div class="col-8">
+                <input 
+                  *ngIf="mode !== 1" 
+                  id="fechaDesasignacion" 
+                  type="date" 
+                  class="form-control" 
+                  formControlName="fecha_desasignacion" 
+                  title="Fecha Desasignación" 
+                  placeholder="Seleccione la fecha de desasignación"
+                >
+                <p *ngIf="mode === 1">{{ vehiculoDriverForm.value.fecha_desasignacion }}</p>
+                <div *ngIf="getTheFormGroup.fecha_desasignacion.errors && (getTheFormGroup.fecha_desasignacion.dirty || getTheFormGroup.fecha_desasignacion.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.fecha_desasignacion.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Botones de Crear/Actualizar -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
-                <button *ngIf="mode === 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear</button>
-                <button *ngIf="mode === 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar</button>
+                <button 
+                  *ngIf="mode === 2" 
+                  type="button" 
+                  class="btn btn-success btn-block" 
+                  (click)="create()"
+                >Crear</button>
+                <button 
+                  *ngIf="mode === 3" 
+                  type="button" 
+                  class="btn btn-success btn-block" 
+                  (click)="update()"
+                >Actualizar</button>
               </div>
             </div>
           </div>

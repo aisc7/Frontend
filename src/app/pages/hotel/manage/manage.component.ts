@@ -49,9 +49,8 @@ export class ManageHotelComponent implements OnInit {
   // Configuramos el formulario con validaciones
   configFormGroup() {
     this.hotelForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      location: ['', Validators.required],
-      description: ['', Validators.required]
+      stars: ['', Validators.required],
+      servicio_id: ['', Validators.required]
     });
   }
 

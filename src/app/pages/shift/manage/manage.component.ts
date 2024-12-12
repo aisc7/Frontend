@@ -46,9 +46,10 @@ export class ManageShiftComponent implements OnInit {
 
   configFormGroup() {
     this.shiftForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required]
+      start_time: ['', Validators.required],
+      end_time: ['', Validators.required], 
+      location: ['', Validators.required],
+      conductor_id: ['', Validators.required],
     });
   }
 

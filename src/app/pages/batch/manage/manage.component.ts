@@ -36,8 +36,6 @@ export class ManageBatchComponent implements OnInit {
 
   configFormGroup() {
     this.batchForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
       quantity: ['', Validators.required],
       routeId: ['', Validators.required],
       addrerouteId: ['', Validators.required]

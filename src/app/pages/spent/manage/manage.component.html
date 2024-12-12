@@ -10,6 +10,7 @@
         </div>
         <form class="form" [formGroup]="spentForm">
           <div class="card-body">
+            <!-- ID -->
             <div class="row">
               <div class="col-4">
                 <label>ID:</label>
@@ -19,27 +20,31 @@
               </div>
             </div>
             <br />
+
+            <!-- Monto -->
             <div class="row">
               <div class="col-4">
-                <label>Monto:</label>
+                <label for="monto" class="form-label">Monto:</label>
               </div>
               <div class="col-8">
                 <input 
                   type="number" 
                   class="form-control" 
-                  formControlName="amount" 
+                  formControlName="monto" 
                   title="Monto" 
                   placeholder="Ingrese el monto"
                 >
-                <div *ngIf="getTheFormGroup.amount.errors && (getTheFormGroup.amount.dirty || getTheFormGroup.amount.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.amount.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="spentForm.get('monto').errors && (spentForm.get('monto').dirty || spentForm.get('monto').touched || trySend)">
+                  <strong *ngIf="spentForm.get('monto').errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Descripción -->
             <div class="row">
               <div class="col-4">
-                <label>Descripción:</label>
+                <label for="description" class="form-label">Descripción:</label>
               </div>
               <div class="col-8">
                 <input 
@@ -49,12 +54,36 @@
                   title="Descripción" 
                   placeholder="Ingrese la descripción"
                 >
-                <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="spentForm.get('description').errors && (spentForm.get('description').dirty || spentForm.get('description').touched || trySend)">
+                  <strong *ngIf="spentForm.get('description').errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Fecha -->
+            <div class="row">
+              <div class="col-4">
+                <label for="date" class="form-label">Fecha:</label>
+              </div>
+              <div class="col-8">
+                <input 
+                  *ngIf="mode != 1" 
+                  type="date" 
+                  class="form-control" 
+                  formControlName="date" 
+                  title="Fecha" 
+                  placeholder="Seleccione la fecha"
+                >
+                <p *ngIf="mode == 1">{{ spentForm.value.date }}</p>
+                <div *ngIf="spentForm.get('date').errors && (spentForm.get('date').dirty || spentForm.get('date').touched || trySend)">
+                  <strong *ngIf="spentForm.get('date').errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Botón para Crear/Actualizar -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
@@ -72,9 +101,11 @@
                 >Actualizar</button>
               </div>
             </div>
+
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+4

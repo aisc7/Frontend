@@ -52,10 +52,11 @@ export class ManageContractComponent implements OnInit {
 
   configFormGroup() {
     this.contractForm = this.theFormBuilder.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required]
+      fecha_inicio: ['', Validators.required],
+      fecha_fin: ['', Validators.required],
+      estado: ['', Validators.required],
+      detalles_servicio: ['', Validators.required],
+      costumer_id: ['', Validators.required],
     });
   }
 

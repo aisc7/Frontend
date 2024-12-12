@@ -2,57 +2,149 @@
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
-        <div class="card-header text-center">
+        <div class="card-header border-0 text-center">
           <h3 *ngIf="mode == 1" class="mb-0">Visualizar Contrato</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear Contrato</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Contrato</h3>
+          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Contrato</h3>
         </div>
-        <form [formGroup]="contractForm">
+        <form class="form" [formGroup]="contractForm">
           <div class="card-body">
-            <!-- ID -->
             <div class="row mb-3">
               <div class="col-4">
                 <label>ID:</label>
               </div>
               <div class="col-8">
-                <p>{{contractId}}</p>
+                <p>{{ contractId }}</p>
               </div>
             </div>
 
-            <!-- Tipo de contrato -->
+            <!-- Campo Fecha Inicio -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Tipo de contrato:</label>
+                <label for="fecha_inicio" class="form-label">Fecha de Inicio:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="contractType" placeholder="Ingrese el tipo de contrato" 
-                       [readonly]="mode === 1" />
-                <div *ngIf="getTheFormGroup.contractType.invalid && (getTheFormGroup.contractType.dirty || getTheFormGroup.contractType.touched || trySend)">
-                  <strong class="msnError">Requerido</strong>
+                <input
+                  id="fecha_inicio"
+                  type="date"
+                  class="form-control"
+                  formControlName="fecha_inicio"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.fecha_inicio.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.fecha_inicio.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
 
-            <!-- Fecha inicio -->
+            <!-- Campo Fecha Fin -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Fecha inicio:</label>
+                <label for="fecha_fin" class="form-label">Fecha de Fin:</label>
               </div>
               <div class="col-8">
-                <input type="date" class="form-control" formControlName="fecha_inicio" placeholder="Seleccione la fecha de inicio" 
-                       [readonly]="mode === 1" />
-                <div *ngIf="getTheFormGroup.fecha_inicio.invalid && (getTheFormGroup.fecha_inicio.dirty || getTheFormGroup.fecha_inicio.touched || trySend)">
-                  <strong class="msnError">Requerido</strong>
+                <input
+                  id="fecha_fin"
+                  type="date"
+                  class="form-control"
+                  formControlName="fecha_fin"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.fecha_fin.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.fecha_fin.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
 
-            <!-- Acciones -->
+            <!-- Campo Estado -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="estado" class="form-label">Estado:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="estado"
+                  type="text"
+                  class="form-control"
+                  formControlName="estado"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese Estado"
+                  [class.is-invalid]="trySend && getTheFormGroup.estado.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.estado.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
+
+            <!-- Campo Detalles del Servicio -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="detalles_servicio" class="form-label">Detalles del Servicio:</label>
+              </div>
+              <div class="col-8">
+                <textarea
+                  id="detalles_servicio"
+                  class="form-control"
+                  formControlName="detalles_servicio"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese Detalles del Servicio"
+                  [class.is-invalid]="trySend && getTheFormGroup.detalles_servicio.invalid"
+                ></textarea>
+                <div *ngIf="trySend && getTheFormGroup.detalles_servicio.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
+
+            <!-- Campo ID del Cliente -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="costumer_id" class="form-label">ID del Cliente:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="costumer_id"
+                  type="text"
+                  class="form-control"
+                  formControlName="costumer_id"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese ID del Cliente"
+                  [class.is-invalid]="trySend && getTheFormGroup.costumer_id.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.costumer_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="handleAction()">Crear</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="handleAction()">Actualizar</button>
+              <div class="col-8 d-flex justify-content-between">
+                <button 
+                  *ngIf="mode == 2" 
+                  type="button" 
+                  class="btn btn-success" 
+                  (click)="handleAction()"> 
+                  Crear 
+                </button>
+                <button 
+                  *ngIf="mode == 3" 
+                  type="button" 
+                  class="btn btn-primary" 
+                  (click)="handleAction()"> 
+                  Actualizar 
+                </button>
+                <button 
+                  *ngIf="mode == 4" 
+                  type="button" 
+                  class="btn btn-danger" 
+                  (click)="handleAction()"> 
+                  Eliminar 
+                </button>
               </div>
             </div>
           </div>
@@ -61,4 +153,3 @@
     </div>
   </div>
 </div>
-

@@ -34,16 +34,16 @@
             </div>
             <br />
 
-            <!-- País ID -->
+            <!-- description -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>País ID:</label>
+              <label>Descripcion:</label>
               </div>
               <div class="col-8">
-                <input type="number" class="form-control" formControlName="countryId" title="País ID" placeholder="Ingrese el ID del país" [readonly]="mode === 1">
-                <div *ngIf="getTheFormGroup.countryId.errors && (getTheFormGroup.countryId.dirty || getTheFormGroup.countryId.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.countryId.errors.required" class="msnError">Requerido</strong>
-                </div>
+              <input type="text" class="form-control" formControlName="description" title="descripcion" placeholder="Ingrese la descripcion" [readonly]="mode === 1">
+              <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
+                <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
+              </div>
               </div>
             </div>
             <br />

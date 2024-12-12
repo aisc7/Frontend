@@ -44,8 +44,10 @@ export class ManageOwnerVehicleComponent implements OnInit {
 
   configFormGroup() {
     this.ownerVehicleForm = this.theFormBuilder.group({
-      ownerId: ['', Validators.required],
-      vehicleId: ['', Validators.required]
+    fechaAsignacion: ['', Validators.required],
+    fechaDesasignacion: ['', Validators.required],
+      vehiculo_id: ['', Validators.required],
+      dueno_id: ['', Validators.required]
     });
   }
 

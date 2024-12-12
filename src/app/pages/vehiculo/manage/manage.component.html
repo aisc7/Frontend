@@ -3,76 +3,80 @@
     <div class="col-12 col-md-8">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Vehículo</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear Vehículo</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Vehículo</h3>
-          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Vehículo</h3>
+          <h3 *ngIf="mode === 1" class="mb-0">Visualizar Vehículo</h3>
+          <h3 *ngIf="mode === 2" class="mb-0">Crear Vehículo</h3>
+          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Vehículo</h3>
+          <h3 *ngIf="mode === 4" class="mb-0">Eliminar Vehículo</h3>
         </div>
         <form class="form" [formGroup]="vehicleForm">
           <div class="card-body">
-            <!-- ID del Vehículo -->
+            <!-- Tipo de Vehículo -->
             <div class="row">
               <div class="col-4">
-                <label>ID:</label>
+                <label for="tipoVehiculo">Tipo de Vehículo:</label>
               </div>
               <div class="col-8">
-                <p>{{ vehicleId }}</p>
-              </div>
-            </div>
-            <br />
-            
-            <!-- Placa -->
-            <div class="row">
-              <div class="col-4">
-                <label>Placa:</label>
-              </div>
-              <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="plate" title="Placa" placeholder="Ingrese la placa">
-                <p *ngIf="mode == 1">{{ vehicleForm.value.plate }}</p>
-                <div *ngIf="getTheFormGroup.plate.errors && (getTheFormGroup.plate.dirty || getTheFormGroup.plate.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.plate.errors.required" class="msnError">Requerido</strong>
+                <input *ngIf="mode !== 1" id="tipoVehiculo" type="text" class="form-control" formControlName="tipo_vehiculo" title="Tipo de Vehículo" placeholder="Ingrese el tipo de vehículo">
+                <p *ngIf="mode === 1">{{ vehicleForm.value.tipo_vehiculo }}</p>
+                <div *ngIf="getTheFormGroup.tipo_vehiculo.errors && (getTheFormGroup.tipo_vehiculo.dirty || getTheFormGroup.tipo_vehiculo.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.tipo_vehiculo.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
-            
-            <!-- Modelo -->
+
+            <!-- Capacidad de Peso -->
             <div class="row">
               <div class="col-4">
-                <label>Modelo:</label>
+                <label for="capacidadPeso">Capacidad de Peso:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="model" title="Modelo" placeholder="Ingrese el modelo">
-                <p *ngIf="mode == 1">{{ vehicleForm.value.model }}</p>
-                <div *ngIf="getTheFormGroup.model.errors && (getTheFormGroup.model.dirty || getTheFormGroup.model.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.model.errors.required" class="msnError">Requerido</strong>
+                <input *ngIf="mode !== 1" id="capacidadPeso" type="number" class="form-control" formControlName="capacidad_peso" title="Capacidad de Peso" placeholder="Ingrese la capacidad de peso">
+                <p *ngIf="mode === 1">{{ vehicleForm.value.capacidad_peso }}</p>
+                <div *ngIf="getTheFormGroup.capacidad_peso.errors && (getTheFormGroup.capacidad_peso.dirty || getTheFormGroup.capacidad_peso.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.capacidad_peso.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
-            
-            <!-- Año -->
+
+            <!-- Capacidad de Volumen -->
             <div class="row">
               <div class="col-4">
-                <label>Año:</label>
+                <label for="capacidadVolumen">Capacidad de Volumen:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="year" title="Año" placeholder="Ingrese el año">
-                <p *ngIf="mode == 1">{{ vehicleForm.value.year }}</p>
-                <div *ngIf="getTheFormGroup.year.errors && (getTheFormGroup.year.dirty || getTheFormGroup.year.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.year.errors.required" class="msnError">Requerido</strong>
+                <input *ngIf="mode !== 1" id="capacidadVolumen" type="number" class="form-control" formControlName="capacidad_volumen" title="Capacidad de Volumen" placeholder="Ingrese la capacidad de volumen">
+                <p *ngIf="mode === 1">{{ vehicleForm.value.capacidad_volumen }}</p>
+                <div *ngIf="getTheFormGroup.capacidad_volumen.errors && (getTheFormGroup.capacidad_volumen.dirty || getTheFormGroup.capacidad_volumen.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.capacidad_volumen.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
-            
+
+            <!-- Estado -->
+            <div class="row">
+              <div class="col-4">
+                <label for="estado">Estado:</label>
+              </div>
+              <div class="col-8">
+                <input *ngIf="mode !== 1" id="estado" type="text" class="form-control" formControlName="estado" title="Estado" placeholder="Ingrese el estado">
+                <p *ngIf="mode === 1">{{ vehicleForm.value.estado }}</p>
+                <div *ngIf="getTheFormGroup.estado.errors && (getTheFormGroup.estado.dirty || getTheFormGroup.estado.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.estado.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
             <!-- Botones de acción -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar</button>
-                <button *ngIf="mode == 4" type="button" class="btn btn-danger btn-block" (click)="delete()">Eliminar</button>
+                <button *ngIf="mode === 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear</button>
+                <button *ngIf="mode === 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar</button>
+                <button *ngIf="mode === 4" type="button" class="btn btn-danger btn-block" (click)="delete()">Eliminar</button>
               </div>
             </div>
           </div>

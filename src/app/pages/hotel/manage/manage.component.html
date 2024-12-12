@@ -4,61 +4,37 @@
   <div class="row">
     <div class="col">
       <div class="card shadow">
-        <div class="card-header border-0">
+        <div class="card-header border-0 text-center">
           <h3 *ngIf="mode == 1" class="mb-0">Visualizar Hotel</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear Hotel</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Hotel</h3>
         </div>
         <form class="form" [formGroup]="hotelForm">
           <div class="card-body">
-            <!-- ID -->
-            <div class="row">
-              <div class="col-4">
-                <label>ID:</label>
-              </div>
-              <div class="col-8">
-                <p>{{hotelId}}</p>
-              </div>
-            </div>
-            <br />
 
-            <!-- Nombre -->
-            <div class="row">
+            <!-- Estrellas -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label>Nombre:</label>
+                <label>Estrellas:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre del hotel">
-                <div *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.name.errors.required" class="msnError">Requerido</strong>
+                <input type="number" class="form-control" formControlName="stars" title="Estrellas del hotel" placeholder="Ingrese el número de estrellas" [readonly]="mode === 1" min="1" max="5">
+                <div *ngIf="getTheFormGroup.stars.errors && (getTheFormGroup.stars.dirty || getTheFormGroup.stars.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.stars.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
 
-            <!-- Ubicación -->
-            <div class="row">
+            <!-- Servicio ID -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label>Ubicación:</label>
+                <label>Servicio ID:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="location" title="Ubicación" placeholder="Ingrese la ubicación del hotel">
-                <div *ngIf="getTheFormGroup.location.errors && (getTheFormGroup.location.dirty || getTheFormGroup.location.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.location.errors.required" class="msnError">Requerido</strong>
-                </div>
-              </div>
-            </div>
-            <br />
-
-            <!-- Descripción -->
-            <div class="row">
-              <div class="col-4">
-                <label>Descripción:</label>
-              </div>
-              <div class="col-8">
-                <textarea class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción del hotel"></textarea>
-                <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
+                <input type="number" class="form-control" formControlName="servicio_id" title="Servicio ID" placeholder="Ingrese el ID del servicio" [readonly]="mode === 1">
+                <div *ngIf="getTheFormGroup.servicio_id.errors && (getTheFormGroup.servicio_id.dirty || getTheFormGroup.servicio_id.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.servicio_id.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>

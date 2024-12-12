@@ -1,17 +1,22 @@
 <div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
+
 <!-- Page content -->
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
+  <!-- Formulario de Operación -->
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
           <h3 *ngIf="mode == 1" class="mb-0">Visualizar Operación</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear Operación</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Operación</h3>
+          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Operación</h3>
         </div>
         <form class="form" [formGroup]="operationForm">
           <div class="card-body">
-            <div class="row">
+            
+            <!-- Campo ID -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label>ID:</label>
               </div>
@@ -19,24 +24,116 @@
                 <p>{{operationId}}</p>
               </div>
             </div>
-            <br />
-            <div class="row">
+
+            <!-- Fecha de Inicio -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label>Nombre:</label>
+                <label for="startDate" class="form-label">Fecha de Inicio:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre de la operación">
-                <div *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.name.errors.required" class="msnError">Requerido</strong>
+                <input
+                  id="startDate"
+                  type="date"
+                  class="form-control"
+                  formControlName="startDate"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese Fecha de Inicio"
+                  [class.is-invalid]="trySend && getTheFormGroup.startDate.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.startDate.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
-            <br />
+
+            <!-- Fecha de Fin -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="endDate" class="form-label">Fecha de Fin:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="endDate"
+                  type="date"
+                  class="form-control"
+                  formControlName="endDate"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese Fecha de Fin"
+                  [class.is-invalid]="trySend && getTheFormGroup.endDate.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.endDate.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
+
+            <!-- Municipio -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="municipality_id" class="form-label">Municipio:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="municipality_id"
+                  type="text"
+                  class="form-control"
+                  formControlName="municipality_id"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese Municipio"
+                  [class.is-invalid]="trySend && getTheFormGroup.municipality_id.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.municipality_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
+
+            <!-- Vehículo -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="vehiculo_id" class="form-label">Vehículo:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="vehiculo_id"
+                  type="text"
+                  class="form-control"
+                  formControlName="vehiculo_id"
+                  [readonly]="mode == 1"
+                  placeholder="Ingrese Vehículo"
+                  [class.is-invalid]="trySend && getTheFormGroup.vehiculo_id.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.vehiculo_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones de acción -->
             <div class="row">
               <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()"> Crear </button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()"> Actualizar </button>
+              <div class="col-8 d-flex justify-content-between">
+                <button 
+                  *ngIf="mode == 2" 
+                  type="button" 
+                  class="btn btn-success" 
+                  (click)="create()"> 
+                  Crear 
+                </button>
+                <button 
+                  *ngIf="mode == 3" 
+                  type="button" 
+                  class="btn btn-primary" 
+                  (click)="update()"> 
+                  Actualizar 
+                </button>
+                <button 
+                  *ngIf="mode == 4" 
+                  type="button" 
+                  class="btn btn-danger" 
+                  (click)="delete()"> 
+                  Eliminar 
+                </button>
               </div>
             </div>
           </div>

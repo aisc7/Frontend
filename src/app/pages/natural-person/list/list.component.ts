@@ -10,11 +10,11 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  naturalPersons: NaturalPerson[];
+  naturalPerson: NaturalPerson[];
 
   constructor(private naturalPersonService: NaturalPersonService, private router: Router) {
     console.log('Constructor');
-    this.naturalPersons = [];
+    this.naturalPerson = [];
   }
 
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class ListComponent implements OnInit {
 
   list() {
     this.naturalPersonService.list().subscribe((data) => {
-      this.naturalPersons = data;
+      this.naturalPerson= data;
     });
   }
 

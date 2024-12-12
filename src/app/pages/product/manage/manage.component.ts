@@ -44,7 +44,8 @@ export class ManageComponent implements OnInit { // Cambiado a "ManageComponent"
     this.productForm = this.theFormBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]]
+     batch_id: ['', Validators.required],
+     customer_id: ['', Validators.required],
     });
   }
 

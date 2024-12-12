@@ -46,7 +46,7 @@ export class ManageDepartmentComponent implements OnInit {
   configFormGroup() {
     this.departmentForm = this.theFormBuilder.group({
       name: ['', Validators.required],
-      countryId: ['', Validators.required]
+      description:['', Validators.required]
     });
   }
 

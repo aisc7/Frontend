@@ -12,6 +12,7 @@
         </div>
         <form class="form" [formGroup]="categoryForm">
           <div class="card-body">
+            
             <!-- ID -->
             <div class="row">
               <div class="col-4">
@@ -38,22 +39,7 @@
             </div>
             <br />
 
-            <!-- Descripción -->
-            <div class="row">
-              <div class="col-4">
-                <label>Descripción:</label>
-              </div>
-              <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="description" title="Descripción" placeholder="Ingrese la descripción de la categoría">
-                <p *ngIf="mode == 1">{{ categoryForm.get('description')?.value }}</p>
-                <div *ngIf="getTheFormGroup.description.errors && (getTheFormGroup.description.dirty || getTheFormGroup.description.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.description.errors.required" class="msnError">Requerido</strong>
-                </div>
-              </div>
-            </div>
-            <br />
-
-            <!-- Botones -->
+                        <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">

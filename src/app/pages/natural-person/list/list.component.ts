@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.naturalPersonService.list().subscribe((data) => {
       this.naturalPerson= data;
+      console.log(this.naturalPerson);
     });
   }
 
@@ -51,14 +52,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['natural-persons/create']);
+    this.router.navigate(['persona-natural/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['natural-persons/view', id]);
+    this.router.navigate(['persona-natural/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['natural-persons/update', id]);
+    this.router.navigate(['persona-natural/update', id]);
   }
 }

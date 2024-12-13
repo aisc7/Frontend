@@ -23,8 +23,24 @@ export class ListComponent implements OnInit {
   }
 
   list() {
-    this.routeService.list().subscribe((data) => {
-      this.routes = data;
+    this.routeService.list().subscribe((data: any[]) => {
+      this.routes = data.map(item => ({
+        id: item.id,
+        starting_place: item.starting_place,
+        ending_place: item.ending_place,  
+        distance: item.distance,
+        delivery_date: item.delivery_date,
+        contract_id: item.contract_id,
+        vehiculo_id: item.vehiculo_id,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        contract: item.contract,
+        vehiculo: item.vehiculo,
+        batches: item.batches,
+        conductores: item.conductores,
+        addrerouteorders : item.addrerouteorders
+      }));
+      console.log('empresa:', this.routes);
     });
   }
 
@@ -51,14 +67,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['routes/create']);
+    this.router.navigate(['ruta/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['routes/view', id]);
+    this.router.navigate(['ruta/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['routes/update', id]);
+    this.router.navigate(['ruta/update', id]);
   }
 }

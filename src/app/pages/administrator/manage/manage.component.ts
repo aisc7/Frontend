@@ -42,6 +42,9 @@ export class ManageAdministratorComponent implements OnInit {
       case currentUrl.includes("delete"):
         this.mode = 4; // Modo de eliminar
         break;
+      case currentUrl.includes("list"): // Este es el modo de listar
+        this.mode = 0; // Modo de listar
+        break;
       default:
         this.mode = 1; // Default a "view"
     }
@@ -129,6 +132,9 @@ export class ManageAdministratorComponent implements OnInit {
         break;
       case 4: // Modo de eliminar
         this.delete(this.administratorId);
+        break;
+      case 0: // Modo de listar
+        // Llamar a un método para listar administradores
         break;
       default:
         break;

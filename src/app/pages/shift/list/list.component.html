@@ -1,6 +1,6 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
   <!-- Table -->
   <div class="row">
     <div class="col">
@@ -10,20 +10,29 @@
         </div>
         <div class="card-body">
           <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <table class="table">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
             <thead>
               <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
+                <th scope="col">Tiempo de inicio</th>
+                <th scope="col">Tiempo de fin</th>
+                <th scope="col">Ubicación</th>
+                <th scope="col">Conductor</th>
                 <th scope="col">Fecha de Creación</th>
-                <th scope="col">Opciones</th>
+                <th scope="col">Fecha de Actualización</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let shift of shifts">
                 <td>{{ shift.id }}</td>
-                <td>{{ shift.name }}</td>
-                <td>{{ shift.creationDate }}</td>
+                <td>{{shift.start_time | date: 'dd/MM/yyyy' }}</td>
+                <td>{{shift.end_time | date: 'dd/MM/yyyy' }}</td>
+                <td>{{shift.location}}</td>
+                <td>{{shift.conductor_id}}</td>
+                <td>{{shift.created_at | date: 'dd/MM/yyyy' }}</td>
+                <td>{{shift.updated_at | date: 'dd/MM/yyyy' }}</td>
                 <td>
                   <button type="button" class="btn btn-info" (click)="view(shift.id)">Ver</button>
                   <button type="button" class="btn btn-warning" (click)="update(shift.id)">Editar</button>

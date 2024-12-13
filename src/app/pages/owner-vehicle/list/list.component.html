@@ -1,6 +1,6 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
   <!-- Table -->
   <div class="row">
     <div class="col">
@@ -10,20 +10,30 @@
         </div>
         <div class="card-body">
           <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <table class="table">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
             <thead>
               <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Opciones</th>
+                <th scope="col">Fecha Asignación</th>
+                <th scope="col">Fecha Desasignación</th>
+                <th scope="col">Vehículo ID</th>
+                <th scope="col">Dueño ID</th>
+                <th scope="col"> Fecha Creación</th>
+                <th scope="col"> Fecha Actualización</th>
+
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let owner of ownerVehicles">
                 <td>{{ owner.id }}</td>
-                <td>{{ owner.name }}</td>
-                <td>{{ owner.creationDate }}</td>
+                <td>{{ owner.fechAsignacion }}</td>
+                <td>{{ owner.fechDesasignacion }}</td>
+                <td>{{ owner.vehiculo_id }}</td>
+                <td>{{ owner.dueno }}</td>
+                <td>{{owner.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>{{owner.updatedAt | date: 'dd/MM/yyyy' }}</td>
                 <td>
                   <button type="button" class="btn btn-info" (click)="view(owner.id)">Ver</button>
                   <button type="button" class="btn btn-warning" (click)="update(owner.id)">Editar</button>

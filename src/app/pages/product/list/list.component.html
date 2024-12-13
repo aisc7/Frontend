@@ -1,6 +1,6 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
   <!-- Table -->
   <div class="row">
     <div class="col">
@@ -10,20 +10,29 @@
         </div>
         <div class="card-body">
           <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <table class="table">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
             <thead>
               <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Opciones</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Lote ID</th>
+                <th scope="col">Cliente ID</th>
+                <th scope="col"> Fecha Creación</th>
+                <th scope="col"> Fecha Actualización</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let product of products">
                 <td>{{ product.id }}</td>
                 <td>{{ product.name }}</td>
-                <td>{{ product.creationDate }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.batch_id }}</td>
+                <td>{{ product.customer_id }}</td>
+               <td>{{product.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>{{product.updatedAt | date: 'dd/MM/yyyy' }}</td>
                 <td>
                   <button type="button" class="btn btn-info" (click)="view(product.id)">Ver</button>
                   <button type="button" class="btn btn-warning" (click)="update(product.id)">Editar</button>

@@ -1,37 +1,46 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+
+
 <!-- Page content -->
-<div class="container-fluid mt--7">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Companies</h3>
+          <h3 class="mb-0">Compañias</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let company of companies">
-                <td>{{ company.id }}</td>
-                <td>{{ company.name }}</td>
-                <td>{{ company.creationDate }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(company.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(company.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(company.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <!-- Botón para crear una nueva compañía -->
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear</button>
+          
+          <!-- Tabla con las compañías -->
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Tipo de Compañía</th>
+                  <th scope="col">Dirección Fiscal</th>
+                  <th scope="col">Fecha de Creación</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Iteración sobre las compañías -->
+                <tr *ngFor="let company of companies">
+                  <td>{{ company.id }}</td>
+                  <td>{{ company.company_type }}</td>
+                  <td>{{ company.fiscal_address }}</td>
+                  <td>{{ company.createdAt | date: 'dd/MM/yyyy' }}</td>
+                  <td>
+                    <!-- Botones de acción -->
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(company.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(company.id)">Editar</button>
+                    <button type="button" class="btn btn-dark btn-sm" (click)="delete(company.id)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

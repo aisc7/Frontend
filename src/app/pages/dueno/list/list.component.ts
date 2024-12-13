@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.duenoService.list().subscribe((data) => {
       this.duenos = data;
+      console.log(this.duenos);
     });
   }
 
@@ -50,16 +51,17 @@ export class ListComponent implements OnInit {
     });
   }
 
+
   create() {
-    this.router.navigate(['duenos/create']);
+    this.router.navigate(['dueno/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['duenos/view', id]);
+    this.router.navigate(['dueno/view', id]);
     console.log('View');
   }
 
   update(id: number) {
-    this.router.navigate(['duenos/update', id]);
+    this.router.navigate(['dueno/update', id]);
   }
 }

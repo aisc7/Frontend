@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.distributionCenterService.list().subscribe((data) => {
       this.distributionCenters = data;
+      console.log(this.distributionCenters);
     });
   }
 
@@ -51,14 +52,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['distribution-centers/create']);
+    this.router.navigate(['centro-distribucion/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['distribution-centers/view', id]);
+    this.router.navigate(['centro-distribucion/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['distribution-centers/update', id]);
+    this.router.navigate(['centro-distribucion/update', id]);
   }
 }

@@ -26,9 +26,6 @@ export class ListComponent implements OnInit {
       (data) => {
         console.log('Datos recibidos:', data);
         this.administrators = data;
-      },
-      (error) => {
-        console.error('Error al obtener administradores:', error);
       }
     );
   }
@@ -56,15 +53,16 @@ export class ListComponent implements OnInit {
     });
   }
 
+
   create() {
-    this.router.navigate(['administrators/create']);
+    this.router.navigate(['administrator/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['administrators/view', id]);
+    this.router.navigate(['administrator/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['administrators/update', id]);
+    this.router.navigate(['administrator/update', id]);
   }
 }

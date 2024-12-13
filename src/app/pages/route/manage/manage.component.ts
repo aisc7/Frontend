@@ -48,7 +48,7 @@ export class ManageRouteComponent implements OnInit {
       starting_place: ['', Validators.required],
       ending_place: ['', Validators.required], 
       distance: ['', Validators.required],
-      delivery_time: ['', Validators.required],
+      delivery_date: ['', Validators.required],
       contract_id: ['', Validators.required],
       vehiculo_id: ['', Validators.required]
     });

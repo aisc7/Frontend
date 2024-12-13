@@ -50,15 +50,16 @@ export class ListComponent implements OnInit {
     });
   }
 
+
   create() {
-    this.router.navigate(['cuotas/create']);
+    this.router.navigate(['cuota/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['cuotas/view', id]);
+    this.router.navigate(['cuota/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['cuotas/update', id]);
+    this.router.navigate(['cuota/update', id]);
   }
 }

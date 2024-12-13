@@ -1,36 +1,40 @@
-<!-- Page content -->
-<div class="container-fluid mt--7">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
       <div class="card shadow">
         <div class="card-header border-0">
           <h3 class="mb-0">Conductores</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let conductor of conductors">
-                <td>{{ conductor.id }}</td>
-                <td>{{ conductor.name }}</td>
-                <td>{{ conductor.creationDate }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(conductor.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(conductor.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(conductor.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear</button>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Usuario ID</th>
+                  <th scope="col">Licencia</th>
+                  <th scope="col">Tipo de Licencia</th>
+                  <th scope="col">Teléfono</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let conductor of conductors">
+                  <td>{{ conductor.id }}</td>
+                  <td>{{ conductor.user_id }}</td>
+                  <td>{{ conductor.licencia }}</td>
+                  <td>{{ conductor.tipo_licencia }}</td>
+                  <td>{{ conductor.telefono }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(conductor.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(conductor.id)">Editar</button>
+                    <button type="button" class="btn btn-dark btn-sm" (click)="delete(conductor.id)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

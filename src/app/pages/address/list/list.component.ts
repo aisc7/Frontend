@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.addressService.list().subscribe((data) => {
       this.addresses = data;
+      console.log('Datos recibidos:', data);
     });
   }
 
@@ -51,14 +52,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['addresses/create']);
+    this.router.navigate(['direccion/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['addresses/view', id]);
+    this.router.navigate(['direccion/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['addresses/update', id]);
+    this.router.navigate(['direccion/update', id]);
   }
 }

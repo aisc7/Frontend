@@ -23,10 +23,19 @@ export class ListComponent implements OnInit {
   }
 
   list() {
-    this.hotelService.list().subscribe((data) => {
-      this.hoteles = data;
+    this.hotelService.list().subscribe((data: any[]) => {
+      this.hoteles = data.map(item => ({
+        id: item.id,
+        stars: item.starts,
+        servicio_id: item.servicio_id,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        service: item.service
+      }));
+      console.log('empresa:', this.hoteles);
     });
   }
+
 
   delete(id: number) {
     Swal.fire({
@@ -51,14 +60,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['hoteles/create']);
+    this.router.navigate(['hotel/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['hoteles/view', id]);
+    this.router.navigate(['hotel/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['hoteles/update', id]);
+    this.router.navigate(['hotel/update', id]);
   }
 }

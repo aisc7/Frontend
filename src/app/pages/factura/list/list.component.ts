@@ -23,10 +23,24 @@ export class ListComponent implements OnInit {
   }
 
   list() {
-    this.facturaService.list().subscribe((data) => {
-      this.facturas = data;
-    });
-  }
+    this.facturaService.list().subscribe((data: any[]) => {
+      this.facturas= data.map(item => ({
+        id: item.id,
+      fecha_emision: item.fecha_emision,
+      monto_total: item.monto_total,
+      estado: item.estado,
+      cuota_id: item.cuota_id,
+      spent_id: item.spent_id,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+      cuota: item.cuota,
+      spent: item.spent
+      
+      }));
+      console.log('empresa:', this.facturas);
+    }
+  );
+}
 
   delete(id: number) {
     Swal.fire({
@@ -51,14 +65,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['facturas/create']);
+    this.router.navigate(['factura/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['facturas/view', id]);
+    this.router.navigate(['factura/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['facturas/update', id]);
+    this.router.navigate(['factura/update', id]);
   }
 }

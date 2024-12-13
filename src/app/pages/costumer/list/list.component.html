@@ -1,37 +1,47 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+
+
 <!-- Page content -->
-<div class="container-fluid mt--7">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Customers</h3>
+          <h3 class="mb-0">Clientes</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let customer of customers">
-                <td>{{ customer.id }}</td>
-                <td>{{ customer.name }}</td>
-                <td>{{ customer.creationDate }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(customer.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(customer.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(customer.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <!-- Botón para crear un nuevo cliente -->
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear</button>
+
+          <!-- Tabla con los clientes -->
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Telefono</th>
+                  <th scope="col">  Cantidad de Productos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Iteración sobre los clientes -->
+                <tr *ngFor="let customer of customers">
+                  <td>{{ customer.id }}</td>
+                  <td>{{ customer.user_id }}</td>  <!-- Mostrar ID de usuario -->
+                  <td>{{ customer.phone }}</td>  <!-- Mostrar teléfono -->
+                  <td>{{ customer.order_count }}</td>  <!-- Mostrar cantidad de productos -->
+                  <td>{{ customer.createdAt | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{ customer.updatedAt | date: 'dd/MM/yyyy' }}</td>
+                  <td>
+                    <!-- Botones de acción -->
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(customer.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(customer.id)">Editar</button>
+                    <button type="button" class="btn btn-dark btn-sm" (click)="delete(customer.id)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

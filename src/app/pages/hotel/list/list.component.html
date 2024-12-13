@@ -1,6 +1,7 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
-<div class="container-fluid mt--7">
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+
   <!-- Table -->
   <div class="row">
     <div class="col">
@@ -10,20 +11,25 @@
         </div>
         <div class="card-body">
           <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <table class="table">
-            <thead>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
               <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
+                <th scope="col">Estrellas</th>
+                <th scope="col">Servicio Id</th>
                 <th scope="col">Fecha de Creación</th>
-                <th scope="col">Opciones</th>
+                <th scope="col">Fecha de Actualización</th>
+      
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let hotel of hoteles">
                 <td>{{ hotel.id }}</td>
-                <td>{{ hotel.name }}</td>
-                <td>{{ hotel.creationDate }}</td>
+                <td>{{ hotel.stars }}</td>
+                <td>{{ hotel.servicio_id }}</td>
+                <td>{{ hotel.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ hotel.updatedAt | date: 'dd/MM/yyyy' }}</td>
                 <td>
                   <button type="button" class="btn btn-info" (click)="view(hotel.id)">Ver</button>
                   <button type="button" class="btn btn-warning" (click)="update(hotel.id)">Editar</button>

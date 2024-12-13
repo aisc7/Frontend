@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.customerService.list().subscribe((data) => {
       this.customers = data;
+      console.log('Datos recibidos:', data);
     });
   }
 
@@ -49,16 +50,15 @@ export class ListComponent implements OnInit {
       }
     });
   }
-
   create() {
-    this.router.navigate(['customers/create']);
+    this.router.navigate(['cliente/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['customers/view', id]);
+    this.router.navigate(['cliente/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['customers/update', id]);
+    this.router.navigate(['cliente/update', id]);
   }
 }

@@ -1,31 +1,38 @@
-<div class="container-fluid">
-  <div class="card shadow">
-    <div class="card-header border-0">
-      <h3 class="mb-0">Addresses</h3>
-    </div>
-    <div class="card-body">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Calle</th>
-            <th scope="col">Ciudad</th>
-            <th scope="col">Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let actual of addresses">
-            <td>{{ actual.id }}</td>
-            <td>{{ actual.street }}</td>
-            <td>{{ actual.city }}</td>
-            <td>
-              <button type="button" class="btn btn-info" (click)="view(actual.id)">Ver</button>
-              <button type="button" class="btn btn-warning" (click)="update(actual.id)">Editar</button>
-              <button type="button" class="btn btn-dark" (click)="delete(actual.id)">Eliminar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Addresses</h3>
+        </div>
+        <div class="card-body">
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear</button>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Calle</th>
+                  <th scope="col">Ciudad</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let actual of addresses">
+                  <td>{{ actual.id }}</td>
+                  <td>{{ actual.street }}</td>
+                  <td>{{ actual.city }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(actual.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(actual.id)">Editar</button>
+                    <button type="button" class="btn btn-dark btn-sm" (click)="delete(actual.id)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

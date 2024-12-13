@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.addreRouteOrderService.list().subscribe((data) => {
       this.addreRouteOrders = data;
+      console.log('Datos recibidos:', data);
     });
   }
 
@@ -50,16 +51,17 @@ export class ListComponent implements OnInit {
     });
   }
 
+
   create() {
-    this.router.navigate(['addre-route-orders/create']);
+    this.router.navigate(['orden-ruta-direccion/create']);
   }
 
   view(id: number) {
     console.log('View');
-    this.router.navigate(['addre-route-orders/view', id]);
+    this.router.navigate(['orden-ruta-direccion/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['addre-route-orders/update', id]);
+    this.router.navigate(['orden-ruta-direccion/update', id]);
   }
 }

@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.categoryProductService.list().subscribe((data) => {
       this.categoryProducts = data;
+      console.log('Datos recibidos:', data);
     });
   }
 
@@ -49,16 +50,16 @@ export class ListComponent implements OnInit {
       }
     });
   }
-
+  
   create() {
-    this.router.navigate(['category-products/create']);
+    this.router.navigate(['categoria-producto/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['category-products/view', id]);
+    this.router.navigate(['categoria-producto/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['category-products/update', id]);
+    this.router.navigate(['categoria-producto/update', id]);
   }
 }

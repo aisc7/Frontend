@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.spentService.list().subscribe((data) => {
       this.spents = data;
+      console.log(this.spents);
     });
   }
 
@@ -51,14 +52,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['spents/create']);
+    this.router.navigate(['gasto/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['spents/view', id]);
+    this.router.navigate(['gasto/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['spents/update', id]);
+    this.router.navigate(['gasto/update', id]);
   }
 }

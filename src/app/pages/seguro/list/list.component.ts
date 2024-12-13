@@ -51,14 +51,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['seguros/create']);
+    this.router.navigate(['seguro/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['seguros/view', id]);
+    this.router.navigate(['seguro/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['seguros/update', id]);
+    this.router.navigate(['seguro/update', id]);
   }
 }

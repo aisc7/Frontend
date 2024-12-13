@@ -1,12 +1,11 @@
 <div class="container-fluid mt--7">
-  <!-- Formulario de Conductor -->
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Conductor</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Conductor</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Conductor</h3>
         </div>
 
         <form class="form" [formGroup]="conductorForm">
@@ -17,7 +16,16 @@
                 <label>ID:</label>
               </div>
               <div class="col-8">
-                <p>{{ conductorId }}</p>
+                <p *ngIf="mode == 1">{{ conductorId }}</p>
+                <input
+                  *ngIf="mode != 1"
+                  type="text"
+                  class="form-control"
+                  formControlName="id"
+                  title="ID"
+                  placeholder="Ingrese ID"
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
 
@@ -27,7 +35,9 @@
                 <label>Usuario ID:</label>
               </div>
               <div class="col-8">
+                <p *ngIf="mode == 1">{{ conductorForm.get('user_id').value }}</p>
                 <input
+                  *ngIf="mode != 1"
                   type="text"
                   class="form-control"
                   formControlName="user_id"
@@ -46,7 +56,9 @@
                 <label>Licencia:</label>
               </div>
               <div class="col-8">
+                <p *ngIf="mode == 1">{{ conductorForm.get('licencia').value }}</p>
                 <input
+                  *ngIf="mode != 1"
                   type="text"
                   class="form-control"
                   formControlName="licencia"
@@ -65,7 +77,9 @@
                 <label>Tipo Licencia:</label>
               </div>
               <div class="col-8">
+                <p *ngIf="mode == 1">{{ conductorForm.get('tipo_licencia').value }}</p>
                 <input
+                  *ngIf="mode != 1"
                   type="text"
                   class="form-control"
                   formControlName="tipo_licencia"
@@ -84,7 +98,9 @@
                 <label>Teléfono:</label>
               </div>
               <div class="col-8">
+                <p *ngIf="mode == 1">{{ conductorForm.get('telefono').value }}</p>
                 <input
+                  *ngIf="mode != 1"
                   type="text"
                   class="form-control"
                   formControlName="telefono"
@@ -99,32 +115,10 @@
 
             <!-- Botones -->
             <div class="row">
-              <div class="col-4"></div>
-              <div class="col-8 d-flex justify-content-between">
-                <!-- Crear -->
-                <button 
-                  *ngIf="mode == 2" 
-                  type="button" 
-                  class="btn btn-success" 
-                  (click)="create()"> 
-                  Crear 
-                </button>
-                <!-- Actualizar -->
-                <button 
-                  *ngIf="mode == 3" 
-                  type="button" 
-                  class="btn btn-primary" 
-                  (click)="update()"> 
-                  Actualizar 
-                </button>
-                <!-- Eliminar -->
-                <button 
-                  *ngIf="mode == 1" 
-                  type="button" 
-                  class="btn btn-danger" 
-                  (click)="delete()"> 
-                  Eliminar 
-                </button>
+              <div class="col-12 d-flex justify-content-between">
+                <button *ngIf="mode == 2" type="button" class="btn btn-success" (click)="create()">Crear</button>
+                <button *ngIf="mode == 3" type="button" class="btn btn-primary" (click)="update()">Actualizar</button>
+                <button *ngIf="mode == 1" type="button" class="btn btn-danger" (click)="delete(conductorId)">Eliminar</button>
               </div>
             </div>
           </div>

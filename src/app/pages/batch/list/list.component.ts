@@ -49,16 +49,16 @@ export class ListComponent implements OnInit {
       }
     });
   }
-
+  
   create() {
-    this.router.navigate(['batches/create']);
+    this.router.navigate(['lote/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['batches/view', id]);
+    this.router.navigate(['lote/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['batches/update', id]);
+    this.router.navigate(['lote/update', id]);
   }
 }

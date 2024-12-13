@@ -1,6 +1,7 @@
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
 
-<!-- Page content -->
-<div class="container-fluid mt--7">
   <!-- Table -->
   <div class="row">
     <div class="col">
@@ -10,20 +11,32 @@
         </div>
         <div class="card-body">
           <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <table class="table">
-            <thead>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
               <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Opciones</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Tipo de Documento</th>
+                <th scope="col">Número de Documento</th>
+                <th scope="col">Fecha de Nacimiento</th>
+                <th scope="col">Empresa ID</th>
+                <th scope="col">Cliente ID</th>
+                <th scope="col"> Fecha Creación</th>
+                <th scope="col"> Fecha Actualización</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let person of naturalPerson">
-                <td>{{ person.id }}</td>
-                <td>{{ person.name }}</td>
-                <td>{{ person.creationDate }}</td>
+                <td>{{person.id }}</td>
+                <td>{{person.user_id }}</td>
+                <td>{{person.document_type }}</td>
+                <td>{{person.document_number }}</td>
+                <td>{{person.birth_date }}</td>
+                <td>{{person.company_id }}</td>
+                <td>{{person.customer_id }}</td>
+                <td>{{person.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>{{person.updatedAt | date: 'dd/MM/yyyy' }}</td>
                 <td>
                   <button type="button" class="btn btn-info" (click)="view(person.id)">Ver</button>
                   <button type="button" class="btn btn-warning" (click)="update(person.id)">Editar</button>

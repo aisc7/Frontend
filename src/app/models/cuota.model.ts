@@ -10,7 +10,6 @@ export class Cuota {
     contract_id: number;
     createdAt: Date;
     updatedAt: Date;
-
     contract: Contract;
     factura: Factura;
 }

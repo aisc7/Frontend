@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.municipalityService.list().subscribe((data) => {
       this.municipalities = data;
+      console.log(this.municipalities);
     });
   }
 
@@ -51,14 +52,14 @@ export class ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['municipalities/create']);
+    this.router.navigate(['municipio/create']);
   }
 
   view(id: number) {
-    this.router.navigate(['municipalities/view', id]);
+    this.router.navigate(['municipio/view', id]);
   }
 
   update(id: number) {
-    this.router.navigate(['municipalities/update', id]);
+    this.router.navigate(['municipio/update', id]);
   }
 }

@@ -17,7 +17,7 @@ export class ManageContractComponent implements OnInit {
   trySend: boolean = false;
 
   constructor(
-    private theFormBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private contractService: ContractService,
     private router: Router,
     private route: ActivatedRoute
@@ -26,37 +26,30 @@ export class ManageContractComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    console.log('Current URL:', currentUrl); // Para depurar
-
-    // Asignar el valor del mode según la URL
-    if (currentUrl.includes("view")) {
-      this.mode = 1; // Ver
-    } else if (currentUrl.includes("create")) {
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
+      this.mode = 1; // Visualizar
+    } else if (currentUrl.includes('create')) {
       this.mode = 2; // Crear
-    } else if (currentUrl.includes("update")) {
+    } else if (currentUrl.includes('update')) {
       this.mode = 3; // Actualizar
-    } else if (currentUrl.includes("delete")) {
+    } else if (currentUrl.includes('delete')) {
       this.mode = 4; // Eliminar
-    } else {
-      this.mode = 0; // Default si no se encuentra ninguno
     }
 
-    console.log('Mode:', this.mode); // Para depurar
-
-    if (this.route.snapshot.params.id) {
-      this.contractId = this.route.snapshot.params.id;
+    if (this.route.snapshot.params['id']) {
+      this.contractId = +this.route.snapshot.params['id'];
       this.getContract(this.contractId);
     }
   }
 
   configFormGroup() {
-    this.contractForm = this.theFormBuilder.group({
+    this.contractForm = this.formBuilder.group({
       fecha_inicio: ['', Validators.required],
       fecha_fin: ['', Validators.required],
       estado: ['', Validators.required],
       detalles_servicio: ['', Validators.required],
-      costumer_id: ['', Validators.required],
+      customer_id: ['', Validators.required]
     });
   }
 
@@ -65,7 +58,7 @@ export class ManageContractComponent implements OnInit {
   }
 
   getContract(id: number) {
-    this.contractService.get(id).subscribe((data) => {
+    this.contractService.get(id).subscribe((data: Contract) => {
       this.contractForm.patchValue(data);
     });
   }
@@ -73,23 +66,10 @@ export class ManageContractComponent implements OnInit {
   handleAction() {
     this.trySend = true;
     if (this.contractForm.valid) {
-      if (this.mode >= 1 && this.mode <= 4) {
-        switch (this.mode) {
-          case 2:
-            this.create();
-            break;
-          case 3:
-            this.update();
-            break;
-          case 4:
-            this.delete();
-            break;
-          default:
-            break;
-        }
-      } else {
-        // Si mode es un valor inesperado
-        Swal.fire('Error', 'Acción no válida', 'error');
+      if (this.mode === 2) {
+        this.create();
+      } else if (this.mode === 3) {
+        this.update();
       }
     }
   }
@@ -109,9 +89,20 @@ export class ManageContractComponent implements OnInit {
   }
 
   delete() {
-    this.contractService.delete(this.contractId).subscribe(() => {
-      Swal.fire('Eliminado', 'El contrato ha sido eliminado correctamente', 'success');
-      this.router.navigate(['/contracts']);
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡Este contrato será eliminado!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'No, cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.contractService.delete(this.contractId).subscribe(() => {
+          Swal.fire('Eliminado', 'El contrato ha sido eliminado', 'success');
+          this.router.navigate(['/contracts']);
+        });
+      }
     });
   }
 }

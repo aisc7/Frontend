@@ -1,10 +1,9 @@
 import { Servicio } from './servicio.model';
 
 export class Administrator {
-    id: number;
+    id?: number; // ID opcional
     user_id: string;
     servicio_id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    servicio: Servicio;
-}
+    created_at?: string;
+    updated_at?: string;
+}  

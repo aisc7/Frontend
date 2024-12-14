@@ -9,15 +9,6 @@
         </div>
         <form class="form" [formGroup]="customerForm">
           <div class="card-body">
-            <div class="row mb-3">
-              <div class="col-4">
-                <label>ID:</label>
-              </div>
-              <div class="col-8">
-                <p>{{ customerId }}</p>
-              </div>
-            </div>
-
             <!-- Campo user_id -->
             <div class="row mb-3">
               <div class="col-4">
@@ -29,17 +20,13 @@
                   type="text"
                   class="form-control"
                   formControlName="user_id"
+                  placeholder="Ingrese el ID del usuario"
                   [readonly]="mode == 1"
-                  placeholder="Ingrese el ID de usuario"
-                  [class.is-invalid]="trySend && getTheFormGroup.user_id.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.user_id.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
-            <!-- Campo Phone -->
+            <!-- Campo Teléfono -->
             <div class="row mb-3">
               <div class="col-4">
                 <label for="phone" class="form-label">Teléfono:</label>
@@ -51,57 +38,39 @@
                   class="form-control"
                   formControlName="phone"
                   placeholder="Ingrese el teléfono del cliente"
-                  [class.is-invalid]="trySend && getTheFormGroup.phone.invalid"
+                  [readonly]="mode == 1"
                 />
-                <div *ngIf="trySend && getTheFormGroup.phone.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
-            <!-- Campo Order Count -->
+            <!-- Campo Número de Pedidos -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="orderCount" class="form-label">Cantidad de Pedidos:</label>
+                <label for="order_count" class="form-label">Número de Pedidos:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="orderCount"
+                  id="order_count"
                   type="number"
                   class="form-control"
                   formControlName="order_count"
-                  placeholder="Ingrese la cantidad de pedidos"
-                  [class.is-invalid]="trySend && getTheFormGroup.order_count.invalid"
+                  placeholder="Ingrese el número de pedidos realizados"
+                  [readonly]="mode == 1"
                 />
-                <div *ngIf="trySend && getTheFormGroup.order_count.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8 d-flex justify-content-between">
                 <button
-                  *ngIf="mode == 2"
+                  *ngIf="mode == 2 || mode == 3"
                   type="button"
                   class="btn btn-success"
-                  (click)="handleAction()">
-                  Crear
-                </button>
-                <button
-                  *ngIf="mode == 3"
-                  type="button"
-                  class="btn btn-primary"
-                  (click)="handleAction()">
-                  Actualizar
-                </button>
-                <button
-                  *ngIf="mode == 4"
-                  type="button"
-                  class="btn btn-danger"
-                  (click)="handleAction()">
-                  Eliminar
+                  (click)="mode == 2 ? create() : update()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
                 </button>
               </div>
             </div>

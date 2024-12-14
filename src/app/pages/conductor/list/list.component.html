@@ -11,8 +11,7 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Usuario ID</th>
+                  <th scope="col">ID</th>
                   <th scope="col">Licencia</th>
                   <th scope="col">Tipo de Licencia</th>
                   <th scope="col">Teléfono</th>
@@ -22,7 +21,6 @@
               <tbody>
                 <tr *ngFor="let conductor of conductors">
                   <td>{{ conductor.id }}</td>
-                  <td>{{ conductor.user_id }}</td>
                   <td>{{ conductor.licencia }}</td>
                   <td>{{ conductor.tipo_licencia }}</td>
                   <td>{{ conductor.telefono }}</td>

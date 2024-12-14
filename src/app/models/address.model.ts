@@ -4,16 +4,12 @@ import { AddreRouteOrder } from './addre-route-order.model';
 import { Route } from './route.model';
 
 export class Address {
-    id: number;
-    street: string;
-    number: string;
-    neighborhood: string;
-    reference: string;
-    municipality_id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    municipality: Municipality;
-    distributionCenter: DistributionCenter;
-    addrerouteorders: AddreRouteOrder[];
-    conductores: Route[];
-}
+    id?: number; // ID autogenerado (opcional para nuevas creaciones)
+    street: string; // Requerido
+    number?: string; // Opcional
+    neighborhood: string; // Requerido
+    reference?: string; // Opcional
+    municipality_id: number; // Relación foránea (requerido)
+    created_at?: Date; // Autogenerado en el backend
+    updated_at?: Date; // Autogenerado en el backend
+}  

@@ -11,23 +11,23 @@ export class DistributionCenterService {
   constructor(private http: HttpClient) {}
 
   list(): Observable<DistributionCenter[]> {
-    return this.http.get<DistributionCenter[]>(`${environment.url_ms_businessAKJ}/distribution-centers`);
+    return this.http.get<DistributionCenter[]>(`${environment.url_ms_businessAKJ}/distributioncenters`);
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.url_ms_businessAKJ}/distribution-centers/${id}`);
+    return this.http.delete<void>(`${environment.url_ms_businessAKJ}/distributioncenters/${id}`);
   }
 
   get(id: number): Observable<DistributionCenter> {
-    return this.http.get<DistributionCenter>(`${environment.url_ms_businessAKJ}/distribution-centers/${id}`);
+    return this.http.get<DistributionCenter>(`${environment.url_ms_businessAKJ}/distributioncenters/${id}`);
   }
 
   create(distributionCenter: DistributionCenter): Observable<DistributionCenter> {
     delete distributionCenter.id;
-    return this.http.post<DistributionCenter>(`${environment.url_ms_businessAKJ}/distribution-centers`, distributionCenter);
+    return this.http.post<DistributionCenter>(`${environment.url_ms_businessAKJ}/distributioncenters`, distributionCenter);
   }
 
   update(id: number, distributionCenter: DistributionCenter): Observable<DistributionCenter> {
-    return this.http.put<DistributionCenter>(`${environment.url_ms_businessAKJ}/distribution-centers/${id}`, distributionCenter);
+    return this.http.put<DistributionCenter>(`${environment.url_ms_businessAKJ}/distributioncenters/${id}`, distributionCenter);
   }
 }

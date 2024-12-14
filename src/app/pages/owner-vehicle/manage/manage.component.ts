@@ -6,19 +6,18 @@ import { OwnerVehicle } from 'src/app/models/owner-vehicle.model';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-manage',
+  selector: 'app-manage-owner-vehicle',
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-
 export class ManageOwnerVehicleComponent implements OnInit {
   ownerVehicleForm: FormGroup;
-  ownerVehicleId: number;
-  mode: number;
+  ownerVehicleId: number | undefined;
+  mode: number = 0; // 1: Ver, 2: Crear, 3: Actualizar
   trySend: boolean = false;
 
   constructor(
-    private theFormBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private ownerVehicleService: OwnerVehicleService,
     private router: Router,
     private route: ActivatedRoute
@@ -27,57 +26,75 @@ export class ManageOwnerVehicleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
       this.mode = 1;
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes('create')) {
       this.mode = 2;
-    } else if (currentUrl.includes("update")) {
+    } else if (currentUrl.includes('update')) {
       this.mode = 3;
     }
-  
-    if (this.route.snapshot.params.id) {
-      this.ownerVehicleId = this.route.snapshot.params.id;
+
+    this.ownerVehicleId = this.route.snapshot.params['id'];
+    if (this.ownerVehicleId && this.mode !== 2) {
       this.getOwnerVehicle(this.ownerVehicleId);
     }
   }
 
   configFormGroup() {
-    this.ownerVehicleForm = this.theFormBuilder.group({
-    fechaAsignacion: ['', Validators.required],
-    fechaDesasignacion: ['', Validators.required],
+    this.ownerVehicleForm = this.formBuilder.group({
+      fecha_asignacion: ['', Validators.required],
+      fecha_desasignacion: ['', Validators.required],
       vehiculo_id: ['', Validators.required],
       dueno_id: ['', Validators.required]
     });
   }
 
-  get getTheFormGroup() {
+  get formControls() {
     return this.ownerVehicleForm.controls;
   }
 
   getOwnerVehicle(id: number) {
-    this.ownerVehicleService.get(id).subscribe((data) => {
+    this.ownerVehicleService.get(id).subscribe((data: OwnerVehicle) => {
       this.ownerVehicleForm.patchValue(data);
     });
+  }
+
+  handleAction() {
+    if (this.mode === 2) {
+      this.create();
+    } else if (this.mode === 3) {
+      this.update();
+    }
   }
 
   create() {
     this.trySend = true;
     if (this.ownerVehicleForm.valid) {
-      this.ownerVehicleService.create(this.ownerVehicleForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El vehículo del propietario ha sido creado correctamente', 'success');
-        this.router.navigate(['/owner-vehicles']);
-      });
+      this.ownerVehicleService.create(this.ownerVehicleForm.value).subscribe(
+        () => {
+          Swal.fire('Creado', 'La relación ha sido creada correctamente.', 'success');
+          this.router.navigate(['/owner-vehicles']);
+        },
+        (error) => {
+          Swal.fire('Error', 'Ocurrió un error al crear la relación.', 'error');
+        }
+      );
     }
   }
 
   update() {
     this.trySend = true;
     if (this.ownerVehicleForm.valid) {
-      this.ownerVehicleService.update(this.ownerVehicleId, this.ownerVehicleForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El vehículo del propietario ha sido actualizado correctamente', 'success');
-        this.router.navigate(['/owner-vehicles']);
-      });
+      this.ownerVehicleService.update(this.ownerVehicleId!, this.ownerVehicleForm.value).subscribe(
+        () => {
+          Swal.fire('Actualizado', 'La relación ha sido actualizada correctamente.', 'success');
+          this.router.navigate(['/owner-vehicles']);
+        },
+        (error) => {
+          Swal.fire('Error', 'Ocurrió un error al actualizar la relación.', 'error');
+        }
+      );
     }
   }
 }

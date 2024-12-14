@@ -1,82 +1,118 @@
 <div class="container-fluid mt--7">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 *ngIf="mode === 1" class="mb-0">Visualizar Vehículo</h3>
-          <h3 *ngIf="mode === 2" class="mb-0">Crear Vehículo</h3>
-          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Vehículo</h3>
-          <h3 *ngIf="mode === 4" class="mb-0">Eliminar Vehículo</h3>
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Vehículo</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Vehículo</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Vehículo</h3>
         </div>
         <form class="form" [formGroup]="vehicleForm">
           <div class="card-body">
             <!-- Tipo de Vehículo -->
-            <div class="row">
+            <div class="row mb-3">
               <div class="col-4">
-                <label for="tipoVehiculo">Tipo de Vehículo:</label>
+                <label for="tipo_vehiculo" class="form-label">Tipo de Vehículo:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode !== 1" id="tipoVehiculo" type="text" class="form-control" formControlName="tipo_vehiculo" title="Tipo de Vehículo" placeholder="Ingrese el tipo de vehículo">
-                <p *ngIf="mode === 1">{{ vehicleForm.value.tipo_vehiculo }}</p>
-                <div *ngIf="getTheFormGroup.tipo_vehiculo.errors && (getTheFormGroup.tipo_vehiculo.dirty || getTheFormGroup.tipo_vehiculo.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.tipo_vehiculo.errors.required" class="msnError">Requerido</strong>
+                <input
+                  id="tipo_vehiculo"
+                  type="text"
+                  class="form-control"
+                  formControlName="tipo_vehiculo"
+                  placeholder="Ingrese el tipo de vehículo"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.tipo_vehiculo.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.tipo_vehiculo.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
-            <br />
 
             <!-- Capacidad de Peso -->
-            <div class="row">
+            <div class="row mb-3">
               <div class="col-4">
-                <label for="capacidadPeso">Capacidad de Peso:</label>
+                <label for="capacidad_peso" class="form-label">Capacidad de Peso:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode !== 1" id="capacidadPeso" type="number" class="form-control" formControlName="capacidad_peso" title="Capacidad de Peso" placeholder="Ingrese la capacidad de peso">
-                <p *ngIf="mode === 1">{{ vehicleForm.value.capacidad_peso }}</p>
-                <div *ngIf="getTheFormGroup.capacidad_peso.errors && (getTheFormGroup.capacidad_peso.dirty || getTheFormGroup.capacidad_peso.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.capacidad_peso.errors.required" class="msnError">Requerido</strong>
+                <input
+                  id="capacidad_peso"
+                  type="number"
+                  class="form-control"
+                  formControlName="capacidad_peso"
+                  placeholder="Ingrese la capacidad de peso"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.capacidad_peso.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.capacidad_peso.invalid" class="invalid-feedback">
+                  Este campo es obligatorio y debe ser mayor a 0.
                 </div>
               </div>
             </div>
-            <br />
 
             <!-- Capacidad de Volumen -->
-            <div class="row">
+            <div class="row mb-3">
               <div class="col-4">
-                <label for="capacidadVolumen">Capacidad de Volumen:</label>
+                <label for="capacidad_volumen" class="form-label">Capacidad de Volumen:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode !== 1" id="capacidadVolumen" type="number" class="form-control" formControlName="capacidad_volumen" title="Capacidad de Volumen" placeholder="Ingrese la capacidad de volumen">
-                <p *ngIf="mode === 1">{{ vehicleForm.value.capacidad_volumen }}</p>
-                <div *ngIf="getTheFormGroup.capacidad_volumen.errors && (getTheFormGroup.capacidad_volumen.dirty || getTheFormGroup.capacidad_volumen.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.capacidad_volumen.errors.required" class="msnError">Requerido</strong>
+                <input
+                  id="capacidad_volumen"
+                  type="number"
+                  class="form-control"
+                  formControlName="capacidad_volumen"
+                  placeholder="Ingrese la capacidad de volumen"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.capacidad_volumen.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.capacidad_volumen.invalid" class="invalid-feedback">
+                  Este campo es obligatorio y debe ser mayor a 0.
                 </div>
               </div>
             </div>
-            <br />
 
             <!-- Estado -->
-            <div class="row">
+            <div class="row mb-3">
               <div class="col-4">
-                <label for="estado">Estado:</label>
+                <label for="estado" class="form-label">Estado:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode !== 1" id="estado" type="text" class="form-control" formControlName="estado" title="Estado" placeholder="Ingrese el estado">
-                <p *ngIf="mode === 1">{{ vehicleForm.value.estado }}</p>
-                <div *ngIf="getTheFormGroup.estado.errors && (getTheFormGroup.estado.dirty || getTheFormGroup.estado.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.estado.errors.required" class="msnError">Requerido</strong>
+                <input
+                  id="estado"
+                  type="text"
+                  class="form-control"
+                  formControlName="estado"
+                  placeholder="Ingrese el estado del vehículo"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.estado.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.estado.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
-            <br />
 
-            <!-- Botones de acción -->
+            <!-- Botón -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
-                <button *ngIf="mode === 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear</button>
-                <button *ngIf="mode === 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar</button>
-                <button *ngIf="mode === 4" type="button" class="btn btn-danger btn-block" (click)="delete()">Eliminar</button>
+                <button
+                  *ngIf="mode == 2"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="create()"
+                >
+                  Crear
+                </button>
+                <button
+                  *ngIf="mode == 3"
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="update()"
+                >
+                  Actualizar
+                </button>
               </div>
             </div>
           </div>

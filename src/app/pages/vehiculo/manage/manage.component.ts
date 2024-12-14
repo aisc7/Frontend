@@ -11,10 +11,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./manage.component.css']
 })
 export class ManageVehicleComponent implements OnInit {
-  vehicleForm: FormGroup;
-  vehicleId: number;
-  mode: number;
-  trySend: boolean = false;
+  vehicleForm: FormGroup; // Formulario reactivo
+  vehicleId: number; // ID del vehículo
+  mode: number; // Modo de operación
+  trySend: boolean = false; // Control para mostrar errores en el formulario
 
   constructor(
     private theFormBuilder: FormBuilder,
@@ -26,18 +26,17 @@ export class ManageVehicleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
-      this.mode = 1; // Modo de ver
-    } else if (currentUrl.includes("create")) {
-      this.mode = 2; // Modo de crear
-    } else if (currentUrl.includes("update")) {
-      this.mode = 3; // Modo de actualizar
-    } else if (currentUrl.includes("delete")) {
-      this.mode = 4; // Modo de eliminar
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
+      this.mode = 1; // Modo ver
+    } else if (currentUrl.includes('create')) {
+      this.mode = 2; // Modo crear
+    } else if (currentUrl.includes('update')) {
+      this.mode = 3; // Modo actualizar
     }
 
-    this.vehicleId = this.route.snapshot.params['id']; // Obtener el id desde la ruta
+    // Obtener el ID del vehículo de la ruta
+    this.vehicleId = this.route.snapshot.params['id'];
     if (this.vehicleId) {
       this.vehicleService.get(this.vehicleId).subscribe((data: Vehiculo) => {
         this.vehicleForm.patchValue(data);
@@ -47,10 +46,10 @@ export class ManageVehicleComponent implements OnInit {
 
   configFormGroup() {
     this.vehicleForm = this.theFormBuilder.group({
-      tipo_vehiculo: ['', Validators.required],
-      capacidad_peso: ['', Validators.required],
-      capacidad_volumen: ['', Validators.required],
-      estado: ['', Validators.required]
+      tipo_vehiculo: ['', Validators.required], // Tipo de vehículo requerido
+      capacidad_peso: [0, [Validators.required, Validators.min(1)]], // Peso mínimo 1
+      capacidad_volumen: [0, [Validators.required, Validators.min(1)]], // Volumen mínimo 1
+      estado: ['', Validators.required] // Estado requerido
     });
   }
 

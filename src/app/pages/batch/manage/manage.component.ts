@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BatchService } from './../../../services/batch.service';
 import Swal from 'sweetalert2';
+import { Batch } from 'src/app/models/batch.model';
 
 @Component({
   selector: 'app-manage',
@@ -11,12 +12,12 @@ import Swal from 'sweetalert2';
 })
 export class ManageBatchComponent implements OnInit {
   batchForm: FormGroup;
-  batchId: number | null = null;
-  mode: number = 2;
+  batchId: number;
+  mode: number;
   trySend: boolean = false;
 
   constructor(
-    private theFormBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private batchService: BatchService,
     private router: Router,
     private route: ActivatedRoute
@@ -25,33 +26,32 @@ export class ManageBatchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    this.mode = this.getModeFromUrl(currentUrl);
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
+      this.mode = 1; // Ver
+    } else if (currentUrl.includes('create')) {
+      this.mode = 2; // Crear
+    } else if (currentUrl.includes('update')) {
+      this.mode = 3; // Actualizar
+    } else if (currentUrl.includes('delete')) {
+      this.mode = 4; // Eliminar
+    }
 
     if (this.route.snapshot.params.id) {
-      this.batchId = +this.route.snapshot.params.id;
+      this.batchId = this.route.snapshot.params.id;
       this.getBatch(this.batchId);
     }
   }
 
   configFormGroup() {
-    this.batchForm = this.theFormBuilder.group({
-      quantity: ['', Validators.required],
-      routeId: ['', Validators.required],
-      addrerouteId: ['', Validators.required]
+    this.batchForm = this.formBuilder.group({
+      quantity: ['', [Validators.required, Validators.min(1)]], // Cantidad mayor a 0
+      route_id: ['', Validators.required] // ID de la Ruta
     });
   }
 
   get getTheFormGroup() {
     return this.batchForm.controls;
-  }
-
-  getModeFromUrl(url: string): number {
-    if (url.includes("view")) return 1;
-    if (url.includes("create")) return 2;
-    if (url.includes("update")) return 3;
-    if (url.includes("delete")) return 4;
-    return 2; // Default: Crear
   }
 
   getBatch(id: number) {
@@ -61,52 +61,53 @@ export class ManageBatchComponent implements OnInit {
   }
 
   handleAction() {
-    this.trySend = true;
-
-    if (!this.batchForm.valid) {
-      Swal.fire('Error', 'Por favor, complete todos los campos obligatorios.', 'error');
-      return;
+    if (this.mode === 2) {
+      this.create();
+    } else if (this.mode === 3) {
+      this.update();
     }
+  }
 
-    switch (this.mode) {
-      case 2:
-        this.batchService.create(this.batchForm.value).subscribe(() => {
-          Swal.fire('Creado', 'El lote ha sido creado correctamente.', 'success');
+  create() {
+    this.trySend = true;
+    if (this.batchForm.valid) {
+      this.batchService.create(this.batchForm.value).subscribe(() => {
+        Swal.fire('Creado', 'El lote ha sido creado correctamente', 'success');
+        this.router.navigate(['/batches']);
+      });
+    } else {
+      Swal.fire('Error', 'Complete todos los campos obligatorios', 'error');
+    }
+  }
+
+  update() {
+    this.trySend = true;
+    if (this.batchForm.valid) {
+      this.batchService.update(this.batchId, this.batchForm.value).subscribe(() => {
+        Swal.fire('Actualizado', 'El lote ha sido actualizado correctamente', 'success');
+        this.router.navigate(['/batches']);
+      });
+    } else {
+      Swal.fire('Error', 'Complete todos los campos obligatorios', 'error');
+    }
+  }
+
+  delete() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡Este lote será eliminado!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.batchService.delete(this.batchId).subscribe(() => {
+          Swal.fire('Eliminado', 'El lote ha sido eliminado', 'success');
           this.router.navigate(['/batches']);
         });
-        break;
-
-      case 3:
-        if (this.batchId !== null) {
-          this.batchService.update(this.batchId, this.batchForm.value).subscribe(() => {
-            Swal.fire('Actualizado', 'El lote ha sido actualizado correctamente.', 'success');
-            this.router.navigate(['/batches']);
-          });
-        }
-        break;
-
-      case 1:
-        if (this.batchId !== null) {
-          Swal.fire({
-            title: "Eliminar",
-            text: "¿Está seguro que desea eliminar este lote?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sí, eliminar",
-            cancelButtonText: "Cancelar"
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.batchService.delete(this.batchId).subscribe(() => {
-                Swal.fire('Eliminado', 'El lote ha sido eliminado correctamente.', 'success');
-                this.router.navigate(['/batches']);
-              });
-            }
-          });
-        }
-        break;
-
-      default:
-        Swal.fire('Error', 'Modo no reconocido.', 'error');
-    }
+      }
+    });
   }
 }

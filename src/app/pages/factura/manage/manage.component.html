@@ -2,95 +2,99 @@
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
-        <div class="card-header text-center">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Factura</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear Factura</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Factura</h3>
+        <div class="card-header border-0 text-center">
+          <h3 *ngIf="mode === 1" class="mb-0">Visualizar Factura</h3>
+          <h3 *ngIf="mode === 2" class="mb-0">Crear Factura</h3>
+          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Factura</h3>
         </div>
         <form class="form" [formGroup]="facturaForm">
           <div class="card-body">
-            <!-- Fecha de emisión -->
+            <!-- Campos -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Fecha de Emisión:</label>
+                <label for="fecha_emision" class="form-label">Fecha de Emisión:</label>
               </div>
               <div class="col-8">
-                <input type="date" class="form-control" formControlName="fecha_emision" title="Fecha de Emisión" placeholder="Ingrese la fecha de emisión" [readonly]="mode === 1">
-                <div *ngIf="getTheFormGroup.fecha_emision.errors && (getTheFormGroup.fecha_emision.dirty || getTheFormGroup.fecha_emision.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.fecha_emision.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="fecha_emision"
+                  type="date"
+                  class="form-control"
+                  formControlName="fecha_emision"
+                  [readonly]="mode === 1 || mode === 4"
+                />
               </div>
             </div>
-            <br />
-
-            <!-- Monto Total -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Monto Total:</label>
+                <label for="monto_total" class="form-label">Monto Total:</label>
               </div>
               <div class="col-8">
-                <input type="number" class="form-control" formControlName="monto_total" title="Monto Total" placeholder="Ingrese el monto total" [readonly]="mode === 1">
-                <div *ngIf="getTheFormGroup.monto_total.errors && (getTheFormGroup.monto_total.dirty || getTheFormGroup.monto_total.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.monto_total.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="monto_total"
+                  type="number"
+                  class="form-control"
+                  formControlName="monto_total"
+                  placeholder="Ingrese el monto total"
+                  [readonly]="mode === 1 || mode === 4"
+                />
               </div>
             </div>
-            <br />
-
-            <!-- Estado -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Estado:</label>
+                <label for="estado" class="form-label">Estado:</label>
               </div>
               <div class="col-8">
-                <select class="form-control" formControlName="estado" title="Estado" [disabled]="mode === 1">
-                  <option value="">Seleccione el estado</option>
-                  <option value="pendiente">Pendiente</option>
-                  <option value="pagada">Pagada</option>
-                  <option value="cancelada">Cancelada</option>
-                </select>
-                <div *ngIf="getTheFormGroup.estado.errors && (getTheFormGroup.estado.dirty || getTheFormGroup.estado.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.estado.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="estado"
+                  type="text"
+                  class="form-control"
+                  formControlName="estado"
+                  placeholder="Ingrese el estado"
+                  [readonly]="mode === 1 || mode === 4"
+                />
               </div>
             </div>
-            <br />
-
-            <!-- Cuota ID -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Cuota ID:</label>
+                <label for="cuota_id" class="form-label">ID de la Cuota:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="cuota_id" title="Cuota ID" placeholder="Ingrese el ID de la cuota" [readonly]="mode === 1">
-                <div *ngIf="getTheFormGroup.cuota_id.errors && (getTheFormGroup.cuota_id.dirty || getTheFormGroup.cuota_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.cuota_id.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="cuota_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="cuota_id"
+                  placeholder="Ingrese el ID de la cuota asociada"
+                  [readonly]="mode === 1 || mode === 4"
+                />
               </div>
             </div>
-            <br />
-
-            <!-- Spent ID -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Spent ID:</label>
+                <label for="spent_id" class="form-label">ID del Gasto:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="spent_id" title="Spent ID" placeholder="Ingrese el ID de gasto" [readonly]="mode === 1">
-                <div *ngIf="getTheFormGroup.spent_id.errors && (getTheFormGroup.spent_id.dirty || getTheFormGroup.spent_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.spent_id.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="spent_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="spent_id"
+                  placeholder="Ingrese el ID del gasto asociado"
+                  [readonly]="mode === 1 || mode === 4"
+                />
               </div>
             </div>
-            <br />
-
-            <!-- Botones de acción -->
+            <!-- Botones -->
             <div class="row">
-              <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="handleAction()">Crear</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="handleAction()">Actualizar</button>
-                <button *ngIf="mode == 4" type="button" class="btn btn-danger btn-block" (click)="delete()">Eliminar</button>
+              <div class="col-8 offset-4 d-flex justify-content-between">
+                <button
+                  *ngIf="mode === 2 || mode === 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode === 2 ? 'Crear' : 'Actualizar' }}
+                </button>
               </div>
             </div>
           </div>

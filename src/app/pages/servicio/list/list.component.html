@@ -1,42 +1,39 @@
 <div class="container-fluid mt--10">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
           <h3 class="mb-0">Servicios</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Servicio</button>
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Costo</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Fecha de Actualización</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let servicio of servicios">
-                <td>{{ servicio.id }}</td>
-                <td>{{ servicio.descripcion }}</td>
-                <td>{{ servicio.costo }}</td>
-                <td>{{servicio.created_at | date: 'dd/MM/yyyy' }}</td>
-                <td>{{servicio.updated_at | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(servicio.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(servicio.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(servicio.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Costo</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let actual of servicios">
+                  <td>{{ actual.id }}</td>
+                  <td>{{ actual.descripcion }}</td>
+                  <td>{{ actual.costo | currency }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(actual.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(actual.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(actual.id)">Eliminar</button>
+                  </td>
+                </tr>
+                <tr *ngIf="servicios.length === 0">
+                  <td colspan="4" class="text-center">No se encontraron servicios.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

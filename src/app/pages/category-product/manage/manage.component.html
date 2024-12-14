@@ -3,11 +3,11 @@
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
-          <h3 class="mb-0">
-            {{ mode == 2 ? 'Crear Categoría de Producto' : mode == 3 ? 'Actualizar Categoría de Producto' : mode == 1 ? 'Eliminar Categoría de Producto' : 'Gestión de Categoría de Producto' }}
-          </h3>
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Relación</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Relación</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Relación</h3>
         </div>
-        <form [formGroup]="categoryProductForm" novalidate>
+        <form class="form" [formGroup]="categoryProductForm">
           <div class="card-body">
             <!-- Campo Fecha Asignación -->
             <div class="row mb-3">
@@ -21,79 +21,65 @@
                   class="form-control"
                   formControlName="fecha_asignacion"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.fecha_asignacion.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.fecha_asignacion.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
-            <!-- Campo Fecha Designación -->
+            <!-- Campo Fecha Desasignación -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="fecha_designacion" class="form-label">Fecha de Designación:</label>
+                <label for="fecha_desasignacion" class="form-label">Fecha de Desasignación:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="fecha_designacion"
+                  id="fecha_desasignacion"
                   type="date"
                   class="form-control"
-                  formControlName="fecha_designacion"
+                  formControlName="fecha_desasignacion"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.fecha_designacion.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.fecha_designacion.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
-            <!-- Campo Producto ID -->
+            <!-- Campo ID Producto -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="producto_id" class="form-label">ID del Producto:</label>
+                <label for="product_id" class="form-label">ID Producto:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="producto_id"
-                  type="text"
+                  id="product_id"
+                  type="number"
                   class="form-control"
-                  formControlName="producto_id"
+                  formControlName="product_id"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.producto_id.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.producto_id.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
-            <!-- Campo Categoría ID -->
+            <!-- Campo ID Categoría -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="category_id" class="form-label">ID de Categoría:</label>
+                <label for="category_id" class="form-label">ID Categoría:</label>
               </div>
               <div class="col-8">
                 <input
                   id="category_id"
-                  type="text"
+                  type="number"
                   class="form-control"
                   formControlName="category_id"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.category_id.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.category_id.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
-            <div class="d-flex justify-content-between mt-4">
-              <button type="button" class="btn btn-primary" (click)="handleAction()">
-                {{ mode == 2 ? 'Crear' : mode == 3 ? 'Actualizar' : mode == 1 ? 'Eliminar' : 'Acción' }}
-              </button>
-              <button type="button" class="btn btn-secondary" routerLink="/category-products">Cancelar</button>
+            <!-- Botones -->
+            <div class="row">
+              <div class="col-8 offset-4 d-flex justify-content-between">
+                <button *ngIf="mode == 2 || mode == 3" type="button" class="btn btn-success" (click)="handleAction()">
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
+                </button>
+              </div>
             </div>
           </div>
         </form>

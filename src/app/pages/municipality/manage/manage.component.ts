@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MunicipalityService } from './../../../services/municipality.service';
-import { Municipality } from 'src/app/models/municipality.model';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-manage',
+  selector: 'app-manage-municipality',
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-
 export class ManageMunicipalityComponent implements OnInit {
   municipalityForm: FormGroup;
   municipalityId: number;
@@ -27,17 +25,17 @@ export class ManageMunicipalityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
       this.mode = 1;
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes('create')) {
       this.mode = 2;
-    } else if (currentUrl.includes("update")) {
+    } else if (currentUrl.includes('update')) {
       this.mode = 3;
-    } else if (currentUrl.includes("delete")) {
+    } else if (currentUrl.includes('delete')) {
       this.mode = 4;
     }
-  
+
     if (this.route.snapshot.params.id) {
       this.municipalityId = this.route.snapshot.params.id;
       this.getMunicipality(this.municipalityId);
@@ -47,8 +45,8 @@ export class ManageMunicipalityComponent implements OnInit {
   configFormGroup() {
     this.municipalityForm = this.theFormBuilder.group({
       name: ['', Validators.required],
-      description: ['', Validators.required],
-      department_id: ['', Validators.required]
+      description: [''],
+      department_id: ['', Validators.required],
     });
   }
 
@@ -62,29 +60,40 @@ export class ManageMunicipalityComponent implements OnInit {
     });
   }
 
-  create() {
+  handleAction() {
     this.trySend = true;
     if (this.municipalityForm.valid) {
-      this.municipalityService.create(this.municipalityForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El municipio ha sido creado correctamente', 'success');
-        this.router.navigate(['/municipalities']);
-      });
+      if (this.mode === 2) {
+        this.create();
+      } else if (this.mode === 3) {
+        this.update();
+      }
     }
   }
 
+  create() {
+    this.municipalityService.create(this.municipalityForm.value).subscribe(
+      () => {
+        Swal.fire('Creado', 'El municipio ha sido creado correctamente', 'success');
+        this.router.navigate(['/municipalities']);
+      },
+      (error) => {
+        Swal.fire('Error', 'Ocurrió un error al crear el municipio', 'error');
+        console.error(error);
+      }
+    );
+  }
+
   update() {
-    this.trySend = true;
-    if (this.municipalityForm.valid) {
-      this.municipalityService.update(this.municipalityId, this.municipalityForm.value).subscribe(() => {
+    this.municipalityService.update(this.municipalityId, this.municipalityForm.value).subscribe(
+      () => {
         Swal.fire('Actualizado', 'El municipio ha sido actualizado correctamente', 'success');
         this.router.navigate(['/municipalities']);
-      });
-    }
-  }
-  delete () {
-    this.municipalityService.delete(this.municipalityId).subscribe(() => {
-      Swal.fire('Eliminado', 'El municipio ha sido eliminado correctamente', 'success');
-      this.router.navigate(['/municipalities']);
-    });
+      },
+      (error) => {
+        Swal.fire('Error', 'Ocurrió un error al actualizar el municipio', 'error');
+        console.error(error);
+      }
+    );
   }
 }

@@ -10,23 +10,23 @@ export class OwnerVehicleService {
   constructor(private http: HttpClient) {}
 
   list(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.url_ms_businessAKJ}/owner-vehicles`);
+    return this.http.get<any[]>(`${environment.url_ms_businessAKJ}/ownervehicles`);
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.url_ms_businessAKJ}/owner-vehicles/${id}`);
+    return this.http.delete<void>(`${environment.url_ms_businessAKJ}/ownervehicles/${id}`);
   }
 
   get(id: number): Observable<any> {
-    return this.http.get<any>(`${environment.url_ms_businessAKJ}/owner-vehicles/${id}`);
+    return this.http.get<any>(`${environment.url_ms_businessAKJ}/ownervehicles/${id}`);
   }
 
   create(ownerVehicle: any): Observable<any> {
     delete ownerVehicle.id;
-    return this.http.post<any>(`${environment.url_ms_businessAKJ}/owner-vehicles`, ownerVehicle);
+    return this.http.post<any>(`${environment.url_ms_businessAKJ}/ownervehicles`, ownerVehicle);
   }
 
   update(id: number, ownerVehicle: any): Observable<any> {
-    return this.http.put<any>(`${environment.url_ms_businessAKJ}/owner-vehicles/${id}`, ownerVehicle);
+    return this.http.put<any>(`${environment.url_ms_businessAKJ}/ownervehicles/${id}`, ownerVehicle);
   }
 }

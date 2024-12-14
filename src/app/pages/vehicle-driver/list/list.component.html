@@ -1,46 +1,43 @@
 <div class="container-fluid mt--10">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Conductores De Vehiculos</h3>
+          <h3 class="mb-0">Relaciones Vehículo-Conductor</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Relación</button>
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Fecha de Asignación</th>
-                <th scope="col">Fecha de Desasignación</th>
-                <th scope="col">Vehiculo ID</th>
-                <th scope="col">Conductor ID</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Fecha de Actualización</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let driver of vehicleDrivers">
-                <td>{{ driver.id }}</td>
-                <td>{{driver.fecha_asignacion| date: 'dd/MM/yyyy' }}</td>
-                <td>{{driver.fecha_desasignacion | date: 'dd/MM/yyyy' }}</td>
-                <td>{{driver.vehiculo_id }}</td>
-                <td>{{driver.conductor_id }}</td>
-                <td>{{driver.created_at | date: 'dd/MM/yyyy' }}</td>
-                <td>{{driver.updated_at | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(driver.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(driver.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(driver.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <th>ID</th>
+                  <th>Fecha Asignación</th>
+                  <th>Fecha Desasignación</th>
+                  <th>ID Vehículo</th>
+                  <th>ID Conductor</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vehiculoDriver of vehicleDrivers">
+                  <td>{{ vehiculoDriver.id }}</td>
+                  <td>{{ vehiculoDriver.fecha_asignacion }}</td>
+                  <td>{{ vehiculoDriver.fecha_desasignacion }}</td>
+                  <td>{{ vehiculoDriver.vehiculo_id }}</td>
+                  <td>{{ vehiculoDriver.conductor_id }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(vehiculoDriver.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(vehiculoDriver.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(vehiculoDriver.id)">Eliminar</button>
+                  </td>
+                </tr>
+                <tr *ngIf="vehicleDrivers.length === 0">
+                  <td colspan="6" class="text-center">No se encontraron relaciones.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

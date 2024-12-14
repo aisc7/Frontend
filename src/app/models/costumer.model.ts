@@ -5,13 +5,7 @@ import { NaturalPerson } from './natural-person.model';
 
 export class Customer {
     id: number;
-    user_id: string;
-    phone: string;
-    order_count: number;
-    createdAt: Date;
-    updatedAt: Date;
-    contracts: Contract[];
-    products: Product[];
-    company: Company;
-    naturalperson: NaturalPerson;
-}
+    user_id: string; // ID del usuario
+    phone: string; // Teléfono del cliente
+    order_count: number; // Número de pedidos realizados
+}  

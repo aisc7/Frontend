@@ -11,12 +11,12 @@ import Swal from 'sweetalert2';
 })
 export class ManageNaturalPersonComponent implements OnInit {
   naturalPersonForm: FormGroup;
-  naturalPersonId: number | null = null;
-  mode: number; // 1- View, 2- Create, 3- Update, 4- Delete
+  personId: number;
+  mode: number;
   trySend: boolean = false;
 
   constructor(
-    private theFormBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private naturalPersonService: NaturalPersonService,
     private router: Router,
     private route: ActivatedRoute
@@ -25,21 +25,28 @@ export class ManageNaturalPersonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.handleMode();
-    if (this.mode !== 2 && this.route.snapshot.params['id']) {
-      this.naturalPersonId = +this.route.snapshot.params['id']; // Convert to number
-      this.getNaturalPerson(this.naturalPersonId);
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
+      this.mode = 1; // Ver
+    } else if (currentUrl.includes('create')) {
+      this.mode = 2; // Crear
+    } else if (currentUrl.includes('update')) {
+      this.mode = 3; // Actualizar
+    }
+
+    if (this.route.snapshot.params.id) {
+      this.personId = this.route.snapshot.params.id;
+      this.getNaturalPerson(this.personId);
     }
   }
 
-  configFormGroup(): void {
-    this.naturalPersonForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
+  configFormGroup() {
+    this.naturalPersonForm = this.formBuilder.group({
       user_id: ['', Validators.required],
       document_type: ['', Validators.required],
       document_number: ['', Validators.required],
       birth_date: ['', Validators.required],
-      company_id: ['', Validators.required],
+      company_id: [''],
       customer_id: ['', Validators.required]
     });
   }
@@ -48,90 +55,36 @@ export class ManageNaturalPersonComponent implements OnInit {
     return this.naturalPersonForm.controls;
   }
 
-  handleMode(): void {
-    const currentUrl = this.route.snapshot.routeConfig?.path || '';
-
-    switch (true) {
-      case currentUrl.includes('view'):
-        this.mode = 1;
-        break;
-      case currentUrl.includes('create'):
-        this.mode = 2;
-        break;
-      case currentUrl.includes('update'):
-        this.mode = 3;
-        break;
-      case currentUrl.includes('delete'):
-        this.mode = 4;
-        break;
-      default:
-        this.mode = 2; // Default to Create
-        break;
-    }
-  }
-
-  getNaturalPerson(id: number): void {
-    this.naturalPersonService.get(id).subscribe({
-      next: (data) => {
-        this.naturalPersonForm.patchValue(data);
-      },
-      error: () => {
-        Swal.fire('Error', 'No se pudo cargar la información de la persona natural', 'error');
-      }
+  getNaturalPerson(id: number) {
+    this.naturalPersonService.get(id).subscribe((data) => {
+      this.naturalPersonForm.patchValue(data);
     });
   }
 
-  create(): void {
+  handleAction() {
+    if (this.mode === 2) {
+      this.create();
+    } else if (this.mode === 3) {
+      this.update();
+    }
+  }
+
+  create() {
     this.trySend = true;
     if (this.naturalPersonForm.valid) {
-      this.naturalPersonService.create(this.naturalPersonForm.value).subscribe({
-        next: () => {
-          Swal.fire('Creado', 'La Persona Natural ha sido creada correctamente', 'success');
-          this.router.navigate(['/natural-persons']);
-        },
-        error: () => {
-          Swal.fire('Error', 'No se pudo crear la Persona Natural', 'error');
-        }
+      this.naturalPersonService.create(this.naturalPersonForm.value).subscribe(() => {
+        Swal.fire('Creado', 'La persona natural ha sido creada correctamente', 'success');
+        this.router.navigate(['/natural-people']);
       });
     }
   }
 
-  update(): void {
+  update() {
     this.trySend = true;
-    if (this.naturalPersonForm.valid && this.naturalPersonId !== null) {
-      this.naturalPersonService.update(this.naturalPersonId, this.naturalPersonForm.value).subscribe({
-        next: () => {
-          Swal.fire('Actualizado', 'La Persona Natural ha sido actualizada correctamente', 'success');
-          this.router.navigate(['/natural-persons']);
-        },
-        error: () => {
-          Swal.fire('Error', 'No se pudo actualizar la Persona Natural', 'error');
-        }
-      });
-    }
-  }
-
-  delete(): void {
-    if (this.naturalPersonId !== null) {
-      Swal.fire({
-        title: '¿Estás seguro?',
-        text: 'Esta acción no se puede deshacer',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.naturalPersonService.delete(this.naturalPersonId).subscribe({
-            next: () => {
-              Swal.fire('Eliminado', 'La Persona Natural ha sido eliminada correctamente', 'success');
-              this.router.navigate(['/natural-persons']);
-            },
-            error: () => {
-              Swal.fire('Error', 'No se pudo eliminar la Persona Natural', 'error');
-            }
-          });
-        }
+    if (this.naturalPersonForm.valid) {
+      this.naturalPersonService.update(this.personId, this.naturalPersonForm.value).subscribe(() => {
+        Swal.fire('Actualizado', 'La persona natural ha sido actualizada correctamente', 'success');
+        this.router.navigate(['/natural-people']);
       });
     }
   }

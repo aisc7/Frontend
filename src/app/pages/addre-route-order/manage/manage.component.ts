@@ -15,6 +15,7 @@ export class ManageComponent implements OnInit {
   addreRouteOrderId: number;
   mode: number;
   trySend: boolean = false;
+  orderId: any;
 
   constructor(
     private theFormBuilder: FormBuilder,
@@ -26,18 +27,17 @@ export class ManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Analiza y parte la ruta
-    const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
       this.mode = 1;
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes('create')) {
       this.mode = 2;
-    } else if (currentUrl.includes("update")) {
+    } else if (currentUrl.includes('update')) {
       this.mode = 3;
-    }else if (currentUrl.includes("delete")) {
+    } else if (currentUrl.includes('delete')) {
       this.mode = 4;
     }
-  
+
     if (this.route.snapshot.params.id) {
       this.addreRouteOrderId = this.route.snapshot.params.id;
       this.getAddreRouteOrder(this.addreRouteOrderId);
@@ -46,8 +46,8 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.addreRouteOrderForm = this.theFormBuilder.group({
-      addressId: ['', Validators.required],
-      routeId: ['', Validators.required]
+      address_id: ['', Validators.required], // ID de la dirección, requerido
+      route_id: ['', Validators.required], // ID de la ruta, requerido
     });
   }
 
@@ -61,23 +61,44 @@ export class ManageComponent implements OnInit {
     });
   }
 
+  handleAction() {
+    this.trySend = true;
+    if (this.addreRouteOrderForm.valid) {
+      if (this.mode === 2) {
+        this.create();
+      } else if (this.mode === 3) {
+        this.update();
+      }
+    }
+  }
+
   create() {
     this.trySend = true;
     if (this.addreRouteOrderForm.valid) {
-      this.addreRouteOrderService.create(this.addreRouteOrderForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El AddreRouteOrder ha sido creado correctamente', 'success');
-        this.router.navigate(['/addre-route-orders']);
-      });
+      this.addreRouteOrderService.create(this.addreRouteOrderForm.value).subscribe(
+        () => {
+          Swal.fire('Creado', 'El AddreRouteOrder ha sido creado correctamente', 'success');
+          this.router.navigate(['/addre-route-orders']);
+        },
+        (error) => {
+          Swal.fire('Error', 'Ocurrió un error al crear el AddreRouteOrder', 'error');
+        }
+      );
     }
   }
 
   update() {
     this.trySend = true;
     if (this.addreRouteOrderForm.valid) {
-      this.addreRouteOrderService.update(this.addreRouteOrderId, this.addreRouteOrderForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El AddreRouteOrder ha sido actualizado correctamente', 'success');
-        this.router.navigate(['/addre-route-orders']);
-      });
+      this.addreRouteOrderService.update(this.addreRouteOrderId, this.addreRouteOrderForm.value).subscribe(
+        () => {
+          Swal.fire('Actualizado', 'El AddreRouteOrder ha sido actualizado correctamente', 'success');
+          this.router.navigate(['/addre-route-orders']);
+        },
+        (error) => {
+          Swal.fire('Error', 'Ocurrió un error al actualizar el AddreRouteOrder', 'error');
+        }
+      );
     }
   }
 }

@@ -11,23 +11,23 @@ export class CategoryProductService {
   constructor(private http: HttpClient) {}
 
   list(): Observable<CategoryProduct[]> {
-    return this.http.get<CategoryProduct[]>(`${environment.url_ms_businessAKJ}/category-products`);
+    return this.http.get<CategoryProduct[]>(`${environment.url_ms_businessAKJ}/categoryproducts`);
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.url_ms_businessAKJ}/category-products/${id}`);
+    return this.http.delete<void>(`${environment.url_ms_businessAKJ}/categoryproducts/${id}`);
   }
 
   get(id: number): Observable<CategoryProduct> {
-    return this.http.get<CategoryProduct>(`${environment.url_ms_businessAKJ}/category-products/${id}`);
+    return this.http.get<CategoryProduct>(`${environment.url_ms_businessAKJ}/categoryproducts/${id}`);
   }
 
   create(categoryProduct: CategoryProduct): Observable<CategoryProduct> {
     delete categoryProduct.id;
-    return this.http.post<CategoryProduct>(`${environment.url_ms_businessAKJ}/category-products`, categoryProduct);
+    return this.http.post<CategoryProduct>(`${environment.url_ms_businessAKJ}/categoryproducts`, categoryProduct);
   }
 
   update(id: number, categoryProduct: CategoryProduct): Observable<CategoryProduct> {
-    return this.http.put<CategoryProduct>(`${environment.url_ms_businessAKJ}/category-products/${id}`, categoryProduct);
+    return this.http.put<CategoryProduct>(`${environment.url_ms_businessAKJ}/categoryproducts/${id}`, categoryProduct);
   }
 }

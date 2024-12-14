@@ -6,14 +6,9 @@ import { Hotel } from './hotel.model';
 import { Restaurant } from './restaurant.model';
 
 export class Servicio {
-    id: number;
-    descripcion: string;
-    costo: number;
-    createdAt: Date;
-    updatedAt: Date;
-    spents: Spent[];
-    conductores: Conductor[];
-    administrador: Administrator;
-    hotel: Hotel;
-    restaurant: Restaurant;
-}
+    id?: number; // ID autogenerado
+    descripcion: string; // Descripción del servicio
+    costo: number; // Costo del servicio
+    created_at?: Date; // Fecha de creación (autogenerado)
+    updated_at?: Date; // Fecha de actualización (autogenerado)
+}  

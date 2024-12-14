@@ -1,47 +1,43 @@
 <div class="container-fluid mt--10">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Propietarios de Vehículos</h3>
+          <h3 class="mb-0">Relaciones Dueño-Vehículo</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Relación</button>
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Fecha Asignación</th>
-                <th scope="col">Fecha Desasignación</th>
-                <th scope="col">Vehículo ID</th>
-                <th scope="col">Dueño ID</th>
-                <th scope="col"> Fecha Creación</th>
-                <th scope="col"> Fecha Actualización</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let owner of ownerVehicles">
-                <td>{{ owner.id }}</td>
-                <td>{{ owner.fechAsignacion }}</td>
-                <td>{{ owner.fechDesasignacion }}</td>
-                <td>{{ owner.vehiculo_id }}</td>
-                <td>{{ owner.dueno }}</td>
-                <td>{{owner.createdAt | date: 'dd/MM/yyyy' }}</td>
-                <td>{{owner.updatedAt | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(owner.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(owner.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(owner.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <th>ID</th>
+                  <th>Fecha Asignación</th>
+                  <th>Fecha Designación</th>
+                  <th>ID Vehículo</th>
+                  <th>ID Dueño</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ownerVehicle of ownerVehicles">
+                  <td>{{ ownerVehicle.id }}</td>
+                  <td>{{ ownerVehicle.fecha_asignacion }}</td>
+                  <td>{{ ownerVehicle.fecha_designacion }}</td>
+                  <td>{{ ownerVehicle.vehiculo_id }}</td>
+                  <td>{{ ownerVehicle.dueno_id }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(ownerVehicle.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(ownerVehicle.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(ownerVehicle.id)">Eliminar</button>
+                  </td>
+                </tr>
+                <tr *ngIf="ownerVehicles.length === 0">
+                  <td colspan="6" class="text-center">No se encontraron relaciones.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

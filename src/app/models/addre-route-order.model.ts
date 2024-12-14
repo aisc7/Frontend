@@ -6,9 +6,6 @@ export class AddreRouteOrder {
     id: number;
     address_id: number;
     route_id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    address: Address;
-    route: Route;
-    batch: Batch;
-}
+    created_at?: string;
+    updated_at?: string;
+}  

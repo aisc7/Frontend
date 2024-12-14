@@ -4,13 +4,9 @@ import { Conductor } from './conductor.model';
 import { Spent } from './spent.model';
 
 export class Dueno {
-    id: number;
-    user_id: string;
-    conductor_id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    ownervehicles: OwnerVehicle[];
-    vehiculos: Vehiculo[];
-    conductor: Conductor;
-    spents: Spent[];
+    id?: number; // ID único del dueño
+    user_id: string; // ID del usuario relacionado
+    conductor_id: number; // ID del conductor relacionado
+    created_at?: string; // Fecha de creación
+    updated_at?: string; // Fecha de última actualización
 }

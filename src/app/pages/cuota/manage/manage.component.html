@@ -2,119 +2,90 @@
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
-        <div class="card-header text-center">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Cuota</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear Cuota</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Cuota</h3>
+        <div class="card-header border-0 text-center">
+          <h3 *ngIf="mode === 1" class="mb-0">Visualizar Cuota</h3>
+          <h3 *ngIf="mode === 2" class="mb-0">Crear Cuota</h3>
+          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Cuota</h3>
+          <h3 *ngIf="mode === 4" class="mb-0">Eliminar Cuota</h3>
         </div>
-        <form [formGroup]="cuotaForm">
+        <form class="form" [formGroup]="cuotaForm">
           <div class="card-body">
-
-        <!-- Campo Monto -->
-        <div class="row mb-3">
-          <div class="col-4">
-            <label for="monto" class="form-label">Monto:</label>
-          </div>
-          <div class="col-8">
-            <input
-              id="monto"
-              type="text"
-              class="form-control"
-              formControlName="monto"
-              [readonly]="mode == 1"
-              placeholder="Ingrese el monto"
-              [class.is-invalid]="trySend && getTheFormGroup.monto.invalid"
-            />
-            <div *ngIf="trySend && getTheFormGroup.monto.invalid" class="invalid-feedback">
-              Este campo es obligatorio.
+            <!-- Campos -->
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="monto" class="form-label">Monto:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="monto"
+                  type="number"
+                  class="form-control"
+                  formControlName="monto"
+                  placeholder="Ingrese el monto de la cuota"
+                  [readonly]="mode === 1 || mode === 4"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="fecha_vencimiento" class="form-label">Fecha de Vencimiento:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="fecha_vencimiento"
+                  type="date"
+                  class="form-control"
+                  formControlName="fecha_vencimiento"
+                  [readonly]="mode === 1 || mode === 4"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="estado_pago" class="form-label">Estado del Pago:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="estado_pago"
+                  type="text"
+                  class="form-control"
+                  formControlName="estado_pago"
+                  placeholder="Ingrese el estado del pago"
+                  [readonly]="mode === 1 || mode === 4"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="contract_id" class="form-label">ID del Contrato:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="contract_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="contract_id"
+                  placeholder="Ingrese el ID del contrato asociado"
+                  [readonly]="mode === 1 || mode === 4"
+                />
+              </div>
+            </div>
+            <!-- Botones -->
+            <div class="row">
+              <div class="col-8 offset-4 d-flex justify-content-between">
+                <button
+                  *ngIf="mode === 2 || mode === 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode === 2 ? 'Crear' : 'Actualizar' }}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Campo Fecha de Vencimiento -->
-        <div class="row mb-3">
-          <div class="col-4">
-            <label for="fecha_vencimiento" class="form-label">Fecha de Vencimiento:</label>
-          </div>
-          <div class="col-8">
-            <input
-              id="fecha_vencimiento"
-              type="date"
-              class="form-control"
-              formControlName="fecha_vencimiento"
-              [readonly]="mode == 1"
-              [class.is-invalid]="trySend && getTheFormGroup.fecha_vencimiento.invalid"
-            />
-            <div *ngIf="trySend && getTheFormGroup.fecha_vencimiento.invalid" class="invalid-feedback">
-              Este campo es obligatorio.
-            </div>
-          </div>
-        </div>
-
-        <!-- Campo Estado del Pago -->
-        <div class="row mb-3">
-          <div class="col-4">
-            <label for="estado_pago" class="form-label">Estado del Pago:</label>
-          </div>
-          <div class="col-8">
-            <input
-              id="estado_pago"
-              type="text"
-              class="form-control"
-              formControlName="estado_pago"
-              [readonly]="mode == 1"
-              placeholder="Ingrese el estado del pago"
-              [class.is-invalid]="trySend && getTheFormGroup.estado_pago.invalid"
-            />
-            <div *ngIf="trySend && getTheFormGroup.estado_pago.invalid" class="invalid-feedback">
-              Este campo es obligatorio.
-            </div>
-          </div>
-        </div>
-
-        <!-- Campo ID del Contrato -->
-        <div class="row mb-3">
-          <div class="col-4">
-            <label for="contract_id" class="form-label">ID del Contrato:</label>
-          </div>
-          <div class="col-8">
-            <input
-              id="contract_id"
-              type="text"
-              class="form-control"
-              formControlName="contract_id"
-              [readonly]="mode == 1"
-              placeholder="Ingrese el ID del contrato"
-              [class.is-invalid]="trySend && getTheFormGroup.contract_id.invalid"
-            />
-            <div *ngIf="trySend && getTheFormGroup.contract_id.invalid" class="invalid-feedback">
-              Este campo es obligatorio.
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-4"></div>
-          <div class="col-8 d-flex justify-content-between">
-            <button
-              *ngIf="mode == 2"
-              type="button"
-              class="btn btn-success"
-              (click)="handleAction()">
-              Crear
-            </button>
-            <button
-              *ngIf="mode == 3"
-              type="button"
-              class="btn btn-primary"
-              (click)="handleAction()">
-              Actualizar
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
-</div>
-</div>
 </div>

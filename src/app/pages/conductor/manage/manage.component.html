@@ -6,119 +6,115 @@
           <h3 *ngIf="mode == 1" class="mb-0">Visualizar Conductor</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear Conductor</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Conductor</h3>
+          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Conductor</h3>
         </div>
-
         <form class="form" [formGroup]="conductorForm">
           <div class="card-body">
-            <!-- ID del conductor -->
+            <!-- Campo User ID -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>ID:</label>
+                <label for="user_id" class="form-label">ID de Usuario:</label>
               </div>
               <div class="col-8">
-                <p *ngIf="mode == 1">{{ conductorId }}</p>
                 <input
-                  *ngIf="mode != 1"
-                  type="text"
-                  class="form-control"
-                  formControlName="id"
-                  title="ID"
-                  placeholder="Ingrese ID"
-                  [readonly]="mode === 1"
-                />
-              </div>
-            </div>
-
-            <!-- Usuario ID -->
-            <div class="row mb-3">
-              <div class="col-4">
-                <label>Usuario ID:</label>
-              </div>
-              <div class="col-8">
-                <p *ngIf="mode == 1">{{ conductorForm.get('user_id').value }}</p>
-                <input
-                  *ngIf="mode != 1"
+                  id="user_id"
                   type="text"
                   class="form-control"
                   formControlName="user_id"
-                  title="Usuario ID"
-                  placeholder="Ingrese Usuario ID"
+                  placeholder="Ingrese el ID de usuario"
+                  [readonly]="mode == 1 || mode == 4"
+                  [class.is-invalid]="trySend && getTheFormGroup.user_id.invalid"
                 />
-                <div *ngIf="getTheFormGroup.user_id.errors && (getTheFormGroup.user_id.dirty || getTheFormGroup.user_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.user_id.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.user_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
 
-            <!-- Licencia -->
+
+            <!-- Campo Licencia -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Licencia:</label>
+                <label for="licencia" class="form-label">Licencia:</label>
               </div>
               <div class="col-8">
-                <p *ngIf="mode == 1">{{ conductorForm.get('licencia').value }}</p>
                 <input
-                  *ngIf="mode != 1"
+                  id="licencia"
                   type="text"
                   class="form-control"
                   formControlName="licencia"
-                  title="Licencia"
-                  placeholder="Ingrese Licencia"
+                  placeholder="Ingrese el número de licencia"
+                  [readonly]="mode == 1 || mode == 4"
+                  [class.is-invalid]="trySend && getTheFormGroup.licencia.invalid"
                 />
-                <div *ngIf="getTheFormGroup.licencia.errors && (getTheFormGroup.licencia.dirty || getTheFormGroup.licencia.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.licencia.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.licencia.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
 
-            <!-- Tipo Licencia -->
+            <!-- Campo Tipo de Licencia -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Tipo Licencia:</label>
+                <label for="tipo_licencia" class="form-label">Tipo de Licencia:</label>
               </div>
               <div class="col-8">
-                <p *ngIf="mode == 1">{{ conductorForm.get('tipo_licencia').value }}</p>
                 <input
-                  *ngIf="mode != 1"
+                  id="tipo_licencia"
                   type="text"
                   class="form-control"
                   formControlName="tipo_licencia"
-                  title="Tipo Licencia"
                   placeholder="Ingrese el tipo de licencia"
+                  [readonly]="mode == 1 || mode == 4"
+                  [class.is-invalid]="trySend && getTheFormGroup.tipo_licencia.invalid"
                 />
-                <div *ngIf="getTheFormGroup.tipo_licencia.errors && (getTheFormGroup.tipo_licencia.dirty || getTheFormGroup.tipo_licencia.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.tipo_licencia.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.tipo_licencia.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
 
-            <!-- Teléfono -->
+            <!-- Campo Teléfono -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Teléfono:</label>
+                <label for="telefono" class="form-label">Teléfono:</label>
               </div>
               <div class="col-8">
-                <p *ngIf="mode == 1">{{ conductorForm.get('telefono').value }}</p>
                 <input
-                  *ngIf="mode != 1"
+                  id="telefono"
                   type="text"
                   class="form-control"
                   formControlName="telefono"
-                  title="Teléfono"
-                  placeholder="Ingrese el teléfono"
+                  placeholder="Ingrese el teléfono del conductor"
+                  [readonly]="mode == 1 || mode == 4"
+                  [class.is-invalid]="trySend && getTheFormGroup.telefono.invalid"
                 />
-                <div *ngIf="getTheFormGroup.telefono.errors && (getTheFormGroup.telefono.dirty || getTheFormGroup.telefono.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.telefono.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.telefono.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
 
             <!-- Botones -->
             <div class="row">
-              <div class="col-12 d-flex justify-content-between">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success" (click)="create()">Crear</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-primary" (click)="update()">Actualizar</button>
-                <button *ngIf="mode == 1" type="button" class="btn btn-danger" (click)="delete(conductorId)">Eliminar</button>
+              <div class="col-4"></div>
+              <div class="col-8 d-flex justify-content-between">
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
+                </button>
+                <button
+                  *ngIf="mode == 4"
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="delete(conductorId)"
+                >
+                  Eliminar
+                </button>
               </div>
             </div>
           </div>

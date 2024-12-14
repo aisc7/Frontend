@@ -1,25 +1,14 @@
 <div class="container-fluid mt--7">
-  <!-- Table -->
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Empresa</h3>
+          <h3 *ngIf="mode == 1" class="mb-0">Ver Empresa</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear Empresa</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Empresa</h3>
-          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Empresa</h3>
         </div>
         <form class="form" [formGroup]="companyForm">
           <div class="card-body">
-            <div class="row mb-3">
-              <div class="col-4">
-                <label>Id:</label>
-              </div>
-              <div class="col-8">
-                <p>{{ companyId }}</p>
-              </div>
-            </div>
-
             <!-- Campo Tipo de Empresa -->
             <div class="row mb-3">
               <div class="col-4">
@@ -31,13 +20,9 @@
                   type="text"
                   class="form-control"
                   formControlName="company_type"
+                  placeholder="Ingrese el tipo de empresa"
                   [readonly]="mode == 1"
-                  placeholder="Ingrese Tipo de Empresa"
-                  [class.is-invalid]="trySend && getTheFormGroup.company_type.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.company_type.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
@@ -52,13 +37,9 @@
                   type="text"
                   class="form-control"
                   formControlName="fiscal_address"
+                  placeholder="Ingrese la dirección fiscal"
                   [readonly]="mode == 1"
-                  placeholder="Ingrese Dirección Fiscal"
-                  [class.is-invalid]="trySend && getTheFormGroup.fiscal_address.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.fiscal_address.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
@@ -70,42 +51,26 @@
               <div class="col-8">
                 <input
                   id="customer_id"
-                  type="text"
+                  type="number"
                   class="form-control"
                   formControlName="customer_id"
+                  placeholder="Ingrese el ID del cliente"
                   [readonly]="mode == 1"
-                  placeholder="Ingrese ID del Cliente"
-                  [class.is-invalid]="trySend && getTheFormGroup.customer_id.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.customer_id.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8 d-flex justify-content-between">
-                <button 
-                  *ngIf="mode == 2" 
-                  type="button" 
-                  class="btn btn-success" 
-                  (click)="handleAction()"> 
-                  Crear 
-                </button>
-                <button 
-                  *ngIf="mode == 3" 
-                  type="button" 
-                  class="btn btn-primary" 
-                  (click)="handleAction()"> 
-                  Actualizar 
-                </button>
-                <button 
-                  *ngIf="mode == 4" 
-                  type="button" 
-                  class="btn btn-danger" 
-                  (click)="handleAction()"> 
-                  Eliminar 
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
                 </button>
               </div>
             </div>

@@ -2,15 +2,13 @@ import { Address } from './address.model';
 import { Municipality } from './municipality.model';
 
 export class DistributionCenter {
-  id: number;
-  name: string; // nombre
-  phone: string; // celular
-  email: string; // correo electrónico
-  capacity: number; // capacidad
-  address_id: number; // dirección
-  municipality_id: number; // municipio_id
-  createdAt: Date;
-  updatedAt: Date;
-  address: Address;
-  municipality: Municipality;
+  id?: number; // ID opcional
+  name: string;
+  phone: string;
+  email: string;
+  capacity: number;
+  address_id: number;
+  municipality_id: number;
+  created_at?: string;
+  updated_at?: string;
 }

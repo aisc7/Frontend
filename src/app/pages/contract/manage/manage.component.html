@@ -6,19 +6,9 @@
           <h3 *ngIf="mode == 1" class="mb-0">Visualizar Contrato</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear Contrato</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Contrato</h3>
-          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Contrato</h3>
         </div>
         <form class="form" [formGroup]="contractForm">
           <div class="card-body">
-            <div class="row mb-3">
-              <div class="col-4">
-                <label>ID:</label>
-              </div>
-              <div class="col-8">
-                <p>{{ contractId }}</p>
-              </div>
-            </div>
-
             <!-- Campo Fecha Inicio -->
             <div class="row mb-3">
               <div class="col-4">
@@ -31,11 +21,7 @@
                   class="form-control"
                   formControlName="fecha_inicio"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.fecha_inicio.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.fecha_inicio.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
@@ -51,11 +37,7 @@
                   class="form-control"
                   formControlName="fecha_fin"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.fecha_fin.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.fecha_fin.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
@@ -70,13 +52,9 @@
                   type="text"
                   class="form-control"
                   formControlName="estado"
+                  placeholder="Ingrese el estado del contrato"
                   [readonly]="mode == 1"
-                  placeholder="Ingrese Estado"
-                  [class.is-invalid]="trySend && getTheFormGroup.estado.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.estado.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
@@ -90,60 +68,40 @@
                   id="detalles_servicio"
                   class="form-control"
                   formControlName="detalles_servicio"
+                  placeholder="Ingrese detalles del servicio"
                   [readonly]="mode == 1"
-                  placeholder="Ingrese Detalles del Servicio"
-                  [class.is-invalid]="trySend && getTheFormGroup.detalles_servicio.invalid"
                 ></textarea>
-                <div *ngIf="trySend && getTheFormGroup.detalles_servicio.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
             <!-- Campo ID del Cliente -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="costumer_id" class="form-label">ID del Cliente:</label>
+                <label for="customer_id" class="form-label">ID del Cliente:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="costumer_id"
-                  type="text"
+                  id="customer_id"
+                  type="number"
                   class="form-control"
-                  formControlName="costumer_id"
+                  formControlName="customer_id"
+                  placeholder="Ingrese el ID del cliente"
                   [readonly]="mode == 1"
-                  placeholder="Ingrese ID del Cliente"
-                  [class.is-invalid]="trySend && getTheFormGroup.costumer_id.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.costumer_id.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
               </div>
             </div>
 
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8 d-flex justify-content-between">
-                <button 
-                  *ngIf="mode == 2" 
-                  type="button" 
-                  class="btn btn-success" 
-                  (click)="handleAction()"> 
-                  Crear 
-                </button>
-                <button 
-                  *ngIf="mode == 3" 
-                  type="button" 
-                  class="btn btn-primary" 
-                  (click)="handleAction()"> 
-                  Actualizar 
-                </button>
-                <button 
-                  *ngIf="mode == 4" 
-                  type="button" 
-                  class="btn btn-danger" 
-                  (click)="handleAction()"> 
-                  Eliminar 
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="mode == 2 ? create() : update()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
                 </button>
               </div>
             </div>

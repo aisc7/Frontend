@@ -10,15 +10,14 @@ import Swal from 'sweetalert2';
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-
 export class ManageCategoryComponent implements OnInit {
   categoryForm: FormGroup;
-  categoryId: number;
-  mode: number;
+  categoryId: number | undefined;
+  mode: number = 0; // 1: Ver, 2: Crear, 3: Actualizar
   trySend: boolean = false;
 
   constructor(
-    private theFormBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private categoryService: CategoryService,
     private router: Router,
     private route: ActivatedRoute
@@ -27,75 +26,72 @@ export class ManageCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
       this.mode = 1;
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes('create')) {
       this.mode = 2;
-    } else if (currentUrl.includes("update")) {
+    } else if (currentUrl.includes('update')) {
       this.mode = 3;
-    } else if (currentUrl.includes("delete")) {
-      this.mode = 4; // Modo de eliminación
     }
 
-    if (this.route.snapshot.params.id) {
-      this.categoryId = this.route.snapshot.params.id;
+    this.categoryId = this.route.snapshot.params['id'];
+    if (this.categoryId && this.mode !== 2) {
       this.getCategory(this.categoryId);
     }
   }
 
   configFormGroup() {
-    this.categoryForm = this.theFormBuilder.group({
-      name: ['', Validators.required],
+    this.categoryForm = this.formBuilder.group({
+      name: ['', Validators.required] // Nombre de la categoría
     });
   }
 
-  get getTheFormGroup() {
+  get formControls() {
     return this.categoryForm.controls;
   }
 
   getCategory(id: number) {
-    this.categoryService.get(id).subscribe((data) => {
+    this.categoryService.get(id).subscribe((data: Category) => {
       this.categoryForm.patchValue(data);
     });
+  }
+
+  handleAction() {
+    if (this.mode === 2) {
+      this.create();
+    } else if (this.mode === 3) {
+      this.update();
+    }
   }
 
   create() {
     this.trySend = true;
     if (this.categoryForm.valid) {
-      this.categoryService.create(this.categoryForm.value).subscribe(() => {
-        Swal.fire('Creado', 'La categoría ha sido creada correctamente', 'success');
-        this.router.navigate(['/categories']);
-      });
+      this.categoryService.create(this.categoryForm.value).subscribe(
+        () => {
+          Swal.fire('Creado', 'La categoría ha sido creada correctamente.', 'success');
+          this.router.navigate(['/categories']);
+        },
+        (error) => {
+          Swal.fire('Error', 'Ocurrió un error al crear la categoría.', 'error');
+        }
+      );
     }
   }
 
   update() {
     this.trySend = true;
     if (this.categoryForm.valid) {
-      this.categoryService.update(this.categoryId, this.categoryForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'La categoría ha sido actualizada correctamente', 'success');
-        this.router.navigate(['/categories']);
-      });
-    }
-  }
-
-  delete() {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: 'Esta acción eliminará la categoría.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Eliminar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.categoryService.delete(this.categoryId).subscribe(() => {
-          Swal.fire('Eliminado', 'La categoría ha sido eliminada correctamente', 'success');
+      this.categoryService.update(this.categoryId!, this.categoryForm.value).subscribe(
+        () => {
+          Swal.fire('Actualizado', 'La categoría ha sido actualizada correctamente.', 'success');
           this.router.navigate(['/categories']);
-        });
-      }
-    });
+        },
+        (error) => {
+          Swal.fire('Error', 'Ocurrió un error al actualizar la categoría.', 'error');
+        }
+      );
+    }
   }
 }

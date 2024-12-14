@@ -11,12 +11,12 @@ import Swal from 'sweetalert2';
 })
 export class ManageCategoryProductComponent implements OnInit {
   categoryProductForm: FormGroup;
-  categoryProductId: number | null = null;
-  mode: number = 2;
+  relationId: number;
+  mode: number;
   trySend: boolean = false;
 
   constructor(
-    private theFormBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private categoryProductService: CategoryProductService,
     private router: Router,
     private route: ActivatedRoute
@@ -25,34 +25,32 @@ export class ManageCategoryProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    this.mode = this.getModeFromUrl(currentUrl);
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
+      this.mode = 1; // Ver
+    } else if (currentUrl.includes('create')) {
+      this.mode = 2; // Crear
+    } else if (currentUrl.includes('update')) {
+      this.mode = 3; // Actualizar
+    }
 
     if (this.route.snapshot.params.id) {
-      this.categoryProductId = +this.route.snapshot.params.id;
-      this.getCategoryProduct(this.categoryProductId);
+      this.relationId = this.route.snapshot.params.id;
+      this.getCategoryProduct(this.relationId);
     }
   }
 
   configFormGroup() {
-    this.categoryProductForm = this.theFormBuilder.group({
+    this.categoryProductForm = this.formBuilder.group({
       fecha_asignacion: ['', Validators.required],
-      fecha_designacion: ['', Validators.required],
-      producto_id: ['', Validators.required],
-      category_id: ['', Validators.required]
+      fecha_desasignacion: [''],
+      product_id: ['', Validators.required],
+      category_id: ['', Validators.required],
     });
   }
 
   get getTheFormGroup() {
     return this.categoryProductForm.controls;
-  }
-
-  getModeFromUrl(url: string): number {
-    if (url.includes("view")) return 1;
-    if (url.includes("create")) return 2;
-    if (url.includes("update")) return 3;
-    if (url.includes("delete")) return 4;
-    return 2; // Default: Crear
   }
 
   getCategoryProduct(id: number) {
@@ -62,52 +60,30 @@ export class ManageCategoryProductComponent implements OnInit {
   }
 
   handleAction() {
-    this.trySend = true;
-
-    if (!this.categoryProductForm.valid) {
-      Swal.fire('Error', 'Por favor, complete todos los campos obligatorios.', 'error');
-      return;
+    if (this.mode === 2) {
+      this.create();
+    } else if (this.mode === 3) {
+      this.update();
     }
+  }
 
-    switch (this.mode) {
-      case 2:
-        this.categoryProductService.create(this.categoryProductForm.value).subscribe(() => {
-          Swal.fire('Creado', 'El producto de categoría ha sido creado correctamente.', 'success');
-          this.router.navigate(['/category-products']);
-        });
-        break;
+  create() {
+    this.trySend = true;
+    if (this.categoryProductForm.valid) {
+      this.categoryProductService.create(this.categoryProductForm.value).subscribe(() => {
+        Swal.fire('Creado', 'La relación categoría-producto ha sido creada correctamente', 'success');
+        this.router.navigate(['/category-products']);
+      });
+    }
+  }
 
-      case 3:
-        if (this.categoryProductId !== null) {
-          this.categoryProductService.update(this.categoryProductId, this.categoryProductForm.value).subscribe(() => {
-            Swal.fire('Actualizado', 'El producto de categoría ha sido actualizado correctamente.', 'success');
-            this.router.navigate(['/category-products']);
-          });
-        }
-        break;
-
-      case 1:
-        if (this.categoryProductId !== null) {
-          Swal.fire({
-            title: "Eliminar",
-            text: "¿Está seguro que desea eliminar este producto de categoría?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sí, eliminar",
-            cancelButtonText: "Cancelar"
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.categoryProductService.delete(this.categoryProductId).subscribe(() => {
-                Swal.fire('Eliminado', 'El producto de categoría ha sido eliminado correctamente.', 'success');
-                this.router.navigate(['/category-products']);
-              });
-            }
-          });
-        }
-        break;
-
-      default:
-        Swal.fire('Error', 'Modo no reconocido.', 'error');
+  update() {
+    this.trySend = true;
+    if (this.categoryProductForm.valid) {
+      this.categoryProductService.update(this.relationId, this.categoryProductForm.value).subscribe(() => {
+        Swal.fire('Actualizado', 'La relación categoría-producto ha sido actualizada correctamente', 'success');
+        this.router.navigate(['/category-products']);
+      });
     }
   }
 }

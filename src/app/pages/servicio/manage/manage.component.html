@@ -1,8 +1,8 @@
 <div class="container-fluid mt--7">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8">
-      <div class="card shadow">
-        <div class="card-header border-0">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
           <h3 *ngIf="mode == 1" class="mb-0">Visualizar Servicio</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear Servicio</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Servicio</h3>
@@ -10,47 +10,62 @@
         </div>
         <form class="form" [formGroup]="servicioForm">
           <div class="card-body">
-
-            <!-- Descripción del Servicio -->
-            <div class="row">
+            <!-- Campo Descripción -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label for="descripcion" class="form-label">Descripción:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="descripcion" title="Descripción" placeholder="Ingrese la descripción del servicio">
-                <p *ngIf="mode == 1">{{ servicioForm.value.descripcion }}</p>
-                <div *ngIf="getTheFormGroup.descripcion.errors && (getTheFormGroup.descripcion.dirty || getTheFormGroup.descripcion.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.descripcion.errors.required" class="msnError">Requerido</strong>
+                <input
+                  id="descripcion"
+                  type="text"
+                  class="form-control"
+                  formControlName="descripcion"
+                  placeholder="Ingrese la descripción del servicio"
+                  [readonly]="mode == 1 || mode == 4"
+                  [class.is-invalid]="trySend && getTheFormGroup.descripcion.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.descripcion.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
-            <br />
 
-            <!-- Costo del Servicio -->
-            <div class="row">
+            <!-- Campo Costo -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label for="costo" class="form-label">Costo:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="number" class="form-control" formControlName="costo" title="Costo" placeholder="Ingrese el costo del servicio">
-                <p *ngIf="mode == 1">{{ servicioForm.value.costo }}</p>
-                <div *ngIf="getTheFormGroup.costo.errors && (getTheFormGroup.costo.dirty || getTheFormGroup.costo.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.costo.errors.required" class="msnError">Requerido</strong>
+                <input
+                  id="costo"
+                  type="number"
+                  class="form-control"
+                  formControlName="costo"
+                  placeholder="Ingrese el costo del servicio"
+                  [readonly]="mode == 1 || mode == 4"
+                  [class.is-invalid]="trySend && getTheFormGroup.costo.invalid"
+                />
+                <div *ngIf="trySend && getTheFormGroup.costo.invalid" class="invalid-feedback">
+                  Este campo es obligatorio y debe ser un valor positivo.
                 </div>
               </div>
             </div>
-            <br />
 
-            <!-- Botones de acción -->
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar</button>
-                <button *ngIf="mode == 4" type="button" class="btn btn-danger btn-block" (click)="delete()">Eliminar</button>
+              <div class="col-8 d-flex justify-content-between">
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
+                </button>
               </div>
             </div>
-
           </div>
         </form>
       </div>

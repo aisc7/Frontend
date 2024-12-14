@@ -1,46 +1,43 @@
 <div class="container-fluid mt--10">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
           <h3 class="mb-0">Productos</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Producto</button>
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Lote ID</th>
-                <th scope="col">Cliente ID</th>
-                <th scope="col"> Fecha Creación</th>
-                <th scope="col"> Fecha Actualización</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let product of products">
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.batch_id }}</td>
-                <td>{{ product.customer_id }}</td>
-               <td>{{product.createdAt | date: 'dd/MM/yyyy' }}</td>
-                <td>{{product.updatedAt | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(product.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(product.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(product.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>ID Lote</th>
+                  <th>ID Cliente</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of products">
+                  <td>{{ product.id }}</td>
+                  <td>{{ product.name }}</td>
+                  <td>{{ product.description }}</td>
+                  <td>{{ product.batch_id }}</td>
+                  <td>{{ product.customer_id }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(product.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(product.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(product.id)">Eliminar</button>
+                  </td>
+                </tr>
+                <tr *ngIf="products.length === 0">
+                  <td colspan="6" class="text-center">No se encontraron productos.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

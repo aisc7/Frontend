@@ -1,50 +1,44 @@
-<div class="container-fluid mt--10">
+<div class="container-fluid mt--7">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Rutas</h3>
+          <h3 class="mb-0">Lista de Rutas</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Ruta</button>
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Lugar de inicio</th>
-                <th scope="col">Lugar final</th>
-                <th scope="col">Distancia</th>
-                <th scope="col">Fecha de envio</th>
-                <th scope="col">Contrato ID</th>
-                <th scope="col">Vehiculo ID</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Fecha de Actualización</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let route of routes">
-                <td>{{ route.id }}</td>
-                <td>{{ route.starting_place }}</td>
-                <td>{{ route.ending_place }}</td>
-                <td>{{ route.distance }}</td>
-                <td>{{ route.delivery_date}}</td>
-                <td>{{ route.contract_id }}</td>
-                <td>{{ route.vehicle_id }}</td>
-                <td>{{route.createdAt | date: 'dd/MM/yyyy' }}</td>
-                <td>{{route.updatedAt | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(route.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(route.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(route.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <th>ID</th>
+                  <th>Inicio</th>
+                  <th>Destino</th>
+                  <th>Distancia</th>
+                  <th>Fecha Entrega</th>
+                  <th>Contrato</th>
+                  <th>Vehículo</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let route of routes">
+                  <td>{{ route.id }}</td>
+                  <td>{{ route.starting_place }}</td>
+                  <td>{{ route.ending_place }}</td>
+                  <td>{{ route.distance }} km</td>
+                  <td>{{ route.delivery_date | date }}</td>
+                  <td>{{ route.contract_id }}</td>
+                  <td>{{ route.vehiculo_id }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(route.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(route.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(route.id)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

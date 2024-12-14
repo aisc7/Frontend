@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServicioService } from './../../../services/servicio.service';
-import { Servicio } from 'src/app/models/servicio.model';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-manage',
+  selector: 'app-manage-servicio',
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
@@ -26,29 +25,27 @@ export class ManageServicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
-      this.mode = 1; // Modo de ver
-    } else if (currentUrl.includes("create")) {
-      this.mode = 2; // Modo de crear
-    } else if (currentUrl.includes("update")) {
-      this.mode = 3; // Modo de actualizar
-    } else if (currentUrl.includes("delete")) {
-      this.mode = 4; // Modo de eliminar
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
+      this.mode = 1; // Visualizar
+    } else if (currentUrl.includes('create')) {
+      this.mode = 2; // Crear
+    } else if (currentUrl.includes('update')) {
+      this.mode = 3; // Actualizar
+    } else if (currentUrl.includes('delete')) {
+      this.mode = 4; // Eliminar
     }
 
-    this.servicioId = this.route.snapshot.params['id']; // Obtener el id desde la ruta
-    if (this.servicioId) {
-      this.servicioService.get(this.servicioId).subscribe((data: Servicio) => {
-        this.servicioForm.patchValue(data);
-      });
+    if (this.route.snapshot.params.id) {
+      this.servicioId = this.route.snapshot.params.id;
+      this.getServicio(this.servicioId);
     }
   }
 
   configFormGroup() {
     this.servicioForm = this.theFormBuilder.group({
-      descripcion: ['', Validators.required],
-      costo: ['', Validators.required]
+      descripcion: ['', Validators.required], // Descripción del servicio
+      costo: ['', [Validators.required, Validators.min(0)]] // Costo (validación de mínimo 0)
     });
   }
 
@@ -56,42 +53,46 @@ export class ManageServicioComponent implements OnInit {
     return this.servicioForm.controls;
   }
 
-  create() {
+  getServicio(id: number) {
+    this.servicioService.get(id).subscribe((data) => {
+      this.servicioForm.patchValue(data);
+    });
+  }
+
+  handleAction() {
     this.trySend = true;
     if (this.servicioForm.valid) {
-      this.servicioService.create(this.servicioForm.value).subscribe(() => {
-        Swal.fire('Creado', 'El Servicio ha sido creado correctamente', 'success');
-        this.router.navigate(['/servicios']);
-      });
+      if (this.mode === 2) {
+        this.create();
+      } else if (this.mode === 3) {
+        this.update();
+      }
     }
+  }
+
+  create() {
+    this.servicioService.create(this.servicioForm.value).subscribe(
+      () => {
+        Swal.fire('Creado', 'El servicio ha sido creado correctamente', 'success');
+        this.router.navigate(['/servicios']);
+      },
+      (error) => {
+        Swal.fire('Error', 'Ocurrió un error al crear el servicio', 'error');
+        console.error(error);
+      }
+    );
   }
 
   update() {
-    this.trySend = true;
-    if (this.servicioForm.valid) {
-      this.servicioService.update(this.servicioId, this.servicioForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'El Servicio ha sido actualizado correctamente', 'success');
+    this.servicioService.update(this.servicioId, this.servicioForm.value).subscribe(
+      () => {
+        Swal.fire('Actualizado', 'El servicio ha sido actualizado correctamente', 'success');
         this.router.navigate(['/servicios']);
-      });
-    }
-  }
-
-  delete() {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: '¡Este servicio será eliminado!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Eliminar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.servicioService.delete(this.servicioId).subscribe(() => {
-          Swal.fire('Eliminado', 'El servicio ha sido eliminado', 'success');
-          this.router.navigate(['/servicios']);
-        });
+      },
+      (error) => {
+        Swal.fire('Error', 'Ocurrió un error al actualizar el servicio', 'error');
+        console.error(error);
       }
-    });
+    );
   }
 }

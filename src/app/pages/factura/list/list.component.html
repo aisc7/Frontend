@@ -1,48 +1,45 @@
 <div class="container-fluid mt--10">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
           <h3 class="mb-0">Facturas</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Nueva Factura</button>
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Fecha de Emisión</th>
-                <th scope="col">Monto Total</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Cuota Id</th>
-                <th scope="col">Spent Id</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Fecha de Actualización</th>
-                
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let factura of facturas">
-                <td>{{ factura.id }}</td>
-                <td>{{ factura.fecha_emision }}</td>
-                <td>{{ factura.monto_total}}</td>
-                <td>{{ factura.estado }}</td>
-                <td>{{ factura.cuota_id }}</td>
-                <td>{{ factura.spent_id }}</td>
-                <td>{{ factura.createdAt | date: 'dd/MM/yyyy' }}</td>
-                <td>{{ factura.updatedAt | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(factura.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(factura.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(factura.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <th>ID</th>
+                  <th>Fecha de Emisión</th>
+                  <th>Monto Total</th>
+                  <th>Estado</th>
+                  <th>ID de la Cuota</th>
+                  <th>ID del Gasto</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let factura of facturas">
+                  <td>{{ factura.id }}</td>
+                  <td>{{ factura.fecha_emision }}</td>
+                  <td>{{ factura.monto_total }}</td>
+                  <td>{{ factura.estado }}</td>
+                  <td>{{ factura.cuota_id }}</td>
+                  <td>{{ factura.spent_id }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(factura.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(factura.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(factura.id)">Eliminar</button>
+                  </td>
+                </tr>
+                <tr *ngIf="facturas.length === 0">
+                  <td colspan="7" class="text-center">No se encontraron facturas.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

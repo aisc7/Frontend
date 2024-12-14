@@ -1,52 +1,43 @@
 <div class="container-fluid mt--10">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Distribution Centers</h3>
+          <h3 class="mb-0">Centros de Distribución</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Nuevo Centro</button>
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Teléfono</th>
-                <th scope="col">Correo Electrónico</th>
-                <th scope="col">Capacidad</th>
-                <th scope="col">Dirección Id</th>
-                <th scope="col">Municipio Id</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Fecha de Actualización</th>
-                
-
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let center of distributionCenters">
-                <td>{{ center.id }}</td>
-                <td>{{ center.name }}</td>
-                <td>{{ center.phone }}</td>
-                <td>{{ center.email }}</td>
-                <td>{{ center.capacity }}</td>
-                <td>{{ center.address_id }}</td>
-                <td>{{ center.municipality_id }}</td>
-                <td>{{ center.createdAt | date: 'dd/MM/yyyy' }}</td>
-                <td>{{ center.updatedAt | date: 'dd/MM/yyyy' }}</td>
-   
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(center.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(center.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(center.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Teléfono</th>
+                  <th>Correo</th>
+                  <th>Capacidad</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let center of distributionCenters">
+                  <td>{{ center.id }}</td>
+                  <td>{{ center.name }}</td>
+                  <td>{{ center.phone }}</td>
+                  <td>{{ center.email }}</td>
+                  <td>{{ center.capacity }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(center.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(center.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(center.id)">Eliminar</button>
+                  </td>
+                </tr>
+                <tr *ngIf="distributionCenters.length === 0">
+                  <td colspan="6" class="text-center">No se encontraron centros de distribución.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

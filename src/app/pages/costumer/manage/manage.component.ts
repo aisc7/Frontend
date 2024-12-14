@@ -6,11 +6,10 @@ import { Customer } from 'src/app/models/costumer.model';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-manage',
+  selector: 'app-manage-customer',
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-
 export class ManageCustomerComponent implements OnInit {
   customerForm: FormGroup;
   customerId: number;
@@ -27,39 +26,33 @@ export class ManageCustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
-      this.mode = 1;
-    } else if (currentUrl.includes("create")) {
-      this.mode = 2;
-    } else if (currentUrl.includes("update")) {
-      this.mode = 3;
-    } else if (currentUrl.includes("delete")) { 
-      this.mode = 4;
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
+      this.mode = 1; // Ver
+    } else if (currentUrl.includes('create')) {
+      this.mode = 2; // Crear
+    } else if (currentUrl.includes('update')) {
+      this.mode = 3; // Actualizar
     }
-  
-    if (this.route.snapshot.params.id) {
-      this.customerId = this.route.snapshot.params.id;
-      this.getCustomer(this.customerId);
+
+    this.customerId = this.route.snapshot.params['id'];
+    if (this.customerId) {
+      this.customerService.get(this.customerId).subscribe((data: Customer) => {
+        this.customerForm.patchValue(data);
+      });
     }
   }
 
   configFormGroup() {
     this.customerForm = this.theFormBuilder.group({
-      user_id: ['', Validators.required],
-      phone: ['', Validators.required],
-      order_count: ['', Validators.required],
+      user_id: ['', Validators.required], // Campo requerido
+      phone: ['', Validators.required], // Campo requerido
+      order_count: [0, [Validators.required, Validators.min(0)]], // Número de pedidos inicial (0 por defecto)
     });
   }
 
   get getTheFormGroup() {
     return this.customerForm.controls;
-  }
-
-  getCustomer(id: number) {
-    this.customerService.get(id).subscribe((data) => {
-      this.customerForm.patchValue(data);
-    });
   }
 
   create() {
@@ -79,29 +72,6 @@ export class ManageCustomerComponent implements OnInit {
         Swal.fire('Actualizado', 'El cliente ha sido actualizado correctamente', 'success');
         this.router.navigate(['/customers']);
       });
-    }
-  }
-
-  delete () {
-    this.customerService.delete(this.customerId).subscribe(() => {
-      Swal.fire('Eliminado', 'El cliente ha sido eliminado correctamente', 'success');
-      this.router.navigate(['/customers']);
-    });
-  }
-
-  handleAction() {
-    switch (this.mode) {
-      case 2: // Crear
-        this.create();
-        break;
-      case 3: // Actualizar
-        this.update();
-        break;
-      case 4: // Eliminar
-        this.delete();
-        break;
-      default:
-        console.error('Acción no reconocida');
     }
   }
 }

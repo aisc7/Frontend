@@ -1,137 +1,122 @@
 <div class="container-fluid mt--7">
-  <!-- Table -->
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
-          <h3 *ngIf="mode == 4" class="mb-0">Eliminar</h3>
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Dirección</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Dirección</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Dirección</h3>
+          <h3 *ngIf="mode == 4" class="mb-0">Eliminar Dirección</h3>
         </div>
         <form class="form" [formGroup]="addressForm">
           <div class="card-body">
+            <!-- Campo Calle -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Id:</label>
-              </div>
-              <div class="col-8">
-                <p>{{ addressId }}</p>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-4">
-                <label>Calle:</label>
+                <label for="street" class="form-label">Calle:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="street"
                   type="text"
                   class="form-control"
                   formControlName="street"
-                  title="Calle"
-                  placeholder="Ingrese Calle"
+                  placeholder="Ingrese la calle"
+                  [readonly]="mode == 1 || mode == 4"
+                  [class.is-invalid]="trySend && getTheFormGroup.street.invalid"
                 />
-                <div
-                  *ngIf="getTheFormGroup.street.errors && (getTheFormGroup.street.dirty || getTheFormGroup.street.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.street.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.street.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
+            <!-- Campo Número -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Número:</label>
+                <label for="number" class="form-label">Número:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="number"
                   type="text"
                   class="form-control"
                   formControlName="number"
-                  title="Número"
-                  placeholder="Ingrese Número"
+                  placeholder="Ingrese el número (opcional)"
+                  [readonly]="mode == 1 || mode == 4"
                 />
-                <div
-                  *ngIf="getTheFormGroup.number.errors && (getTheFormGroup.number.dirty || getTheFormGroup.number.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.number.errors.required" class="msnError">Requerido</strong>
-                </div>
               </div>
             </div>
+
+            <!-- Campo Barrio -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Barrio:</label>
+                <label for="neighborhood" class="form-label">Barrio:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="neighborhood"
                   type="text"
                   class="form-control"
                   formControlName="neighborhood"
-                  title="Barrio"
-                  placeholder="Ingrese Barrio"
+                  placeholder="Ingrese el barrio"
+                  [readonly]="mode == 1 || mode == 4"
+                  [class.is-invalid]="trySend && getTheFormGroup.neighborhood.invalid"
                 />
-                <div
-                  *ngIf="getTheFormGroup.neighborhood.errors && (getTheFormGroup.neighborhood.dirty || getTheFormGroup.neighborhood.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.neighborhood.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.neighborhood.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
+            <!-- Campo Referencia -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Referencia:</label>
+                <label for="reference" class="form-label">Referencia:</label>
               </div>
               <div class="col-8">
-                <input
-                  type="text"
+                <textarea
+                  id="reference"
                   class="form-control"
                   formControlName="reference"
-                  title="Referencia"
-                  placeholder="Ingrese Referencia"
-                />
-                <div
-                  *ngIf="getTheFormGroup.reference.errors && (getTheFormGroup.reference.dirty || getTheFormGroup.reference.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.reference.errors.required" class="msnError">Requerido</strong>
-                </div>
+                  placeholder="Ingrese una referencia (opcional)"
+                  [readonly]="mode == 1 || mode == 4"
+                ></textarea>
               </div>
             </div>
+
+            <!-- Campo ID del Municipio -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Municipio ID:</label>
+                <label for="municipality_id" class="form-label">ID del Municipio:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="municipality_id"
                   type="number"
                   class="form-control"
                   formControlName="municipality_id"
-                  title="Municipio ID"
-                  placeholder="Ingrese Municipio ID"
+                  placeholder="Ingrese el ID del municipio"
+                  [readonly]="mode == 1 || mode == 4"
+                  [class.is-invalid]="trySend && getTheFormGroup.municipality_id.invalid"
                 />
-                <div
-                  *ngIf="getTheFormGroup.municipality_id.errors && (getTheFormGroup.municipality_id.dirty || getTheFormGroup.municipality_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.municipality_id.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.municipality_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8 d-flex justify-content-between">
-                <button 
-                  *ngIf="mode == 2" 
-                  type="button" 
-                  class="btn btn-success" 
-                  (click)="create()"> 
-                  Crear 
-                </button>
-                <button 
-                  *ngIf="mode == 3" 
-                  type="button" 
-                  class="btn btn-primary" 
-                  (click)="update()"> 
-                  Actualizar 
-                </button>
-                <button 
-                  *ngIf="mode == 1" 
-                  type="button" 
-                  class="btn btn-danger" 
-                  (click)="delete()"> 
-                  Eliminar 
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
                 </button>
               </div>
             </div>

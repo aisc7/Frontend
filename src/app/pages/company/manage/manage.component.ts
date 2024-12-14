@@ -12,11 +12,11 @@ import Swal from 'sweetalert2';
 export class ManageCompanyComponent implements OnInit {
   companyForm: FormGroup;
   companyId: number | null = null;
-  mode: number = 2; // Modo por defecto: Crear
+  mode: number = 2; // Default to create
   trySend: boolean = false;
 
   constructor(
-    private theFormBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private companyService: CompanyService,
     private router: Router,
     private route: ActivatedRoute
@@ -25,33 +25,33 @@ export class ManageCompanyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url.join("/");
-    this.mode = this.getModeFromUrl(currentUrl);
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
+      this.mode = 1; // Modo Ver
+    } else if (currentUrl.includes('create')) {
+      this.mode = 2; // Modo Crear
+    } else if (currentUrl.includes('update')) {
+      this.mode = 3; // Modo Actualizar
+    } else if (currentUrl.includes('delete')) {
+      this.mode = 4; // Modo Eliminar
+    }
 
-    if (this.route.snapshot.params.id) {
-      this.companyId = +this.route.snapshot.params.id;
+    if (this.route.snapshot.params['id']) {
+      this.companyId = +this.route.snapshot.params['id'];
       this.getCompany(this.companyId);
     }
   }
 
   configFormGroup() {
-    this.companyForm = this.theFormBuilder.group({
+    this.companyForm = this.formBuilder.group({
       company_type: ['', Validators.required],
       fiscal_address: ['', Validators.required],
-      costumer_id: ['', Validators.required]
+      customer_id: ['', Validators.required]
     });
   }
 
   get getTheFormGroup() {
     return this.companyForm.controls;
-  }
-
-  getModeFromUrl(url: string): number {
-    if (url.includes("view")) return 1;
-    if (url.includes("create")) return 2;
-    if (url.includes("update")) return 3;
-    if (url.includes("delete")) return 4;
-    return 2; // Default: Crear
   }
 
   getCompany(id: number) {
@@ -61,52 +61,53 @@ export class ManageCompanyComponent implements OnInit {
   }
 
   handleAction() {
-    this.trySend = true;
-
-    if (!this.companyForm.valid) {
-      Swal.fire('Error', 'Por favor, complete todos los campos obligatorios.', 'error');
-      return;
+    if (this.mode === 2) {
+      this.create();
+    } else if (this.mode === 3) {
+      this.update();
     }
+  }
 
-    switch (this.mode) {
-      case 2: // Crear
-        this.companyService.create(this.companyForm.value).subscribe(() => {
-          Swal.fire('Creado', 'La empresa ha sido creada correctamente.', 'success');
+  create() {
+    this.trySend = true;
+    if (this.companyForm.valid) {
+      this.companyService.create(this.companyForm.value).subscribe(() => {
+        Swal.fire('Creado', 'La empresa ha sido creada correctamente', 'success');
+        this.router.navigate(['/companies']);
+      });
+    } else {
+      Swal.fire('Error', 'Complete todos los campos obligatorios', 'error');
+    }
+  }
+
+  update() {
+    this.trySend = true;
+    if (this.companyForm.valid) {
+      this.companyService.update(this.companyId!, this.companyForm.value).subscribe(() => {
+        Swal.fire('Actualizado', 'La empresa ha sido actualizada correctamente', 'success');
+        this.router.navigate(['/companies']);
+      });
+    } else {
+      Swal.fire('Error', 'Complete todos los campos obligatorios', 'error');
+    }
+  }
+
+  delete() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡Esta empresa será eliminada!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.companyService.delete(this.companyId!).subscribe(() => {
+          Swal.fire('Eliminado', 'La empresa ha sido eliminada', 'success');
           this.router.navigate(['/companies']);
         });
-        break;
-
-      case 3: // Actualizar
-        if (this.companyId !== null) {
-          this.companyService.update(this.companyId, this.companyForm.value).subscribe(() => {
-            Swal.fire('Actualizado', 'La empresa ha sido actualizada correctamente.', 'success');
-            this.router.navigate(['/companies']);
-          });
-        }
-        break;
-
-      case 4: // Eliminar
-        if (this.companyId !== null) {
-          Swal.fire({
-            title: "Eliminar",
-            text: "¿Está seguro que desea eliminar esta empresa?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Sí, eliminar",
-            cancelButtonText: "Cancelar"
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.companyService.delete(this.companyId).subscribe(() => {
-                Swal.fire('Eliminado', 'La empresa ha sido eliminada correctamente.', 'success');
-                this.router.navigate(['/companies']);
-              });
-            }
-          });
-        }
-        break;
-
-      default:
-        Swal.fire('Error', 'Modo no reconocido.', 'error');
-    }
+      }
+    });
   }
 }

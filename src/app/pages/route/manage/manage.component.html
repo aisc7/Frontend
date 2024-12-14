@@ -1,123 +1,127 @@
-<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
           <h3 *ngIf="mode == 1" class="mb-0">Visualizar Ruta</h3>
           <h3 *ngIf="mode == 2" class="mb-0">Crear Ruta</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Ruta</h3>
         </div>
         <form class="form" [formGroup]="routeForm">
           <div class="card-body">
-
-            <!-- ID -->
-            <div class="row">
+            <!-- Campo Lugar de Inicio -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label>ID:</label>
+                <label for="starting_place" class="form-label">Lugar de Inicio:</label>
               </div>
               <div class="col-8">
-                <p>{{ routeId }}</p>
+                <input
+                  id="starting_place"
+                  type="text"
+                  class="form-control"
+                  formControlName="starting_place"
+                  placeholder="Ingrese el lugar de inicio"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
-            <br />
 
-            <!-- Starting Place -->
-            <div class="row">
+            <!-- Campo Lugar de Destino -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label for="starting_place" class="form-label">Lugar de inicio:</label>
+                <label for="ending_place" class="form-label">Lugar de Destino:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="starting_place" title="Lugar de inicio" placeholder="Ingrese el lugar de inicio">
-                <p *ngIf="mode == 1">{{ routeForm.value.starting_place }}</p>
-                <div *ngIf="getTheFormGroup.starting_place.errors && (getTheFormGroup.starting_place.dirty || getTheFormGroup.starting_place.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.starting_place.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="ending_place"
+                  type="text"
+                  class="form-control"
+                  formControlName="ending_place"
+                  placeholder="Ingrese el lugar de destino"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
-            <br />
 
-            <!-- Ending Place -->
-            <div class="row">
+            <!-- Campo Distancia -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label for="ending_place" class="form-label">Lugar de fin:</label>
+                <label for="distance" class="form-label">Distancia (km):</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="ending_place" title="Lugar de fin" placeholder="Ingrese el lugar de fin">
-                <p *ngIf="mode == 1">{{ routeForm.value.ending_place }}</p>
-                <div *ngIf="getTheFormGroup.ending_place.errors && (getTheFormGroup.ending_place.dirty || getTheFormGroup.ending_place.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.ending_place.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="distance"
+                  type="number"
+                  class="form-control"
+                  formControlName="distance"
+                  placeholder="Ingrese la distancia en kilómetros"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
-            <br />
 
-            <!-- Distance -->
-            <div class="row">
+            <!-- Campo Fecha de Entrega -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label for="distance" class="form-label">Distancia:</label>
+                <label for="delivery_date" class="form-label">Fecha de Entrega:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="number" class="form-control" formControlName="distance" title="Distancia" placeholder="Ingrese la distancia">
-                <p *ngIf="mode == 1">{{ routeForm.value.distance }}</p>
-                <div *ngIf="getTheFormGroup.distance.errors && (getTheFormGroup.distance.dirty || getTheFormGroup.distance.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.distance.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="delivery_date"
+                  type="date"
+                  class="form-control"
+                  formControlName="delivery_date"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
-            <br />
 
-            <!-- Delivery Date -->
-            <div class="row">
+            <!-- Campo ID del Contrato -->
+            <div class="row mb-3">
               <div class="col-4">
-              <label for="delivery_date" class="form-label">Tiempo de entrega:</label>
+                <label for="contract_id" class="form-label">ID del Contrato:</label>
               </div>
               <div class="col-8">
-              <input *ngIf="mode != 1" type="date" class="form-control" formControlName="delivery_date" title="Tiempo de entrega" placeholder="Ingrese el tiempo de entrega">
-              <p *ngIf="mode == 1">{{ routeForm.value.delivery_date | date: 'shortDate' }}</p>
-              <div *ngIf="getTheFormGroup.delivery_date.errors && (getTheFormGroup.delivery_date.dirty || getTheFormGroup.delivery_date.touched || trySend)">
-                <strong *ngIf="getTheFormGroup.delivery_date.errors.required" class="msnError">Requerido</strong>
-              </div>
+                <input
+                  id="contract_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="contract_id"
+                  placeholder="Ingrese el ID del contrato"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
-            <br />
 
-            <!-- Contract ID -->
-            <div class="row">
+            <!-- Campo ID del Vehículo -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label for="contract_id" class="form-label">Contrato ID:</label>
+                <label for="vehiculo_id" class="form-label">ID del Vehículo:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="number" class="form-control" formControlName="contract_id" title="Contrato ID" placeholder="Ingrese el ID del contrato">
-                <p *ngIf="mode == 1">{{ routeForm.value.contract_id }}</p>
-                <div *ngIf="getTheFormGroup.contract_id.errors && (getTheFormGroup.contract_id.dirty || getTheFormGroup.contract_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.contract_id.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="vehiculo_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="vehiculo_id"
+                  placeholder="Ingrese el ID del vehículo"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
-            <br />
 
-            <!-- Vehiculo ID -->
-            <div class="row">
-              <div class="col-4">
-                <label for="vehiculo_id" class="form-label">Vehículo ID:</label>
-              </div>
-              <div class="col-8">
-                <input *ngIf="mode != 1" type="number" class="form-control" formControlName="vehiculo_id" title="Vehículo ID" placeholder="Ingrese el ID del vehículo">
-                <p *ngIf="mode == 1">{{ routeForm.value.vehiculo_id }}</p>
-                <div *ngIf="getTheFormGroup.vehiculo_id.errors && (getTheFormGroup.vehiculo_id.dirty || getTheFormGroup.vehiculo_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.vehiculo_id.errors.required" class="msnError">Requerido</strong>
-                </div>
-              </div>
-            </div>
-            <br />
-
-            <!-- Botones para Crear/Actualizar -->
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear Ruta</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar Ruta</button>
+              <div class="col-8 d-flex justify-content-between">
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="mode == 2 ? create() : update()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
+                </button>
               </div>
             </div>
           </div>

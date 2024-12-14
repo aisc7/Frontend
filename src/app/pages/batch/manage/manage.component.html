@@ -3,13 +3,13 @@
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
-          <h3 class="mb-0">
-            {{ mode == 2 ? 'Crear Lote' : mode == 3 ? 'Actualizar Lote' : mode == 1 ? 'Eliminar Lote' : 'Gestión de Lote' }}
-          </h3>
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Lote</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Lote</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Lote</h3>
         </div>
-        <form [formGroup]="batchForm" novalidate>
+        <form class="form" [formGroup]="batchForm">
           <div class="card-body">
-            <!-- Campo Quantity -->
+            <!-- Campo Cantidad -->
             <div class="row mb-3">
               <div class="col-4">
                 <label for="quantity" class="form-label">Cantidad:</label>
@@ -20,60 +20,48 @@
                   type="number"
                   class="form-control"
                   formControlName="quantity"
+                  placeholder="Ingrese la cantidad del lote"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.quantity.invalid"
                 />
                 <div *ngIf="trySend && getTheFormGroup.quantity.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
+                  Este campo es obligatorio y debe ser mayor a 0.
                 </div>
               </div>
             </div>
 
-            <!-- Campo RouteId -->
+            <!-- Campo Ruta -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="routeId" class="form-label">ID de Ruta:</label>
+                <label for="route_id" class="form-label">ID de la Ruta:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="routeId"
-                  type="text"
+                  id="route_id"
+                  type="number"
                   class="form-control"
-                  formControlName="routeId"
+                  formControlName="route_id"
+                  placeholder="Ingrese el ID de la ruta"
                   [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.routeId.invalid"
                 />
-                <div *ngIf="trySend && getTheFormGroup.routeId.invalid" class="invalid-feedback">
+                <div *ngIf="trySend && getTheFormGroup.route_id.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>
               </div>
             </div>
 
-            <!-- Campo AddrRouteId -->
-            <div class="row mb-3">
-              <div class="col-4">
-                <label for="addrerouteId" class="form-label">ID de Ruta Alternativa:</label>
+            <!-- Botones -->
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8 d-flex justify-content-between">
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="mode == 2 ? create() : update()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
+                </button>
               </div>
-              <div class="col-8">
-                <input
-                  id="addrerouteId"
-                  type="text"
-                  class="form-control"
-                  formControlName="addrerouteId"
-                  [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.addrerouteId.invalid"
-                />
-                <div *ngIf="trySend && getTheFormGroup.addrerouteId.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
-              </div>
-            </div>
-
-            <div class="d-flex justify-content-between mt-4">
-              <button type="button" class="btn btn-primary" (click)="handleAction()">
-                {{ mode == 2 ? 'Crear' : mode == 3 ? 'Actualizar' : mode == 1 ? 'Eliminar' : 'Acción' }}
-              </button>
-              <button type="button" class="btn btn-secondary" routerLink="/batches">Cancelar</button>
             </div>
           </div>
         </form>

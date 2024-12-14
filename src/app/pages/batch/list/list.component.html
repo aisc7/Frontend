@@ -1,33 +1,44 @@
-<div class="container-fluid">
-  <div class="card shadow">
-    <div class="card-header border-0">
-      <h3 class="mb-0">Lotes</h3>
-    </div>
-    <div class="card-body">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Ruta ID</th>
-            <th scope="col">Dirección Ruta ID</th>
-            <th scope="col">Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let actual of batches">
-            <td>{{ actual.id }}</td>
-            <td>{{ actual.quantity }}</td>
-            <td>{{ actual.route_id }}</td>
-            <td>{{ actual.addreroute_id }}</td>
-            <td>
-              <button type="button" class="btn btn-info" (click)="view(actual.id)">Ver</button>
-              <button type="button" class="btn btn-warning" (click)="update(actual.id)">Editar</button>
-              <button type="button" class="btn btn-dark" (click)="delete(actual.id)">Eliminar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Lotes</h3>
+        </div>
+        <div class="card-body">
+          <!-- Botón para crear un nuevo lote -->
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Nuevo Lote</button>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">ID de Ruta</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Iterar sobre los lotes -->
+                <tr *ngFor="let batch of batches">
+                  <td>{{ batch.id }}</td>
+                  <td>{{ batch.quantity }}</td>
+                  <td>{{ batch.route_id }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(batch.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(batch.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(batch.id)">Eliminar</button>
+                  </td>
+                </tr>
+                <!-- Mostrar mensaje si no hay lotes -->
+                <tr *ngIf="batches.length === 0">
+                  <td colspan="4" class="text-center">No se encontraron lotes.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

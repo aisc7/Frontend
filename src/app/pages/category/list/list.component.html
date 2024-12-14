@@ -1,37 +1,37 @@
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
-<div class="container-fluid mt--7">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
+<div class="container-fluid mt--10">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Categories</h3>
+          <h3 class="mb-0">Categorías</h3>
         </div>
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let category of categories">
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>{{ category.creationDate }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(category.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(category.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(category.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Categoría</button>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let category of categories">
+                  <td>{{ category.id }}</td>
+                  <td>{{ category.name }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(category.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(category.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(category.id)">Eliminar</button>
+                  </td>
+                </tr>
+                <tr *ngIf="categories.length === 0">
+                  <td colspan="3" class="text-center">No se encontraron categorías.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

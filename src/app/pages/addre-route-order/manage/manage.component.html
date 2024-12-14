@@ -1,85 +1,67 @@
 <div class="container-fluid mt--7">
-  <!-- Table -->
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Orden</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Orden</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Orden</h3>
         </div>
         <form class="form" [formGroup]="addreRouteOrderForm">
           <div class="card-body">
+            <!-- ID de Dirección -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Id:</label>
-              </div>
-              <div class="col-8">
-                <p>{{ addreRouteOrderId }}</p>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-4">
-                <label>Dirección ID:</label>
+                <label for="address_id" class="form-label">ID de Dirección:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="address_id"
                   type="number"
                   class="form-control"
                   formControlName="address_id"
-                  title="Dirección ID"
-                  placeholder="Ingrese Dirección ID"
+                  placeholder="Ingrese el ID de la dirección"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.address_id.invalid"
                 />
-                <div
-                  *ngIf="getTheFormGroup.address_id.errors && (getTheFormGroup.address_id.dirty || getTheFormGroup.address_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.address_id.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.address_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
+            <!-- ID de Ruta -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Ruta ID:</label>
+                <label for="route_id" class="form-label">ID de Ruta:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="route_id"
                   type="number"
                   class="form-control"
                   formControlName="route_id"
-                  title="Ruta ID"
-                  placeholder="Ingrese Ruta ID"
+                  placeholder="Ingrese el ID de la ruta"
+                  [readonly]="mode == 1"
+                  [class.is-invalid]="trySend && getTheFormGroup.route_id.invalid"
                 />
-                <div
-                  *ngIf="getTheFormGroup.route_id.errors && (getTheFormGroup.route_id.dirty || getTheFormGroup.route_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.route_id.errors.required" class="msnError">Requerido</strong>
+                <div *ngIf="trySend && getTheFormGroup.route_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
                 </div>
               </div>
             </div>
+
+            <!-- Botón -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8 d-flex justify-content-between">
-                <!-- Crear -->
-                <button 
-                  *ngIf="mode == 2" 
-                  type="button" 
-                  class="btn btn-success" 
-                  (click)="create()"> 
-                  Crear 
-                </button>
-                <!-- Actualizar -->
-                <button 
-                  *ngIf="mode == 3" 
-                  type="button" 
-                  class="btn btn-primary" 
-                  (click)="update()"> 
-                  Actualizar 
-                </button>
-                <!-- Eliminar -->
-                <button 
-                  *ngIf="mode == 1" 
-                  type="button" 
-                  class="btn btn-danger" 
-                  (click)="delete()"> 
-                  Eliminar 
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
                 </button>
               </div>
             </div>

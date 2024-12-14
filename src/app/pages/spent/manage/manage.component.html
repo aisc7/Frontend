@@ -1,111 +1,120 @@
-<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Gasto</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear Gasto</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Gasto</h3>
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
+          <h3 *ngIf="mode === 1" class="mb-0">Visualizar Gasto</h3>
+          <h3 *ngIf="mode === 2" class="mb-0">Crear Gasto</h3>
+          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Gasto</h3>
         </div>
         <form class="form" [formGroup]="spentForm">
           <div class="card-body">
-            <!-- ID -->
-            <div class="row">
-              <div class="col-4">
-                <label>ID:</label>
-              </div>
-              <div class="col-8">
-                <p>{{spentId}}</p>
-              </div>
-            </div>
-            <br />
-
-            <!-- Monto -->
-            <div class="row">
-              <div class="col-4">
-                <label for="monto" class="form-label">Monto:</label>
-              </div>
-              <div class="col-8">
-                <input 
-                  type="number" 
-                  class="form-control" 
-                  formControlName="monto" 
-                  title="Monto" 
-                  placeholder="Ingrese el monto"
-                >
-                <div *ngIf="spentForm.get('monto').errors && (spentForm.get('monto').dirty || spentForm.get('monto').touched || trySend)">
-                  <strong *ngIf="spentForm.get('monto').errors.required" class="msnError">Requerido</strong>
-                </div>
-              </div>
-            </div>
-            <br />
-
-            <!-- Descripción -->
-            <div class="row">
+            <!-- Campos -->
+            <div class="row mb-3">
               <div class="col-4">
                 <label for="description" class="form-label">Descripción:</label>
               </div>
               <div class="col-8">
-                <input 
-                  type="text" 
-                  class="form-control" 
-                  formControlName="description" 
-                  title="Descripción" 
+                <input
+                  id="description"
+                  type="text"
+                  class="form-control"
+                  formControlName="description"
                   placeholder="Ingrese la descripción"
-                >
-                <div *ngIf="spentForm.get('description').errors && (spentForm.get('description').dirty || spentForm.get('description').touched || trySend)">
-                  <strong *ngIf="spentForm.get('description').errors.required" class="msnError">Requerido</strong>
-                </div>
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
-            <br />
-
-            <!-- Fecha -->
-            <div class="row">
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="monto" class="form-label">Monto:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="monto"
+                  type="number"
+                  class="form-control"
+                  formControlName="monto"
+                  placeholder="Ingrese el monto"
+                  [readonly]="mode === 1"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
               <div class="col-4">
                 <label for="date" class="form-label">Fecha:</label>
               </div>
               <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="date" 
-                  class="form-control" 
-                  formControlName="date" 
-                  title="Fecha" 
-                  placeholder="Seleccione la fecha"
-                >
-                <p *ngIf="mode == 1">{{ spentForm.value.date }}</p>
-                <div *ngIf="spentForm.get('date').errors && (spentForm.get('date').dirty || spentForm.get('date').touched || trySend)">
-                  <strong *ngIf="spentForm.get('date').errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="date"
+                  type="date"
+                  class="form-control"
+                  formControlName="date"
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
-            <br />
-
-            <!-- Botón para Crear/Actualizar -->
-            <div class="row">
-              <div class="col-4"></div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="servicio_id" class="form-label">ID del Servicio:</label>
+              </div>
               <div class="col-8">
-                <button 
-                  *ngIf="mode == 2" 
-                  type="submit" 
-                  class="btn btn-success btn-block" 
-                  (click)="create()"
-                >Crear</button>
-                <button 
-                  *ngIf="mode == 3" 
-                  type="submit" 
-                  class="btn btn-success btn-block" 
-                  (click)="update()"
-                >Actualizar</button>
+                <input
+                  id="servicio_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="servicio_id"
+                  placeholder="Ingrese el ID del servicio"
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
-
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="conductor_id" class="form-label">ID del Conductor:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="conductor_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="conductor_id"
+                  placeholder="Ingrese el ID del conductor"
+                  [readonly]="mode === 1"
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-4">
+                <label for="dueno_id" class="form-label">ID del Dueño:</label>
+              </div>
+              <div class="col-8">
+                <input
+                  id="dueno_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="dueno_id"
+                  placeholder="Ingrese el ID del dueño"
+                  [readonly]="mode === 1"
+                />
+              </div>
+            </div>
+            <!-- Botones -->
+            <div class="row">
+              <div class="col-8 offset-4 d-flex justify-content-between">
+                <button
+                  *ngIf="mode === 2 || mode === 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode === 2 ? 'Crear' : 'Actualizar' }}
+                </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-4

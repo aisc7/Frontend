@@ -5,15 +5,10 @@ import { Operation } from './operation.model';
 import { Vehiculo } from './vehiculo.model';
 
 export class Municipality {
-    id: number;
-    name: string;
-    description: string;
-    department_id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    department: Department;
-    addresses: Address[];
-    distributioncenters: DistributionCenter[];
-    operations: Operation[];
-    conductores: Vehiculo[];
-}
+    id?: number; // Opcional, ya que será generado automáticamente
+    name: string; // Requerido
+    description?: string; // Opcional
+    department_id: number; // Relación foránea, requerida
+    created_at?: Date; // Autogenerado en el backend
+    updated_at?: Date; // Autogenerado en el backend
+}   

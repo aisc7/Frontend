@@ -1,49 +1,56 @@
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8"></div>
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Dueño</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear Dueño</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Dueño</h3>
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
+          <h3 *ngIf="mode === 1" class="mb-0">Visualizar Dueño</h3>
+          <h3 *ngIf="mode === 2" class="mb-0">Crear Dueño</h3>
+          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Dueño</h3>
         </div>
         <form class="form" [formGroup]="duenoForm">
           <div class="card-body">
-            <!-- user_id -->
-            <div class="row">
+            <!-- Campos -->
+            <div class="row mb-3">
               <div class="col-4">
-                <label>Usuario ID:</label>
+                <label for="user_id" class="form-label">ID del Usuario:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="user_id" title="Usuario ID" placeholder="Ingrese el ID del usuario">
-                <div *ngIf="getTheFormGroup.user_id.errors && (getTheFormGroup.user_id.dirty || getTheFormGroup.user_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.user_id.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="user_id"
+                  type="text"
+                  class="form-control"
+                  formControlName="user_id"
+                  placeholder="Ingrese el ID del usuario"
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
-            <br />
-            
-            <!-- Conductor ID -->
-            <div class="row">
+            <div class="row mb-3">
               <div class="col-4">
-                <label>Conductor ID:</label>
+                <label for="conductor_id" class="form-label">ID del Conductor:</label>
               </div>
               <div class="col-8">
-                <input type="text" class="form-control" formControlName="conductor_id" title="Conductor ID" placeholder="Ingrese el ID del conductor">
-                <div *ngIf="getTheFormGroup.conductor_id.errors && (getTheFormGroup.conductor_id.dirty || getTheFormGroup.conductor_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.conductor_id.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="conductor_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="conductor_id"
+                  placeholder="Ingrese el ID del conductor"
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
-            <br />
-
-            <!-- Botones de acción -->
+            <!-- Botones -->
             <div class="row">
-              <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()">Crear</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()">Actualizar</button>
+              <div class="col-8 offset-4 d-flex justify-content-between">
+                <button
+                  *ngIf="mode === 2 || mode === 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode === 2 ? 'Crear' : 'Actualizar' }}
+                </button>
               </div>
             </div>
           </div>

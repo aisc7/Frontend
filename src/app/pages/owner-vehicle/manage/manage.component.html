@@ -1,121 +1,86 @@
-<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
-
-<!-- Page content -->
 <div class="container-fluid mt--7">
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+          <h3 *ngIf="mode === 1" class="mb-0">Visualizar Relación Dueño-Vehículo</h3>
+          <h3 *ngIf="mode === 2" class="mb-0">Crear Relación Dueño-Vehículo</h3>
+          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Relación Dueño-Vehículo</h3>
         </div>
         <form class="form" [formGroup]="ownerVehicleForm">
           <div class="card-body">
-
-            <!-- ID -->
+            <!-- Campos -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>ID:</label>
+                <label for="fecha_asignacion" class="form-label">Fecha de Asignación:</label>
               </div>
               <div class="col-8">
-                <p>{{ ownerVehicleId }}</p>
+                <input
+                  id="fecha_asignacion"
+                  type="date"
+                  class="form-control"
+                  formControlName="fecha_asignacion"
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
-
-            <!-- Fecha de Asignación -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="fechaAsignacion" class="form-label">Fecha de Asignación:</label>
+                <label for="fecha_desasignacion" class="form-label">Fecha de Desasignación:</label>
               </div>
               <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="date" 
-                  class="form-control" 
-                  formControlName="fechaAsignacion" 
-                  title="Fecha de Asignación" 
-                  placeholder="Seleccione la fecha de asignación" 
-                  [readonly]="mode === 1">
-                <p *ngIf="mode == 1">{{ ownerVehicleForm.value.fechaAsignacion | date }}</p>
-                <div *ngIf="getTheFormGroup.fechaAsignacion.errors && (getTheFormGroup.fechaAsignacion.dirty || getTheFormGroup.fechaAsignacion.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.fechaAsignacion.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="fecha_desasignacion"
+                  type="date"
+                  class="form-control"
+                  formControlName="fecha_desasignacion"
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
-
-            <!-- Fecha de Desasignación -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="fechaDesasignacion" class="form-label">Fecha de Desasignación:</label>
+                <label for="vehiculo_id" class="form-label">ID del Vehículo:</label>
               </div>
               <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="date" 
-                  class="form-control" 
-                  formControlName="fechaDesasignacion" 
-                  title="Fecha de Desasignación" 
-                  placeholder="Seleccione la fecha de desasignación" 
-                  [readonly]="mode === 1">
-                <p *ngIf="mode == 1">{{ ownerVehicleForm.value.fechaDesasignacion | date }}</p>
-                <div *ngIf="getTheFormGroup.fechaDesasignacion.errors && (getTheFormGroup.fechaDesasignacion.dirty || getTheFormGroup.fechaDesasignacion.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.fechaDesasignacion.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="vehiculo_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="vehiculo_id"
+                  placeholder="Ingrese el ID del vehículo"
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
-
-            <!-- Vehículo ID -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="vehiculo_id" class="form-label">Vehículo ID:</label>
+                <label for="dueno_id" class="form-label">ID del Dueño:</label>
               </div>
               <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="number" 
-                  class="form-control" 
-                  formControlName="vehiculo_id" 
-                  title="Vehículo ID" 
-                  placeholder="Ingrese el ID del vehículo" 
-                  [readonly]="mode === 1">
-                <p *ngIf="mode == 1">{{ ownerVehicleForm.value.vehiculo_id }}</p>
-                <div *ngIf="getTheFormGroup.vehiculo_id.errors && (getTheFormGroup.vehiculo_id.dirty || getTheFormGroup.vehiculo_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.vehiculo_id.errors.required" class="msnError">Requerido</strong>
-                </div>
+                <input
+                  id="dueno_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="dueno_id"
+                  placeholder="Ingrese el ID del dueño"
+                  [readonly]="mode === 1"
+                />
               </div>
             </div>
-
-            <!-- Propietario ID -->
-            <div class="row mb-3">
-              <div class="col-4">
-                <label for="dueno_id" class="form-label">Propietario ID:</label>
-              </div>
-              <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="number" 
-                  class="form-control" 
-                  formControlName="dueno_id" 
-                  title="Propietario ID" 
-                  placeholder="Ingrese el ID del propietario" 
-                  [readonly]="mode === 1">
-                <p *ngIf="mode == 1">{{ ownerVehicleForm.value.dueno_id }}</p>
-                <div *ngIf="getTheFormGroup.dueno_id.errors && (getTheFormGroup.dueno_id.dirty || getTheFormGroup.dueno_id.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.dueno_id.errors.required" class="msnError">Requerido</strong>
-                </div>
-              </div>
-            </div>
-
-            <!-- Botones de acción -->
+            <!-- Botones -->
             <div class="row">
-              <div class="col-4"></div>
-              <div class="col-8 d-flex justify-content-between">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success" (click)="create()">Crear</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-primary" (click)="update()">Actualizar</button>
+              <div class="col-8 offset-4 d-flex justify-content-between">
+                <button
+                  *ngIf="mode === 2 || mode === 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode === 2 ? 'Crear' : 'Actualizar' }}
+                </button>
               </div>
             </div>
-
           </div>
         </form>
       </div>

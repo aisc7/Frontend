@@ -1,41 +1,41 @@
-
-
-<!-- Page content -->
 <div class="container-fluid mt--10">
   <div class="row justify-content-center">
     <div class="col-lg-10">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Contratos</h3>
+          <h3 class="mb-0">Lista de Contratos</h3>
         </div>
         <div class="card-body">
-          <!-- Botón para crear un nuevo contrato -->
-          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear</button>
-
-          <!-- Tabla con los contratos -->
+          <!-- Botón para Crear -->
+          <button type="button" class="btn btn-outline-success mb-3" (click)="create()">Crear Contrato</button>
+          
+          <!-- Tabla para listar contratos -->
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Fecha de Creación</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">Fecha Inicio</th>
+                  <th scope="col">Fecha Fin</th>
                   <th scope="col">Estado</th>
-                  <th scope="col">Opciones</th>
+                  <th scope="col">Detalles Servicio</th>
+                  <th scope="col">ID Cliente</th>
+                  <th scope="col">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                <!-- Iteración sobre los contratos -->
-                <tr *ngFor="let contract of contracts">
-                  <td>{{ contract.id }}</td>
-                  <td>{{ contract.name }}</td>
-                  <td>{{ contract.createdAt | date: 'dd/MM/yyyy' }}</td>
-                  <td>{{ contract.estado }}</td>
+                <tr *ngFor="let contrato of contracts">
+                  <td>{{ contrato.id }}</td>
+                  <td>{{ contrato.fecha_inicio | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{ contrato.fecha_fin | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{ contrato.estado }}</td>
+                  <td>{{ contrato.detalles_servicio }}</td>
+                  <td>{{ contrato.customer_id }}</td>
                   <td>
-                    <!-- Botones de acción -->
-                    <button type="button" class="btn btn-info btn-sm" (click)="view(contract.id)">Ver</button>
-                    <button type="button" class="btn btn-warning btn-sm" (click)="update(contract.id)">Editar</button>
-                    <button type="button" class="btn btn-dark btn-sm" (click)="delete(contract.id)">Eliminar</button>
+                    <!-- Botones de acciones -->
+                    <button type="button" class="btn btn-info btn-sm" (click)="view(contrato.id)">Ver</button>
+                    <button type="button" class="btn btn-warning btn-sm" (click)="update(contrato.id)">Editar</button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="delete(contrato.id)">Eliminar</button>
                   </td>
                 </tr>
               </tbody>

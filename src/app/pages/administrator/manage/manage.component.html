@@ -3,52 +3,58 @@
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
-          <h3 *ngIf="mode === 1" class="mb-0">Ver Administrador</h3>
-          <h3 *ngIf="mode === 2" class="mb-0">Crear Administrador</h3>
-          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Administrador</h3>
-          <h3 *ngIf="mode === 4" class="mb-0">Eliminar Administrador</h3>
+          <h3 *ngIf="mode == 1" class="mb-0">Ver Administrador</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Administrador</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Administrador</h3>
         </div>
-
-        <!-- Formulario para Administradores -->
-        <form *ngIf="mode !== 1" [formGroup]="administratorForm">
+        <form class="form" [formGroup]="administratorForm">
           <div class="card-body">
+            <!-- Campo User ID -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Usuario ID:</label>
+                <label for="user_id" class="form-label">User ID:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="user_id"
                   type="text"
                   class="form-control"
                   formControlName="user_id"
-                  placeholder="Ingrese Usuario ID"
-                  [readonly]="mode === 1"
+                  placeholder="Ingrese el User ID"
+                  [readonly]="mode == 1"
                 />
               </div>
             </div>
 
+            <!-- Campo Servicio ID -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>Servicio ID:</label>
+                <label for="servicio_id" class="form-label">Servicio ID:</label>
               </div>
               <div class="col-8">
                 <input
+                  id="servicio_id"
                   type="number"
                   class="form-control"
                   formControlName="servicio_id"
-                  placeholder="Ingrese Servicio ID"
-                  [readonly]="mode === 1"
+                  placeholder="Ingrese el Servicio ID"
+                  [readonly]="mode == 1"
                 />
               </div>
             </div>
 
+            <!-- Botones -->
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8 d-flex justify-content-between">
-                <button *ngIf="mode === 2" type="button" class="btn btn-success" (click)="handleFormAction()">Crear</button>
-                <button *ngIf="mode === 3" type="button" class="btn btn-primary" (click)="handleFormAction()">Actualizar</button>
-                <button *ngIf="mode === 4" type="button" class="btn btn-danger" (click)="handleFormAction()">Eliminar</button>
-                <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="handleAction()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
+                </button>
               </div>
             </div>
           </div>

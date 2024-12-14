@@ -1,5 +1,5 @@
 <div class="container-fluid mt--7">
-  <div class="row justify-content-center">
+  <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
@@ -7,137 +7,110 @@
           <h3 *ngIf="mode == 2" class="mb-0">Crear Persona Natural</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Persona Natural</h3>
         </div>
-        <form [formGroup]="naturalPersonForm">
+        <form class="form" [formGroup]="naturalPersonForm">
           <div class="card-body">
-
-           
-            <!-- Documento ID -->
+            <!-- Campo Usuario -->
             <div class="row mb-3">
               <div class="col-4">
-              <label for="user_id" class="form-label">Documento ID:</label>
+                <label for="user_id" class="form-label">Usuario:</label>
               </div>
               <div class="col-8">
-              <input 
-                *ngIf="mode != 1" 
-                type="text" 
-                class="form-control" 
-                formControlName="user_id" 
-                placeholder="Ingrese o copie el ID del usuario" 
-                [readonly]="mode === 1">
-              <p *ngIf="mode == 1">{{ naturalPersonForm.value.user_id }}</p>
-              <div *ngIf="getTheFormGroup.user_id.errors && (getTheFormGroup.user_id.dirty || getTheFormGroup.user_id.touched || trySend)">
-                <small *ngIf="getTheFormGroup.user_id.errors.required" class="text-danger">Requerido</small>
-              </div>
+                <input
+                  id="user_id"
+                  type="text"
+                  class="form-control"
+                  formControlName="user_id"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
 
-            <!-- Tipo de documento -->
+            <!-- Tipo de Documento -->
             <div class="row mb-3">
               <div class="col-4">
                 <label for="document_type" class="form-label">Tipo de Documento:</label>
               </div>
               <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="text" 
-                  class="form-control" 
-                  formControlName="document_type" 
-                  placeholder="Ingrese el tipo de documento" 
-                  [readonly]="mode === 1">
-                <p *ngIf="mode == 1">{{ naturalPersonForm.value.document_type }}</p>
-                <div *ngIf="getTheFormGroup.document_type.errors && (getTheFormGroup.document_type.dirty || getTheFormGroup.document_type.touched || trySend)">
-                  <small *ngIf="getTheFormGroup.document_type.errors.required" class="text-danger">Requerido</small>
-                </div>
+                <input
+                  id="document_type"
+                  type="text"
+                  class="form-control"
+                  formControlName="document_type"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
 
-            <!-- Número de documento -->
+            <!-- Número de Documento -->
             <div class="row mb-3">
               <div class="col-4">
                 <label for="document_number" class="form-label">Número de Documento:</label>
               </div>
               <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="text" 
-                  class="form-control" 
-                  formControlName="document_number" 
-                  placeholder="Ingrese el número de documento" 
-                  [readonly]="mode === 1">
-                <p *ngIf="mode == 1">{{ naturalPersonForm.value.document_number }}</p>
-                <div *ngIf="getTheFormGroup.document_number.errors && (getTheFormGroup.document_number.dirty || getTheFormGroup.document_number.touched || trySend)">
-                  <small *ngIf="getTheFormGroup.document_number.errors.required" class="text-danger">Requerido</small>
-                </div>
+                <input
+                  id="document_number"
+                  type="text"
+                  class="form-control"
+                  formControlName="document_number"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
 
-            <!-- Fecha de nacimiento -->
+            <!-- Fecha de Nacimiento -->
             <div class="row mb-3">
               <div class="col-4">
                 <label for="birth_date" class="form-label">Fecha de Nacimiento:</label>
               </div>
               <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="date" 
-                  class="form-control" 
-                  formControlName="birth_date" 
-                  placeholder="Seleccione la fecha de nacimiento" 
-                  [readonly]="mode === 1">
-                <p *ngIf="mode == 1">{{ naturalPersonForm.value.birth_date | date }}</p>
-                <div *ngIf="getTheFormGroup.birth_date.errors && (getTheFormGroup.birth_date.dirty || getTheFormGroup.birth_date.touched || trySend)">
-                  <small *ngIf="getTheFormGroup.birth_date.errors.required" class="text-danger">Requerido</small>
-                </div>
+                <input
+                  id="birth_date"
+                  type="date"
+                  class="form-control"
+                  formControlName="birth_date"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
 
-            <!-- ID de la empresa -->
+            <!-- Empresa -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="company_id" class="form-label">ID de la Empresa:</label>
+                <label for="company_id" class="form-label">ID Empresa:</label>
               </div>
               <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="number" 
-                  class="form-control" 
-                  formControlName="company_id" 
-                  placeholder="Ingrese el ID de la empresa" 
-                  [readonly]="mode === 1">
-                <p *ngIf="mode == 1">{{ naturalPersonForm.value.company_id }}</p>
-                <div *ngIf="getTheFormGroup.company_id.errors && (getTheFormGroup.company_id.dirty || getTheFormGroup.company_id.touched || trySend)">
-                  <small *ngIf="getTheFormGroup.company_id.errors.required" class="text-danger">Requerido</small>
-                </div>
+                <input
+                  id="company_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="company_id"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
 
-            <!-- ID del cliente -->
+            <!-- Cliente -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="customer_id" class="form-label">ID del Cliente:</label>
+                <label for="customer_id" class="form-label">ID Cliente:</label>
               </div>
               <div class="col-8">
-                <input 
-                  *ngIf="mode != 1" 
-                  type="number" 
-                  class="form-control" 
-                  formControlName="customer_id" 
-                  placeholder="Ingrese el ID del cliente" 
-                  [readonly]="mode === 1">
-                <p *ngIf="mode == 1">{{ naturalPersonForm.value.customer_id }}</p>
-                <div *ngIf="getTheFormGroup.customer_id.errors && (getTheFormGroup.customer_id.dirty || getTheFormGroup.customer_id.touched || trySend)">
-                  <small *ngIf="getTheFormGroup.customer_id.errors.required" class="text-danger">Requerido</small>
-                </div>
+                <input
+                  id="customer_id"
+                  type="number"
+                  class="form-control"
+                  formControlName="customer_id"
+                  [readonly]="mode == 1"
+                />
               </div>
             </div>
 
-            <!-- Botones de acción -->
+            <!-- Botones -->
             <div class="row">
-              <div class="col-4"></div>
-              <div class="col-8 d-flex justify-content-between">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success" (click)="create()">Crear Persona</button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-primary" (click)="update()">Actualizar Persona</button>
-                <button *ngIf="mode == 3 || mode == 4" type="button" class="btn btn-danger" (click)="delete()">Eliminar Persona</button> 
+              <div class="col-8 offset-4 d-flex justify-content-between">
+                <button *ngIf="mode == 2 || mode == 3" type="button" class="btn btn-success" (click)="handleAction()">
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
+                </button>
               </div>
             </div>
           </div>
@@ -146,4 +119,3 @@
     </div>
   </div>
 </div>
-

@@ -6,19 +6,18 @@ import { Factura } from 'src/app/models/factura.model';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-manage',
+  selector: 'app-manage-factura',
   templateUrl: './manage.component.html',
   styleUrls: ['./manage.component.css']
 })
-
 export class ManageFacturaComponent implements OnInit {
   facturaForm: FormGroup;
-  facturaId: number;
-  mode: number;
+  facturaId: number | undefined;
+  mode: number = 0; // 1: View, 2: Create, 3: Update, 4: Delete
   trySend: boolean = false;
 
   constructor(
-    private theFormBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private facturaService: FacturaService,
     private router: Router,
     private route: ActivatedRoute
@@ -27,87 +26,78 @@ export class ManageFacturaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Determina el modo (crear, ver, actualizar)
-    const currentUrl = this.route.snapshot.url.join("/");
-    if (currentUrl.includes("view")) {
+    const currentUrl = this.route.snapshot.url.join('/');
+    if (currentUrl.includes('view')) {
       this.mode = 1;
-    } else if (currentUrl.includes("create")) {
+    } else if (currentUrl.includes('create')) {
       this.mode = 2;
-    } else if (currentUrl.includes("update")) {
+    } else if (currentUrl.includes('update')) {
       this.mode = 3;
-    } else if (currentUrl.includes("delete")) {
+    } else if (currentUrl.includes('delete')) {
       this.mode = 4;
     }
 
-    // Si existe un ID en la URL, obtenemos los datos de la factura
-    if (this.route.snapshot.params.id) {
-      this.facturaId = this.route.snapshot.params.id;
+    this.facturaId = this.route.snapshot.params['id'];
+    if (this.facturaId && this.mode !== 2) {
       this.getFactura(this.facturaId);
     }
   }
 
-  // Configuración del formulario con validaciones
   configFormGroup() {
-    this.facturaForm = this.theFormBuilder.group({
+    this.facturaForm = this.formBuilder.group({
       fecha_emision: ['', Validators.required],
       monto_total: ['', Validators.required],
       estado: ['', Validators.required],
       cuota_id: ['', Validators.required],
-      spent_id: ['', Validators.required]
+      spent_id: ['', Validators.required],
     });
   }
 
-  // Getter para acceder a los controles del formulario
-  get getTheFormGroup() {
+  get formControls() {
     return this.facturaForm.controls;
   }
 
-  // Obtener los datos de una factura específica
   getFactura(id: number) {
-    this.facturaService.get(id).subscribe((data) => {
-      this.facturaForm.patchValue(data); // Llenamos el formulario con los datos
+    this.facturaService.get(id).subscribe((data: Factura) => {
+      this.facturaForm.patchValue(data);
     });
   }
 
-  // Crear una nueva factura
+  handleAction() {
+    if (this.mode === 2) {
+      this.create();
+    } else if (this.mode === 3) {
+      this.update();
+    }
+  }
+
   create() {
     this.trySend = true;
     if (this.facturaForm.valid) {
-      this.facturaService.create(this.facturaForm.value).subscribe(() => {
-        Swal.fire('Creado', 'La factura ha sido creada correctamente', 'success');
-        this.router.navigate(['/facturas']); // Redirige a la lista de facturas
-      });
+      this.facturaService.create(this.facturaForm.value).subscribe(
+        () => {
+          Swal.fire('Creado', 'La factura ha sido creada correctamente.', 'success');
+          this.router.navigate(['/facturas']);
+        },
+        (error) => {
+          Swal.fire('Error', 'Ocurrió un error al crear la factura.', 'error');
+        }
+      );
     }
   }
 
-  // Actualizar una factura existente
   update() {
     this.trySend = true;
     if (this.facturaForm.valid) {
-      this.facturaService.update(this.facturaId, this.facturaForm.value).subscribe(() => {
-        Swal.fire('Actualizado', 'La factura ha sido actualizada correctamente', 'success');
-        this.router.navigate(['/facturas']); // Redirige a la lista de facturas
-      });
-    }
-  }
-
-  // Eliminar una factura
-  delete() {
-    this.facturaService.delete(this.facturaId).subscribe(() => {
-      Swal.fire('Eliminado', 'La factura ha sido eliminada correctamente', 'success');
-      this.router.navigate(['/facturas']); // Redirige a la lista de facturas
-    });
-  }
-
-  // Maneja las acciones dependiendo del modo (crear/actualizar)
-  handleAction() {
-    this.trySend = true;
-    if (this.facturaForm.valid) {
-      if (this.mode === 2) { // Crear
-        this.create();
-      } else if (this.mode === 3) { // Actualizar
-        this.update();
-      }
+      this.facturaService.update(this.facturaId!, this.facturaForm.value).subscribe(
+        () => {
+          Swal.fire('Actualizado', 'La factura ha sido actualizada correctamente.', 'success');
+          this.router.navigate(['/facturas']);
+        },
+        (error) => {
+          Swal.fire('Error', 'Ocurrió un error al actualizar la factura.', 'error');
+        }
+      );
     }
   }
 }

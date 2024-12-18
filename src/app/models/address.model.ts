@@ -5,11 +5,11 @@ import { Route } from './route.model';
 
 export class Address {
     id?: number; // ID autogenerado (opcional para nuevas creaciones)
-    street: string; // Requerido
+    street?: string; // Requerido
     number?: string; // Opcional
-    neighborhood: string; // Requerido
+    neighborhood?: string; // Requerido
     reference?: string; // Opcional
-    municipality_id: number; // Relación foránea (requerido)
+    municipality?: Municipality; // Relación foránea (requerido)
     created_at?: Date; // Autogenerado en el backend
     updated_at?: Date; // Autogenerado en el backend
 }  

@@ -44,32 +44,30 @@
             <!-- Campo ID Producto -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="product_id" class="form-label">ID Producto:</label>
+                Producto:
               </div>
               <div class="col-8">
-                <input
-                  id="product_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="product_id"
-                  [readonly]="mode == 1"
-                />
+               <select class="form-control" formControlName="product_id" [(ngModel)]="categoryProduct.product.id" >
+                <option *ngFor="let option of products" [value]="option.id">Id: {{option.id}} - Nombre: {{option.name}} - Descripción: {{option.description}} - Lote: {{option.batch.id}} - Cliente: {{option.customer.id}}</option>
+               </select>
+                <div *ngIf="trySend && getTheFormGroup.product_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
               </div>
             </div>
 
             <!-- Campo ID Categoría -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="category_id" class="form-label">ID Categoría:</label>
+                Categoría:
               </div>
               <div class="col-8">
-                <input
-                  id="category_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="category_id"
-                  [readonly]="mode == 1"
-                />
+               <select class="form-control" formControlName="category_id" [(ngModel)]="categoryProduct.category.id" >
+                <option *ngFor="let option of categories" [value]="option.id">Id: {{option.id}} - Nombre: {{option.name}}</option>
+               </select>
+                <div *ngIf="trySend && getTheFormGroup.category_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
               </div>
             </div>
 

@@ -45,34 +45,30 @@
             <!-- Campo Lote -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="batch_id" class="form-label">ID del Lote:</label>
+                Lote:
               </div>
               <div class="col-8">
-                <input
-                  id="batch_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="batch_id"
-                  placeholder="Ingrese el ID del lote"
-                  [readonly]="mode === 1"
-                />
+                <select class="form-control" formControlName="batch_id" [(ngModel)]="product.batch.id" >
+                  <option *ngFor="let option of batches" [value]="option.id">Id: {{option.id}} - Cantidad: {{option.quantity}} - Ruta: {{option.route}}</option>
+                 </select>
+                 <div *ngIf="trySend && getTheFormGroup.batch_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
               </div>
             </div>
 
             <!-- Campo Cliente -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="customer_id" class="form-label">ID del Cliente:</label>
+                Cliente:
               </div>
               <div class="col-8">
-                <input
-                  id="customer_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="customer_id"
-                  placeholder="Ingrese el ID del cliente"
-                  [readonly]="mode === 1"
-                />
+                <select class="form-control" formControlName="customer_id" [(ngModel)]="product.customer.id" >
+                  <option *ngFor="let option of customers" [value]="option.id">Id: {{option.id}} - Teléfono: {{option.phone}} - Cantidad de pedidos: {{option.order_count}}</option>
+                 </select>
+                 <div *ngIf="trySend && getTheFormGroup.customer_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
               </div>
             </div>
 

@@ -88,21 +88,12 @@
             <!-- Campo ID del Municipio -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="municipality_id" class="form-label">ID del Municipio:</label>
+                Municipio:
               </div>
               <div class="col-8">
-                <input
-                  id="municipality_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="municipality_id"
-                  placeholder="Ingrese el ID del municipio"
-                  [readonly]="mode == 1 || mode == 4"
-                  [class.is-invalid]="trySend && getTheFormGroup.municipality_id.invalid"
-                />
-                <div *ngIf="trySend && getTheFormGroup.municipality_id.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
-                </div>
+                <select class="form-control" formControlName="municipality_id" [ngModel]="address.municipality.id" >
+                  <option *ngFor="let option of municipalities" [value]="option.id">Id: {{option.id}} - Nombre: {{option.name}} - Descripción: {{option.description}} - Departamento: {{option.department}}</option>
+                </select>
               </div>
             </div>
 

@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { OwnerVehicle } from "../models/owner-vehicle.model";
 
 @Injectable({
   providedIn: "root",
@@ -9,8 +10,12 @@ import { environment } from "src/environments/environment";
 export class OwnerVehicleService {
   constructor(private http: HttpClient) {}
 
-  list(): Observable<any[]> {
+  list(): Observable<OwnerVehicle[]> {
     return this.http.get<any[]>(`${environment.url_ms_businessAKJ}/ownervehicles`);
+  }
+
+  listByVehiculo(vehiculo_id:number): Observable<OwnerVehicle[]>{
+    return this.http.get<OwnerVehicle[]>(`${environment.url_ms_businessAKJ}/ownervehicles?vehiculo_id=${vehiculo_id}`)
   }
 
   delete(id: number): Observable<void> {

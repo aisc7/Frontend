@@ -61,4 +61,8 @@ export class ListComponent implements OnInit {
   update(id: number) {
     this.router.navigate(['servicio/update', id]);
   }
+
+  showSpents(id:number){
+    this.router.navigate(["gasto/filterByService", id])
+  }
 }

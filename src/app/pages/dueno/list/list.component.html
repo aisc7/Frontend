@@ -26,6 +26,8 @@
                     <button type="button" class="btn btn-info btn-sm" (click)="view(dueno.id)">Ver</button>
                     <button type="button" class="btn btn-warning btn-sm" (click)="update(dueno.id)">Editar</button>
                     <button type="button" class="btn btn-danger btn-sm" (click)="delete(dueno.id)">Eliminar</button>
+                    <button type="button" class="btn btn-success btn-sm" (click)="showSpents(dueno.id)">Gastos</button>
+                    
                   </td>
                 </tr>
                 <tr *ngIf="duenos.length === 0">

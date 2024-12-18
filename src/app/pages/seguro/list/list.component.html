@@ -1,46 +1,49 @@
 <div class="container-fluid mt--10">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 class="mb-0">Seguros</h3>
-        </div>
-        <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Compañia</th>
-                <th scope="col">Numero de Poliza</th>
-                <th scope="col">Fecha de Vencimiento</th>
-                <th scope="col">Vehiculo ID</th>
-                <th scope="col">Fecha de Creación</th>
-                <th scope="col">Fecha de Actualización</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let seguro of seguros">
-                <td>{{ seguro.id }}</td>
-                <td>{{ seguro.compania }}</td>
-                <td>{{seguro.numeroPoliza }}</td>
-                <td>{{seguro.fechaVencimiento | date: 'dd/MM/yyyy' }}</td>
-                <td>{{seguro.vehiculo_id }}</td>
-                <td>{{seguro.created_at | date: 'dd/MM/yyyy' }}</td>
-                <td>{{seguro.updated_at | date: 'dd/MM/yyyy' }}</td>
-                <td>
-                  <button type="button" class="btn btn-info" (click)="view(seguro.id)">Ver</button>
-                  <button type="button" class="btn btn-warning" (click)="update(seguro.id)">Editar</button>
-                  <button type="button" class="btn btn-dark" (click)="delete(seguro.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <!-- Table -->
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <h3 class="mb-0">Seguros</h3>
+            </div>
+            <div class="card-body">
+              <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">Compañia</th>
+                      <th scope="col">Número de Póliza</th>
+                      <th scope="col">Fecha de Vencimiento</th>
+                      <th scope="col">Vehículo ID</th>
+                      <th scope="col">Fecha de Creación</th>
+                      <th scope="col">Fecha de Actualización</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let seguro of seguros">
+                      <td>{{ seguro.id }}</td>
+                      <td>{{ seguro.compania }}</td>
+                      <td>{{ seguro.numero_poliza }}</td>
+                      <td>{{ seguro.fecha_vencimiento | date: 'dd/MM/yyyy' }}</td>
+                      <td>{{ seguro.vehiculo }}</td>
+                      <td>{{ seguro.created_at | date: 'dd/MM/yyyy' }}</td>
+                      <td>{{ seguro.updated_at | date: 'dd/MM/yyyy' }}</td>
+                      <td>
+                        <button type="button" class="btn btn-info" (click)="view(seguro.id)">Ver</button>
+                        <button type="button" class="btn btn-warning" (click)="update(seguro.id)">Editar</button>
+                        <button type="button" class="btn btn-dark" (click)="delete(seguro.id)">Eliminar</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

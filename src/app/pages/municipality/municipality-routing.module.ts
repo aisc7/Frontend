@@ -8,7 +8,12 @@ const routes: Routes = [
   { path: "create", component: ManageMunicipalityComponent },
   { path: "update/:id", component: ManageMunicipalityComponent },
   {path: "delete/:id", component: ManageMunicipalityComponent}, 
-  { path: "view/:id", component: ManageMunicipalityComponent }
+  { path: "view/:id", component: ManageMunicipalityComponent },
+  { path: "filterByDepartment/:id", component:ListComponent},
+  {
+    path: "createForDepartment/:department_id",
+    component: ManageMunicipalityComponent,
+  },
 ];
 
 @NgModule({

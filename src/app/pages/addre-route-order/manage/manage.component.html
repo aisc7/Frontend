@@ -12,18 +12,12 @@
             <!-- ID de Dirección -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="address_id" class="form-label">ID de Dirección:</label>
+                Dirección:
               </div>
               <div class="col-8">
-                <input
-                  id="address_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="address_id"
-                  placeholder="Ingrese el ID de la dirección"
-                  [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.address_id.invalid"
-                />
+                <select class="form-control" formControlName="address_id" [ngModel]="addreRouteOrder.address.id">
+                  <option *ngFor="let option of addresses" [value]="option.id">Id: {{option.id}} - Calle: {{option.street}} - Barrio: {{option.neighborhood}} - Referencia: {{option.reference}} - Municipio id: {{option.municipality_id}} </option>
+                </select>
                 <div *ngIf="trySend && getTheFormGroup.address_id.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>
@@ -33,18 +27,13 @@
             <!-- ID de Ruta -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="route_id" class="form-label">ID de Ruta:</label>
+                Ruta:
               </div>
               <div class="col-8">
-                <input
-                  id="route_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="route_id"
-                  placeholder="Ingrese el ID de la ruta"
-                  [readonly]="mode == 1"
-                  [class.is-invalid]="trySend && getTheFormGroup.route_id.invalid"
-                />
+                <select class="form-control" formControlName="route_id" [ngModel]="addreRouteOrder.route.id">
+                  <option *ngFor="let option of routes" [value]="option.id">Id: {{option.id}} - Lugar de comienzo: {{option.starting_place}} - Lugar final: {{option.ending_place}} - Distancia: {{option.distance}} - Fecha de entrega: {{option.delivery_date}} - Contrato: {{option.contract_id}} - Vehiculo: {{option.vehiculo_id}}</option>
+                </select>
+                
                 <div *ngIf="trySend && getTheFormGroup.route_id.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>

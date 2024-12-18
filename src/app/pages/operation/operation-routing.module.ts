@@ -8,8 +8,16 @@ const routes: Routes = [
   { path: "create", component: ManageComponent },
   { path: "update/:id", component: ManageComponent },
   {path: "delete/:id", component: ManageComponent},
-  { path: "view/:id", component: ManageComponent }
+  { path: "view/:id", component: ManageComponent },
+  { path: "filterByMunicipality/:id", component: ListComponent },
+  {
+    path: "createForMunicipality/:municipality_id",
+    component: ManageComponent,
+  },
+  { path: "filterByVehiculo/:id", component: ListComponent },
+  { path: "createForVehicle/:vehiculo_id", component: ManageComponent }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

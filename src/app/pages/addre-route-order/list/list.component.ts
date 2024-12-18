@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddreRouteOrder } from 'src/app/models/addre-route-order.model';
 import { AddreRouteOrderService } from 'src/app/services/addre-route-order.service';
 import Swal from 'sweetalert2';
@@ -11,15 +11,29 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   addreRouteOrders: AddreRouteOrder[];
+  route_id: number;
+  address_id:number;
 
-  constructor(private addreRouteOrderService: AddreRouteOrderService, private router: Router) {
+  constructor(private addreRouteOrderService: AddreRouteOrderService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor');
     this.addreRouteOrders = [];
   }
 
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
+    this.route_id = null;
+    this.address_id= null;
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+
+    if(currentUrl.includes('filterByRoute')){
+      this.route_id=+this.activatedRoute.snapshot.params['id'];
+      this.filterByRoute();
+    }else if(currentUrl.includes('filterByAddress')){
+      this.address_id = +this.activatedRoute.snapshot.params['id'];
+      this.filterByAddress();
+    }
+    else{
+      this.list() //lista por defecto 
+    }
   }
 
   list() {
@@ -64,4 +78,31 @@ export class ListComponent implements OnInit {
   update(id: number) {
     this.router.navigate(['orden-ruta-direccion/update', id]);
   }
+
+  filterByRoute(){
+    this.addreRouteOrderService.listByRoute(this.route_id).subscribe(data=>{
+      this.addreRouteOrders= data;
+      console.log(this.addreRouteOrders);
+    })
+  }
+
+
+  //funcion para crear una operacion segun un municipio
+
+  createForRoute() {
+    this.router.navigate(["orden-ruta-direccion/createForRoute", this.route_id]);
+  }
+
+  filterByAddress(){
+    this.addreRouteOrderService.listByAddress(this.address_id).subscribe(data=>{
+      this.addreRouteOrders= data;
+      console.log(this.addreRouteOrders);
+    })
+  }
+
+  createForAddress() {
+    this.router.navigate(["orden-ruta-direccion/createForAddress", this.address_id]);
+  }
+
+
 }

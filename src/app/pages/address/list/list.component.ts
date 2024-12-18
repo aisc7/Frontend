@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Address } from 'src/app/models/address.model';
 import { AddressService } from 'src/app/services/address.service';
 import Swal from 'sweetalert2';
@@ -11,15 +11,22 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   addresses: Address[];
+  municipality_id: number;
 
-  constructor(private addressService: AddressService, private router: Router) {
+  constructor(private addressService: AddressService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor');
     this.addresses = [];
   }
 
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
+    this.municipality_id = this.activatedRoute.snapshot.params['id'];
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+
+    if(currentUrl.includes('filterByMunicipality')){
+      this.filterByMunicipality();
+    }else{
+      this.list()
+    }
   }
 
   list() {
@@ -61,5 +68,17 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['direccion/update', id]);
+  }
+
+  filterByMunicipality(){
+    this.addressService.listByMunicipality(this.municipality_id).subscribe(data=>{
+      this.addresses = data;
+      console.log(this.addresses);
+      
+    })
+  }
+
+  showAddreRouteOrders(id:number){
+    this.router.navigate(["orden-ruta-direccion/filterByAddress",id])
   }
 }

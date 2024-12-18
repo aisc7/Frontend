@@ -13,7 +13,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Fecha Asignación</th>
-                  <th>Fecha Designación</th>
+                  <th>Fecha Desasignación</th>
                   <th>ID Vehículo</th>
                   <th>ID Dueño</th>
                   <th>Opciones</th>
@@ -23,7 +23,7 @@
                 <tr *ngFor="let ownerVehicle of ownerVehicles">
                   <td>{{ ownerVehicle.id }}</td>
                   <td>{{ ownerVehicle.fecha_asignacion }}</td>
-                  <td>{{ ownerVehicle.fecha_designacion }}</td>
+                  <td>{{ ownerVehicle.fecha_desasignacion }}</td>
                   <td>{{ ownerVehicle.vehiculo_id }}</td>
                   <td>{{ ownerVehicle.dueno_id }}</td>
                   <td>

@@ -9,6 +9,8 @@ const routes: Routes = [
   { path: "update/:id", component: ManageBatchComponent },      // Ruta para actualizar un lote
   { path: "delete/:id", component: ManageBatchComponent },      // Ruta para eliminar un lote
   { path: "view/:id", component: ManageBatchComponent },        // Ruta para ver detalles de un lote
+  { path: "filterByRoute/:id", component:ListComponent }
+
 ];
 
 @NgModule({

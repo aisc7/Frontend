@@ -1,0 +1,191 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h1 class="mb-0">Formulario de Pago</h1>
+        </div>
+        <form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
+          <div class="form-group">
+            <label for="card_number">Número de tarjeta</label>
+            <input
+              type="text"
+              id="card_number"
+              formControlName="card_number"
+              placeholder="Número de tarjeta (13-19 dígitos)"
+              class="form-control"
+              maxlength="19"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="exp_month">Mes de expiración</label>
+            <input
+              type="text"
+              id="exp_month"
+              formControlName="exp_month"
+              placeholder="MM"
+              class="form-control"
+              maxlength="2"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="exp_year">Año de expiración</label>
+            <input
+              type="text"
+              id="exp_year"
+              formControlName="exp_year"
+              placeholder="YY"
+              class="form-control"
+              maxlength="2"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="cvc">CVC</label>
+            <input
+              type="text"
+              id="cvc"
+              formControlName="cvc"
+              placeholder="CVC (3-4 dígitos)"
+              class="form-control"
+              maxlength="4"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              placeholder="Nombre del titular"
+              class="form-control"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="last_name">Apellido</label>
+            <input
+              type="text"
+              id="last_name"
+              formControlName="last_name"
+              placeholder="Apellido del titular"
+              class="form-control"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="Correo electrónico"
+              class="form-control"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input
+              type="text"
+              id="phone"
+              formControlName="phone"
+              placeholder="Teléfono"
+              class="form-control"
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="cell_phone">Celular</label>
+            <input
+              type="text"
+              id="cell_phone"
+              formControlName="cell_phone"
+              placeholder="Celular"
+              class="form-control"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="doc_number">Número de documento</label>
+            <input
+              type="text"
+              id="doc_number"
+              formControlName="doc_number"
+              placeholder="Número de documento"
+              class="form-control"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="city">Ciudad</label>
+            <input
+              type="text"
+              id="city"
+              formControlName="city"
+              placeholder="Ciudad"
+              class="form-control"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="address">Dirección</label>
+            <input
+              type="text"
+              id="address"
+              formControlName="address"
+              placeholder="Dirección"
+              class="form-control"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="bill">Número de factura</label>
+            <input
+              type="text"
+              id="bill"
+              formControlName="bill"
+              placeholder="Número de factura"
+              class="form-control"
+              required
+            />
+          </div>
+        
+          <div class="form-group">
+            <label for="value">Valor</label>
+            <input
+              type="text"
+              id="value"
+              formControlName="value"
+              placeholder="Valor a pagar"
+              class="form-control"
+              required
+            />
+          </div>
+        
+          <button type="submit" class="btn btn-primary" [disabled]="!paymentForm.valid">
+            Pagar
+          </button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>

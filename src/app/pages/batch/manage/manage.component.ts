@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BatchService } from './../../../services/batch.service';
 import Swal from 'sweetalert2';
 import { Batch } from 'src/app/models/batch.model';
+import { Route } from 'src/app/models/route.model';
+import { RouteService } from 'src/app/services/route.service';
 
 @Component({
   selector: 'app-manage',
@@ -15,17 +17,30 @@ export class ManageBatchComponent implements OnInit {
   batchId: number;
   mode: number;
   trySend: boolean = false;
+  batch:Batch;
+  routes:Route[];
 
   constructor(
     private formBuilder: FormBuilder,
     private batchService: BatchService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private routesService:RouteService
   ) {
+    this.routes=[];
     this.configFormGroup();
+    this.batch={id:0, quantity:0, route:{id:null} }
+  }
+
+  routesList(){
+    this.routesService.list().subscribe(data=>{
+      this.routes=data;
+    })
   }
 
   ngOnInit(): void {
+    this.routesList();
+    this.configFormGroup();
     const currentUrl = this.route.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
       this.mode = 1; // Ver
@@ -46,7 +61,7 @@ export class ManageBatchComponent implements OnInit {
   configFormGroup() {
     this.batchForm = this.formBuilder.group({
       quantity: ['', [Validators.required, Validators.min(1)]], // Cantidad mayor a 0
-      route_id: ['', Validators.required] // ID de la Ruta
+      route_id: [null, Validators.required] // ID de la Ruta
     });
   }
 
@@ -69,6 +84,7 @@ export class ManageBatchComponent implements OnInit {
   }
 
   create() {
+    console.log(JSON.stringify(this.batch))
     this.trySend = true;
     if (this.batchForm.valid) {
       this.batchService.create(this.batchForm.value).subscribe(() => {

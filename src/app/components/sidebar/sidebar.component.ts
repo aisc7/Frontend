@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SecurityService } from 'src/app/services/security.service';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 
 declare interface RouteInfo {
     path: string;
@@ -31,12 +32,16 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   public isCollapsed = true;
 
-  constructor(private router: Router, private securityService : SecurityService) { }
+  constructor(private router: Router, private securityService : SecurityService, private theWebSocketService:WebSocketService) { }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });
+   this.theWebSocketService.setNameEvent("notifications")
+   this.theWebSocketService.callback.subscribe(data=>{
+    console.log("Llegando desde el backend" + JSON.stringify(data));
+   })
   }
 }

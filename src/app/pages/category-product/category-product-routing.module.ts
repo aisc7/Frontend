@@ -8,7 +8,9 @@ const routes: Routes = [
   { path: "create", component: ManageCategoryProductComponent }, // Create category product
   { path: "update/:id", component: ManageCategoryProductComponent }, // Update category product
   {path: "delete/:id", component: ManageCategoryProductComponent}, // Delete category product
-  { path: "view/:id", component: ManageCategoryProductComponent }, // View category product
+  { path: "view/:id", component: ManageCategoryProductComponent },
+  { path: "filterByProduct/:id", component: ListComponent},
+  { path: "filterByCategory/:id", component: ListComponent},
 ];
 
 

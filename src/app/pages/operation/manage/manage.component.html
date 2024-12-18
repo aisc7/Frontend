@@ -1,8 +1,4 @@
-<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
-
-<!-- Page content -->
 <div class="container-fluid mt--7">
-  <!-- Formulario de Operación -->
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
@@ -11,14 +7,15 @@
           <h3 *ngIf="mode == 2" class="mb-0">Crear Operación</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Operación</h3>
           <h3 *ngIf="mode == 4" class="mb-0">Eliminar Operación</h3>
+          <h1 *ngIf="mode == 4" class="mb-0">Crear Operación Municipio_Id #{{operations.municipality_id}}</h1>
+          <h1 *ngIf="mode == 5" class="mb-0">Crear Operación Vehículo_Id #{{operations.vehiculo_id}}</h1>
         </div>
         <form class="form" [formGroup]="operationForm">
           <div class="card-body">
-            
             <!-- Campo ID -->
             <div class="row mb-3">
               <div class="col-4">
-                <label>ID:</label>
+                <label for="operationId" class="form-label">ID:</label>
               </div>
               <div class="col-8">
                 <p>{{operationId}}</p>
@@ -28,14 +25,14 @@
             <!-- Fecha de Inicio -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="startDate" class="form-label">Fecha de Inicio:</label>
+                <label for="start_date" class="form-label">Fecha de Inicio:</label>
               </div>
               <div class="col-8">
                 <input
-                  id="startDate"
+                  id="start_date"
                   type="date"
                   class="form-control"
-                  formControlName="startDate"
+                  formControlName="start_date"
                   [readonly]="mode == 1"
                   placeholder="Ingrese Fecha de Inicio"
                   [class.is-invalid]="trySend && getTheFormGroup.startDate.invalid"
@@ -70,19 +67,15 @@
             <!-- Municipio -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="municipality_id" class="form-label">Municipio:</label>
+                <label for="municipality" class="form-label">Municipio:</label>
               </div>
               <div class="col-8">
-                <input
-                  id="municipality_id"
-                  type="text"
-                  class="form-control"
-                  formControlName="municipality_id"
-                  [readonly]="mode == 1"
-                  placeholder="Ingrese Municipio"
-                  [class.is-invalid]="trySend && getTheFormGroup.municipality_id.invalid"
-                />
-                <div *ngIf="trySend && getTheFormGroup.municipality_id.invalid" class="invalid-feedback">
+                <select class="form-control" formControlName="municipality" [ngModel]="operation.municipality.id">
+                  <option *ngFor="let option of municipalities" [value]="option.id">
+                    Id: {{option.id}} - Nombre: {{option.name}} - Descripción: {{option.description}} - Departamento: {{option.department_id}}
+                  </option>
+                </select>
+                <div *ngIf="trySend && getTheFormGroup.municipality.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>
               </div>
@@ -91,19 +84,15 @@
             <!-- Vehículo -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="vehiculo_id" class="form-label">Vehículo:</label>
+                <label for="vehiculo" class="form-label">Vehículo:</label>
               </div>
               <div class="col-8">
-                <input
-                  id="vehiculo_id"
-                  type="text"
-                  class="form-control"
-                  formControlName="vehiculo_id"
-                  [readonly]="mode == 1"
-                  placeholder="Ingrese Vehículo"
-                  [class.is-invalid]="trySend && getTheFormGroup.vehiculo_id.invalid"
-                />
-                <div *ngIf="trySend && getTheFormGroup.vehiculo_id.invalid" class="invalid-feedback">
+                <select class="form-control" formControlName="vehiculo" [ngModel]="operation.vehiculo.id">
+                  <option *ngFor="let option of vehiculos" [value]="option.id">
+                    Id: {{option.id}} - Tipo: {{option.type}} - Capacidad Peso: {{option.capacity_weight}} - Capacidad Volumen: {{option.capacity_volume}} - Estado: {{option.status}}
+                  </option>
+                </select>
+                <div *ngIf="trySend && getTheFormGroup.vehiculo.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>
               </div>
@@ -113,26 +102,15 @@
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8 d-flex justify-content-between">
-                <button 
-                  *ngIf="mode == 2" 
-                  type="button" 
-                  class="btn btn-success" 
-                  (click)="create()"> 
-                  Crear 
+                <button *ngIf="mode == 2" type="button" class="btn btn-success" (click)="create()">Crear</button>
+                <button *ngIf="mode == 3" type="button" class="btn btn-primary" (click)="update()">Actualizar</button>
+                <button *ngIf="mode == 4" type="button" class="btn btn-danger" (click)="delete()">Eliminar</button>
+
+                <button *ngIf="mode == 4" class="btn btn-success btn-block" (click)="createForMunicipality()">
+                  Crear para Municipio
                 </button>
-                <button 
-                  *ngIf="mode == 3" 
-                  type="button" 
-                  class="btn btn-primary" 
-                  (click)="update()"> 
-                  Actualizar 
-                </button>
-                <button 
-                  *ngIf="mode == 4" 
-                  type="button" 
-                  class="btn btn-danger" 
-                  (click)="delete()"> 
-                  Eliminar 
+                <button *ngIf="mode == 5" class="btn btn-success btn-block" (click)="createForvehiculo()">
+                  Crear para Vehículo
                 </button>
               </div>
             </div>

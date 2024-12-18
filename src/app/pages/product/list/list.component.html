@@ -30,6 +30,7 @@
                     <button type="button" class="btn btn-info btn-sm" (click)="view(product.id)">Ver</button>
                     <button type="button" class="btn btn-warning btn-sm" (click)="update(product.id)">Editar</button>
                     <button type="button" class="btn btn-danger btn-sm" (click)="delete(product.id)">Eliminar</button>
+                    <button type="button" class="btn btn-success btn-sm" (click)="showCategoryProducts(product.id)">Categorias Producto</button>
                   </td>
                 </tr>
                 <tr *ngIf="products.length === 0">

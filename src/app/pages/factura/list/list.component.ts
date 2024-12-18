@@ -25,7 +25,7 @@ export class ListComponent implements OnInit {
   list() {
     this.facturaService.list().subscribe((data: any[]) => {
       this.facturas= data.map(item => ({
-        id: item.id,
+      id: item.id,
       fecha_emision: item.fecha_emision,
       monto_total: item.monto_total,
       estado: item.estado,
@@ -74,5 +74,9 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['factura/update', id]);
+  }
+
+  payment(id:number){
+    this.router.navigate(['factura/payment', id])
   }
 }

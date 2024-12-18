@@ -32,17 +32,12 @@
             <!-- Campo Ruta -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="route_id" class="form-label">ID de la Ruta:</label>
+                Ruta:
               </div>
               <div class="col-8">
-                <input
-                  id="route_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="route_id"
-                  placeholder="Ingrese el ID de la ruta"
-                  [readonly]="mode == 1"
-                />
+               <select class="form-control" formControlName="route_id" [(ngModel)]="batch.route.id" >
+                <option *ngFor="let option of routes" [value]="option.id">Id: {{option.id}} - Lugar de comienzo: {{option.starting_place}} - Lugar final: {{option.ending_place}} - Distancia: {{option.distance}} - Fecha de entrega: {{option.delivery_date}} - Contrato: {{option.contract_id}} - Vehiculo: {{option.vehiculo_id}}</option>
+               </select>
                 <div *ngIf="trySend && getTheFormGroup.route_id.invalid" class="invalid-feedback">
                   Este campo es obligatorio.
                 </div>

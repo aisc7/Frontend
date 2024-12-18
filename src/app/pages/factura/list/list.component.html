@@ -32,7 +32,9 @@
                     <button type="button" class="btn btn-info btn-sm" (click)="view(factura.id)">Ver</button>
                     <button type="button" class="btn btn-warning btn-sm" (click)="update(factura.id)">Editar</button>
                     <button type="button" class="btn btn-danger btn-sm" (click)="delete(factura.id)">Eliminar</button>
-                  </td>
+                    <button class="btn btn-success" *ngIf="factura.estado !== 'Pagada'" (click)="payment(factura.id)">Pagar</button>
+
+                                    </td>
                 </tr>
                 <tr *ngIf="facturas.length === 0">
                   <td colspan="7" class="text-center">No se encontraron facturas.</td>
@@ -40,6 +42,9 @@
               </tbody>
             </table>
           </div>
+
+
+          
         </div>
       </div>
     </div>

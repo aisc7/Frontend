@@ -61,4 +61,8 @@ export class ListComponent implements OnInit {
   update(id: number) {
     this.router.navigate(['categoria/update', id]);
   }
+
+  showCategoryProducts(id:number){
+    this.router.navigate(["categoria-producto/filterByCategory", id])
+  }
 }

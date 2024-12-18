@@ -4,6 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RouteService } from './../../../services/route.service';
 import { Route } from 'src/app/models/route.model';
 import Swal from 'sweetalert2';
+import { Contract } from 'src/app/models/contract.model';
+import { Vehiculo } from 'src/app/models/vehiculo.model';
+import { ContractService } from 'src/app/services/contract.service';
+import { VehiculoService } from 'src/app/services/vehiculo.service';
 
 @Component({
   selector: 'app-manage-route',
@@ -15,17 +19,40 @@ export class ManageRouteComponent implements OnInit {
   routeId: number;
   mode: number;
   trySend: boolean = false;
+  route:Route;
+  contracts:Contract[];
+  vehiculos: Vehiculo[];
 
   constructor(
     private theFormBuilder: FormBuilder,
     private routeService: RouteService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private contractsService:ContractService, 
+    private vehiculosService:VehiculoService
   ) {
+    this.contracts=[];
+    this.vehiculos=[];
     this.configFormGroup();
+    this.route={id:0, starting_place:"", ending_place:"", distance:0, delivery_date:null, contract:{}, vehiculo:{}}
+  }
+
+  vehiculosList(){
+    this.vehiculosService.list().subscribe(data=>{
+      this.vehiculos=data;
+    })
+  }
+  
+  contractsList(){
+    this.contractsService.list().subscribe(data=>{
+      this.contracts=data;
+    })
   }
 
   ngOnInit(): void {
+    this.contractsList();
+    this.vehiculosList();
+    this.configFormGroup();
     const currentUrl = this.activatedRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1; // Modo de ver
@@ -51,8 +78,8 @@ export class ManageRouteComponent implements OnInit {
       ending_place: ['', Validators.required],
       distance: ['', [Validators.required, Validators.min(1)]],
       delivery_date: ['', Validators.required],
-      contract_id: ['', Validators.required],
-      vehiculo_id: ['', Validators.required]
+      contract_id: [null, Validators.required],
+      vehiculo_id: [null, Validators.required]
     });
   }
 
@@ -72,13 +99,16 @@ export class ManageRouteComponent implements OnInit {
   }
 
   create() {
+    console.log(JSON.stringify(this.route))
     this.trySend = true;
     if (this.routeForm.valid) {
       this.routeService.create(this.routeForm.value).subscribe(() => {
         Swal.fire('Creado', 'La ruta ha sido creada correctamente', 'success');
         this.router.navigate(['/routes']);
       });
-    }
+    }else {
+          Swal.fire('Error', 'Complete todos los campos obligatorios', 'error');
+        }
   }
 
   update() {

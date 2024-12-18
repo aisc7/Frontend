@@ -22,16 +22,16 @@
             </div>
             <br />
 
-            <!-- Nombre -->
+            <!-- Compañía -->
             <div class="row">
               <div class="col-4">
-                <label>Nombre:</label>
+                <label>Compañía:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre del seguro">
-                <p *ngIf="mode == 1">{{ seguroForm.value.name }}</p>
-                <div *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.name.errors.required" class="msnError">Requerido</strong>
+                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="compania" title="Compañía" placeholder="Ingrese el nombre de la compañía">
+                <p *ngIf="mode == 1">{{ seguroForm.value.compania }}</p>
+                <div *ngIf="getTheFormGroup.compania?.errors && (getTheFormGroup.compania?.dirty || getTheFormGroup.compania?.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.compania?.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
@@ -43,14 +43,44 @@
                 <label>Número de Póliza:</label>
               </div>
               <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="policyNumber" title="Número de Póliza" placeholder="Ingrese el número de póliza">
-                <p *ngIf="mode == 1">{{ seguroForm.value.policyNumber }}</p>
-                <div *ngIf="getTheFormGroup.policyNumber.errors && (getTheFormGroup.policyNumber.dirty || getTheFormGroup.policyNumber.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.policyNumber.errors.required" class="msnError">Requerido</strong>
+                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="numero_poliza" title="Número de Póliza" placeholder="Ingrese el número de póliza">
+                <p *ngIf="mode == 1">{{ seguroForm.value.numero_poliza }}</p>
+                <div *ngIf="getTheFormGroup.numero_poliza?.errors && (getTheFormGroup.numero_poliza?.dirty || getTheFormGroup.numero_poliza?.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.numero_poliza?.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <br />
+
+            <!-- Fecha de Vencimiento -->
+            <div class="row">
+              <div class="col-4">
+                <label>Fecha de Vencimiento:</label>
+              </div>
+              <div class="col-8">
+                <input *ngIf="mode != 1" type="date" class="form-control" formControlName="fecha_vencimiento" title="Fecha de Vencimiento">
+                <p *ngIf="mode == 1">{{ seguroForm.value.fecha_vencimiento | date:'yyyy-MM-dd' }}</p>
+                <div *ngIf="getTheFormGroup.fecha_vencimiento?.errors && (getTheFormGroup.fecha_vencimiento?.dirty || getTheFormGroup.fecha_vencimiento?.touched || trySend)">
+                  <strong *ngIf="getTheFormGroup.fecha_vencimiento?.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <!-- Campo ID del Vehículo -->
+            <div class="row mb-3">
+              <div class="col-4">
+                Vehiculo:
+              </div>
+              <div class="col-8">
+               <select class="form-control" formControlName="vehiculo_id" [(ngModel)]="seguro.vehiculo.id" >
+                <option *ngFor="let option of vehiculos" [value]="option.id">Id: {{option.id}}</option>
+               </select>
+                <div *ngIf="trySend && getTheFormGroup.vehiculo_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+            </div>
 
             <!-- Botones para Crear/Actualizar/Eliminar -->
             <div class="row">

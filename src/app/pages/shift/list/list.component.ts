@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Shift } from 'src/app/models/shift.model';
 import { ShiftService } from 'src/app/services/shift.service';
 import Swal from 'sweetalert2';
@@ -11,15 +11,22 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   shifts: Shift[];
+  conductor_id: number;
 
-  constructor(private shiftService: ShiftService, private router: Router) {
+  constructor(private shiftService: ShiftService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor');
     this.shifts = [];
   }
 
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
+    this.conductor_id = this.activatedRoute.snapshot.params['id'];
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+
+    if(currentUrl.includes('filterByConductor')){
+      this.filterByConductor();
+    }else{
+      this.list() //lista por defecto 
+    }
   }
 
   list() {
@@ -60,5 +67,12 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['turno/update', id]);
+  }
+
+  filterByConductor(){
+    this.shiftService.listByConductor(this.conductor_id).subscribe(data =>{
+      this.shifts = data;
+      console.log(this.shifts)
+    })
   }
 }

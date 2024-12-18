@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: "create", component: ManageShiftComponent },      // Ruta para crear un turno
   { path: "update/:id", component: ManageShiftComponent },  // Ruta para actualizar un turno específico
   {path : "delete/:id", component: ManageShiftComponent},   // Ruta para eliminar un turno específico
-  { path: "view/:id", component: ManageShiftComponent }     // Ruta para ver los detalles de un turno específico
+  { path: "view/:id", component: ManageShiftComponent } ,    // Ruta para ver los detalles de un turno específico
+  { path: "filterByConductor/:id", component:ListComponent}
 ];
 
 @NgModule({

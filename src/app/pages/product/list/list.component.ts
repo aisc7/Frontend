@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import Swal from 'sweetalert2';
@@ -11,15 +11,28 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   products: Product[];
+  customer_id: number;
+  batch_id: number;
+  
 
-  constructor(private productService: ProductService, private router: Router) {
+  constructor(private productService: ProductService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor');
     this.products = [];
   }
 
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
+    this.customer_id= this.activatedRoute.snapshot.params['id'];
+    this.batch_id = this.activatedRoute.snapshot.params['id'];
+
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+
+    if (currentUrl.includes('filterByCustomer')) {
+      this.filterByCustomer();
+    } else if (currentUrl.includes('filterByBatch')) {
+      this.filterByBatch();
+    } else {
+      this.list();
+    }
   }
 
   list() {
@@ -61,5 +74,24 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['producto/update', id]);
+  }
+
+  filterByCustomer(){
+    this.productService.listByCustomer(this.customer_id).subscribe(data=>{
+      this.products = data;
+      console.log(this.products);
+    })
+  }
+
+  filterByBatch(){
+    this.productService.listByBatch(this.batch_id).subscribe(data=>{
+      this.products = data;
+      console.log(this.products);
+      
+    })
+  }
+
+  showCategoryProducts(id:number){
+    this.router.navigate(["categoria-producto/filterByProduct", id])
   }
 }

@@ -61,4 +61,12 @@ export class ListComponent implements OnInit {
   update(id: number) {
     this.router.navigate(['cliente/update', id]);
   }
+
+  showContracts(id:number){
+    this.router.navigate(["contracts/filterByCustomer", id])
+  }
+
+  showProducts(id:number){
+    this.router.navigate(["products/filterByCustomer", id])
+  }
 }

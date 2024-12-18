@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DistributionCenterService } from './../../../services/distribution-center.service';
 import { DistributionCenter } from 'src/app/models/distribution-center.model';
 import Swal from 'sweetalert2';
+import { Municipality } from 'src/app/models/municipality.model';
+import { MunicipalityService } from 'src/app/services/municipality.service';
 
 @Component({
   selector: 'app-manage',
@@ -15,17 +17,32 @@ export class ManageDistributionCenterComponent implements OnInit {
   distributionCenterId: number | null = null;
   mode: number = 2; // Default to create
   trySend: boolean = false;
+  distributionCenter:DistributionCenter;
+  municipalities:Municipality[];
 
   constructor(
     private formBuilder: FormBuilder,
     private distributionCenterService: DistributionCenterService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private municipalitiesService:MunicipalityService
   ) {
+    this.municipalities=[]
     this.configFormGroup();
+    this.distributionCenter={id:0, name:"", phone:"", email:"", capacity:0, address_id:null, municipality:{
+      id:null
+    } }
+  }
+
+  municipalitiesList(){
+    this.municipalitiesService.list().subscribe(data=>{
+      this.municipalities=data;
+    })
   }
 
   ngOnInit(): void {
+    this.municipalitiesList();
+    this.configFormGroup();
     const currentUrl = this.route.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
       this.mode = 1; // Modo Ver
@@ -48,7 +65,7 @@ export class ManageDistributionCenterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       capacity: ['', [Validators.required, Validators.min(0)]],
       address_id: ['', Validators.required],
-      municipality_id: ['', Validators.required]
+      municipality_id: [null, Validators.required]
     });
   }
 

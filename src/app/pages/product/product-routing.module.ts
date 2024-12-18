@@ -8,7 +8,10 @@ const routes: Routes = [
   { path: "create", component: ManageComponent },
   { path: "view/:id", component: ManageComponent },
   {path: "delete/:id", component: ManageComponent},
-  { path: "update/:id", component: ManageComponent }
+  { path: "update/:id", component: ManageComponent },
+  {path: "filterByCustomer/:id", component:ListComponent},
+  { path: 'filterByBatch/:id', component: ListComponent },
+
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

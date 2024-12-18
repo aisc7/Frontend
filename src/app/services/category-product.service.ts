@@ -13,7 +13,12 @@ export class CategoryProductService {
   list(): Observable<CategoryProduct[]> {
     return this.http.get<CategoryProduct[]>(`${environment.url_ms_businessAKJ}/categoryproducts`);
   }
-
+  listByProduct(product_id:number): Observable<CategoryProduct[]> {
+    return this.http.get<CategoryProduct[]>(`${environment.url_ms_businessAKJ}/categoryproducts?product_id=${product_id}`);
+  }
+  listByCategory(category_id:number): Observable<CategoryProduct[]> {
+    return this.http.get<CategoryProduct[]>(`${environment.url_ms_businessAKJ}/categoryproducts?category_id=${category_id}`);
+  }
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.url_ms_businessAKJ}/categoryproducts/${id}`);
   }

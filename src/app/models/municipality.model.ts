@@ -6,9 +6,10 @@ import { Vehiculo } from './vehiculo.model';
 
 export class Municipality {
     id?: number; // Opcional, ya que será generado automáticamente
-    name: string; // Requerido
+    name?: string; // Requerido
     description?: string; // Opcional
-    department_id: number; // Relación foránea, requerida
+    department?: Department; // Relación foránea, requerida
+    department_id?:number;
     created_at?: Date; // Autogenerado en el backend
     updated_at?: Date; // Autogenerado en el backend
 }   

@@ -8,7 +8,11 @@ const routes: Routes = [
   { path: "create", component: ManageSpentComponent },              // Ruta para crear un gasto
   { path: "update/:id", component: ManageSpentComponent },          // Ruta para actualizar un gasto específico
   {path : "delete/:id", component: ManageSpentComponent},           // Ruta para eliminar un gasto específico
-  { path: "view/:id", component: ManageSpentComponent }             // Ruta para ver los detalles de un gasto específico
+  { path: "view/:id", component: ManageSpentComponent } ,            // Ruta para ver los detalles de un gasto específico
+  { path: "filterByDueno/:id", component: ListComponent},
+  { path: "filterByConductor/:id", component: ListComponent},
+  { path: "filterByService/:id", component: ListComponent},
+
 ];
 
 @NgModule({

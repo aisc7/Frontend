@@ -14,6 +14,10 @@ export class ContractService {
     return this.http.get<Contract[]>(`${environment.url_ms_businessAKJ}/contracts`);
   }
 
+  listByCustomer(customer_id: number): Observable<Contract[]>{
+    return this.http.get<Contract[]>(`${environment.url_ms_businessAKJ}/contracts?customer_id=${customer_id}`)
+    }
+
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.url_ms_businessAKJ}/contracts/${id}`);
   }

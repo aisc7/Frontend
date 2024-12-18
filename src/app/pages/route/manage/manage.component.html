@@ -79,34 +79,29 @@
             <!-- Campo ID del Contrato -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="contract_id" class="form-label">ID del Contrato:</label>
+                Contrato:
               </div>
               <div class="col-8">
-                <input
-                  id="contract_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="contract_id"
-                  placeholder="Ingrese el ID del contrato"
-                  [readonly]="mode == 1"
-                />
+               <select class="form-control" formControlName="contract_id" [(ngModel)]="route.contract.id" >
+                <option *ngFor="let option of contracts" [value]="option.id">Id: {{option.id}}</option>
+               </select>
+                <div *ngIf="trySend && getTheFormGroup.contract_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
               </div>
             </div>
-
             <!-- Campo ID del Vehículo -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="vehiculo_id" class="form-label">ID del Vehículo:</label>
+                Vehiculo:
               </div>
               <div class="col-8">
-                <input
-                  id="vehiculo_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="vehiculo_id"
-                  placeholder="Ingrese el ID del vehículo"
-                  [readonly]="mode == 1"
-                />
+               <select class="form-control" formControlName="vehiculo_id" [(ngModel)]="route.vehiculo.id" >
+                <option *ngFor="let option of vehiculos" [value]="option.id">Id: {{option.id}}</option>
+               </select>
+                <div *ngIf="trySend && getTheFormGroup.vehiculo_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
               </div>
             </div>
 

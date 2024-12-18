@@ -8,7 +8,8 @@ const routes: Routes = [
   { path: 'create', component: ManageSeguroComponent },     // Ruta para crear un seguro
   { path: 'update/:id', component: ManageSeguroComponent }, // Ruta para actualizar un seguro específico
   {path: 'delete/:id', component: ManageSeguroComponent},   // Ruta para eliminar un seguro específico
-  { path: 'view/:id', component: ManageSeguroComponent }    // Ruta para ver los detalles de un seguro específico
+  { path: 'view/:id', component: ManageSeguroComponent },    // Ruta para ver los detalles de un seguro específico
+  { path: 'filterByVehiculo/:id', component: ListComponent}
 ];
 
 @NgModule({

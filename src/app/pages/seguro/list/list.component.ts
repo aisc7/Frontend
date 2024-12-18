@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Seguro } from 'src/app/models/seguro.model';
 import { SeguroService } from 'src/app/services/seguro.service';
 import Swal from 'sweetalert2';
@@ -11,15 +11,22 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   seguros: Seguro[];
+  vehiculo_id: number;
 
-  constructor(private seguroService: SeguroService, private router: Router) {
+  constructor(private seguroService: SeguroService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor');
     this.seguros = [];
   }
 
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
+    this.vehiculo_id = this.activatedRoute.snapshot.params['id'];
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+
+    if(currentUrl.includes('filterByVehiculo')){
+      this.filterByVehiculo();
+    }else{
+      this.list() //lista por defecto 
+    }
   }
 
   list() {
@@ -60,5 +67,14 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['seguro/update', id]);
+  }
+
+
+  filterByVehiculo(){
+    this.seguroService.listByVehiculo(this.vehiculo_id).subscribe(data=>{
+      this.seguros = data;
+      console.log(this.seguros);
+      
+    })
   }
 }

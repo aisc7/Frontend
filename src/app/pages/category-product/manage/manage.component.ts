@@ -3,6 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryProductService } from './../../../services/category-product.service';
 import Swal from 'sweetalert2';
+import { CategoryProduct } from 'src/app/models/category-product.model';
+import { Category } from 'src/app/models/category.model';
+import { Product } from 'src/app/models/product.model';
+import { CategoryService } from 'src/app/services/category.service';
+import { ProductRoutingModule } from '../../product/product-routing.module';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-manage',
@@ -14,17 +20,42 @@ export class ManageCategoryProductComponent implements OnInit {
   relationId: number;
   mode: number;
   trySend: boolean = false;
+  categoryProduct:CategoryProduct;
+  categories:Category[];
+  products:Product[];
 
   constructor(
     private formBuilder: FormBuilder,
     private categoryProductService: CategoryProductService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private categoryService:CategoryService,
+    private productsService:ProductService
   ) {
+    this.categories=[];
+    this.products=[];
     this.configFormGroup();
+    this.categoryProduct={id:0, fecha_asignacion:null, fecha_desasignacion:null, product:{id:0}, category:{id:0} }
+  }
+
+  
+  categoriesList(){
+    this.categoryService.list().subscribe(data=>{
+      this.categories=data;
+    })
+  }
+
+  
+  productsList(){
+    this.productsService.list().subscribe(data=>{
+      this.products=data;
+    })
   }
 
   ngOnInit(): void {
+    this.productsList();
+    this.categoriesList();
+    this.configFormGroup();
     const currentUrl = this.route.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
       this.mode = 1; // Ver
@@ -44,8 +75,8 @@ export class ManageCategoryProductComponent implements OnInit {
     this.categoryProductForm = this.formBuilder.group({
       fecha_asignacion: ['', Validators.required],
       fecha_desasignacion: [''],
-      product_id: ['', Validators.required],
-      category_id: ['', Validators.required],
+      product_id: [null, Validators.required],
+      category_id: [null, Validators.required],
     });
   }
 

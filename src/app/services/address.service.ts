@@ -14,6 +14,10 @@ export class AddressService {
     return this.http.get<Address[]>(`${environment.url_ms_businessAKJ}/addresses`);
   }
 
+  listByMunicipality(municipality_id: number): Observable<Address[]>{
+    return this.http.get<Address[]>(`${environment.url_ms_businessAKJ}/addresses?municipality_id=${municipality_id}`);
+  }
+
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.url_ms_businessAKJ}/addresses/${id}`);
   }

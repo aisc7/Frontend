@@ -86,19 +86,15 @@
               </div>
             </div>
             <div class="row mb-3">
-              <div class="col-4">
-                <label for="municipality_id" class="form-label">Municipio:</label>
-              </div>
-              <div class="col-8">
-                <input
-                  id="municipality_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="municipality_id"
-                  placeholder="Ingrese el ID del municipio"
-                  [readonly]="mode == 1"
-                />
-              </div>
+             <div class="col-4">
+              Municipio:
+             </div>
+             <div class="col-8">
+              <select class="form-control" formControlName="municipality_id" [(ngModel)]="distributionCenter.municipality.id">
+                <option *ngFor="let option of municipalities" [value]="option.id">Id: {{option.id}} - Nombre: {{option.name}} - Descripción: {{option.description}}  - Departamento: {{option.department}} </option>
+              </select>
+
+             </div>
             </div>
 
             <!-- Botones -->

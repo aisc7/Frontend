@@ -6,10 +6,10 @@ import { Customer } from './costumer.model';
 
 export class Product {
     id?: number; // ID del producto
-    name: string; // Nombre del producto
-    description: string; // Descripción del producto
-    batch_id: number; // ID del lote
-    customer_id: number; // ID del cliente
+    name?: string; // Nombre del producto
+    description?: string; // Descripción del producto
+    batch?: Batch; // ID del lote
+    customer?: Customer; // ID del cliente
     created_at?: string; // Fecha de creación
     updated_at?: string; // Fecha de última actualización
 }

@@ -4,6 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { OwnerVehicleService } from './../../../services/owner-vehicle.service';
 import { OwnerVehicle } from 'src/app/models/owner-vehicle.model';
 import Swal from 'sweetalert2';
+import { Dueno } from 'src/app/models/dueno.model';
+import { Vehiculo } from 'src/app/models/vehiculo.model';
+import { DuenoService } from 'src/app/services/dueno.service';
+import { VehiculoService } from 'src/app/services/vehiculo.service';
 
 @Component({
   selector: 'app-manage-owner-vehicle',
@@ -15,17 +19,43 @@ export class ManageOwnerVehicleComponent implements OnInit {
   ownerVehicleId: number | undefined;
   mode: number = 0; // 1: Ver, 2: Crear, 3: Actualizar
   trySend: boolean = false;
+  ownerVehiculo:OwnerVehicle;
+  duenos:Dueno[];
+  vehiculos:Vehiculo[];
+
 
   constructor(
     private formBuilder: FormBuilder,
     private ownerVehicleService: OwnerVehicleService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private duenosService:DuenoService,
+    private vehiculosService:VehiculoService
   ) {
+    this.vehiculos=[];
+    this.duenos=[];
     this.configFormGroup();
+    this.ownerVehiculo={id:0, fecha_asignacion:null, fecha_desasignacion:null, vehiculo:{id:null}, dueno:{id:null} }
   }
 
+
+  vehiculosList(){
+    this.vehiculosService.list().subscribe(data=>{
+      this.vehiculos=data;
+    })
+  }
+
+  duenosList(){
+    this.duenosService.list().subscribe(data=>{
+      this.duenos=data
+      console.log(this.duenos);
+  })}
+  
+
   ngOnInit(): void {
+    this.vehiculosList();
+    this.duenosList();
+    this.configFormGroup();
     const currentUrl = this.route.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
       this.mode = 1;
@@ -45,8 +75,8 @@ export class ManageOwnerVehicleComponent implements OnInit {
     this.ownerVehicleForm = this.formBuilder.group({
       fecha_asignacion: ['', Validators.required],
       fecha_desasignacion: ['', Validators.required],
-      vehiculo_id: ['', Validators.required],
-      dueno_id: ['', Validators.required]
+      vehiculo_id: [null, Validators.required],
+      dueno_id: [null, Validators.required]
     });
   }
 
@@ -69,6 +99,7 @@ export class ManageOwnerVehicleComponent implements OnInit {
   }
 
   create() {
+    console.log(JSON.stringify(this.ownerVehiculo))
     this.trySend = true;
     if (this.ownerVehicleForm.valid) {
       this.ownerVehicleService.create(this.ownerVehicleForm.value).subscribe(
@@ -82,6 +113,11 @@ export class ManageOwnerVehicleComponent implements OnInit {
       );
     }
   }
+
+  get getTheFormGroup() {
+    return this.ownerVehicleForm.controls;
+  }
+
 
   update() {
     this.trySend = true;

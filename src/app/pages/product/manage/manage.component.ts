@@ -3,6 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from './../../../services/product.service';
 import Swal from 'sweetalert2';
+import { Product } from 'src/app/models/product.model';
+import { Batch } from 'src/app/models/batch.model';
+import { Customer } from 'src/app/models/costumer.model';
+import { BatchService } from 'src/app/services/batch.service';
+import { CustomerService } from 'src/app/services/costumer.service';
 
 @Component({
   selector: 'app-manage',
@@ -14,17 +19,40 @@ export class ManageComponent implements OnInit {
   productId: number; // ID del producto
   mode: number; // Modo de operación: 1 (Ver), 2 (Crear), 3 (Actualizar)
   trySend: boolean = false; // Bandera para intentar enviar el formulario
+  product:Product;
+  batches: Batch[];
+  customers: Customer[];
 
   constructor(
     private theFormBuilder: FormBuilder,
     private productService: ProductService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, 
+    private batchesService: BatchService,
+    private customersService: CustomerService
   ) {
+    this.batches=[];
+    this.customers=[];
     this.configFormGroup();
+    this.product={id:0, name:"", description:"", batch:{id:null}, customer:{id:null}}
+  }
+
+  batchesList(){
+    this.batchesService.list().subscribe(data=>{
+      this.batches=data;
+    })
+  }
+
+  customersList(){
+    this.customersService.list().subscribe(data=>{
+      this.customers=data;
+    })
   }
 
   ngOnInit(): void {
+    this.batchesList();
+    this.customersList();
+    this.configFormGroup();
     const currentUrl = this.route.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
       this.mode = 1; // Modo Ver
@@ -45,8 +73,8 @@ export class ManageComponent implements OnInit {
     this.productForm = this.theFormBuilder.group({
       name: ['', Validators.required], // Nombre del producto
       description: ['', Validators.required], // Descripción del producto
-      batch_id: ['', Validators.required], // ID del lote
-      customer_id: ['', Validators.required] // ID del cliente
+      batch_id: [null, Validators.required], // ID del lote
+      customer_id: [null, Validators.required] // ID del cliente
     });
   }
 

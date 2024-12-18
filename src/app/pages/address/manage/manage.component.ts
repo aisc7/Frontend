@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AddressService } from './../../../services/address.service';
 import Swal from 'sweetalert2';
+import { Address } from 'src/app/models/address.model';
+import { Municipality } from 'src/app/models/municipality.model';
+import { MunicipalityService } from 'src/app/services/municipality.service';
 
 @Component({
   selector: 'app-manage-address',
@@ -14,17 +17,36 @@ export class ManageAddressComponent implements OnInit {
   addressId: number;
   mode: number;
   trySend: boolean = false;
+  address:Address;
+  municipalities:Municipality[];
+
 
   constructor(
     private theFormBuilder: FormBuilder,
     private addressService: AddressService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private municipalitiesService:MunicipalityService
+
   ) {
+    this.municipalities=[];
     this.configFormGroup();
+    this.address={id:0, street:"", number:"", neighborhood:"",  reference:"", municipality:{
+      id:null
+    } }
+  
+}  
+
+  municipalitiesList(){
+    this.municipalitiesService.list().subscribe(data=>{
+      this.municipalities=data;
+    })
   }
+  
 
   ngOnInit(): void {
+    this.municipalitiesList();
+    this.configFormGroup();
     const currentUrl = this.route.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
       this.mode = 1;
@@ -48,7 +70,7 @@ export class ManageAddressComponent implements OnInit {
       number: [''],
       neighborhood: ['', Validators.required],
       reference: [''],
-      municipality_id: ['', Validators.required],
+      municipality_id: [null, Validators.required],
     });
   }
 

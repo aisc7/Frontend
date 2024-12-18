@@ -12,6 +12,7 @@ import { ComponentsModule } from './components/components.module';
 import { SecurityInterceptor } from './interceptors/security.interceptor';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { NoAuthenticatedGuard } from './guards/no-authenticated.guard';
+import { PaymentComponent } from './payment/payment.component';
 
 
 
@@ -26,7 +27,7 @@ import { NoAuthenticatedGuard } from './guards/no-authenticated.guard';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
+  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent, PaymentComponent],
   providers: [  //Activo el interceptor 
     { provide : HTTP_INTERCEPTORS,
       useClass: SecurityInterceptor,

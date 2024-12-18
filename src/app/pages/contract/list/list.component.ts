@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Contract } from 'src/app/models/contract.model';
 import { ContractService } from 'src/app/services/contract.service';
 import Swal from 'sweetalert2';
@@ -11,15 +11,22 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   contracts: Contract[];
+  customer_id: number;
 
-  constructor(private contractService: ContractService, private router: Router) {
+  constructor(private contractService: ContractService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor');
     this.contracts = [];
   }
 
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
+    this.customer_id = this.activatedRoute.snapshot.params['id'];
+    const currentUrl= this.activatedRoute.snapshot.url.join('/');
+
+    if(currentUrl.includes('filterByCustomer')){
+      this.filterByCustomer();
+    }else{
+      this.list();
+    }
   }
 
   list() {
@@ -60,5 +67,23 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['contracto/update', id]);
+  }
+
+  filterByCustomer(){
+    this.contractService.listByCustomer(this.customer_id).subscribe(data =>{
+      this.contracts =data;
+      console.log(this.contracts);
+      
+    })
+  }
+
+  showCuotas(id: number){
+    this.router.navigate(["cuotas/filterByContract", id])
+  }
+
+
+  showRoutes(id:number){
+    this.router.navigate(["rutas/filterByContract", id])
+
   }
 }

@@ -55,19 +55,23 @@
                 />
               </div>
             </div>
+            <!--Contrato-->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="contract_id" class="form-label">ID del Contrato:</label>
+                Contrato:
               </div>
               <div class="col-8">
-                <input
-                  id="contract_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="contract_id"
-                  placeholder="Ingrese el ID del contrato asociado"
-                  [readonly]="mode === 1 || mode === 4"
-                />
+                <select class="form-control" formControlName="contract_id">
+                  <option *ngFor="let option of contracts" [value]="option.id">
+                    Id: {{option.id || 'N/A'}} 
+                    Fecha inicio: {{option.fecha_inicio || 'N/A'}} 
+                    - Fecha fin: {{option.fecha_fin || 'N/A'}} 
+                    - Estado: {{option.estado || 'N/A'}} 
+                    - Detalles Servicio: {{option.detalles_servicio || 'N/A'}} 
+                    - Cliente: {{option.customer?.id || 'N/A'}}
+                  </option>
+                </select>
+                
               </div>
             </div>
             <!-- Botones -->

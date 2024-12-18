@@ -4,6 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AddreRouteOrderService } from './../../../services/addre-route-order.service';
 import { AddreRouteOrder } from 'src/app/models/addre-route-order.model';
 import Swal from 'sweetalert2';
+import { AddressService } from 'src/app/services/address.service';
+import { Address } from 'src/app/models/address.model';
+import { RouteService } from 'src/app/services/route.service';
+import { Route } from 'src/app/models/route.model';
 
 @Component({
   selector: 'app-manage',
@@ -16,17 +20,40 @@ export class ManageComponent implements OnInit {
   mode: number;
   trySend: boolean = false;
   orderId: any;
+  addreRouteOrder:AddreRouteOrder;
+  addresses: Address[];
+  routes: Route[];
 
   constructor(
     private theFormBuilder: FormBuilder,
     private addreRouteOrderService: AddreRouteOrderService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private addressService: AddressService,
+    private routesService:RouteService
   ) {
+    this.addresses = [];
+    this.routes =[];
     this.configFormGroup();
+    this.addreRouteOrder={id:0, address:{id:null}, route:{id:null}}
+  }
+
+  addressesList(){
+    this.addressService.list().subscribe(data=>{
+      this.addresses=data
+    })
+  }
+
+  routesList(){
+    this.routesService.list().subscribe(data=>{
+      this.routes=data
+    })
   }
 
   ngOnInit(): void {
+    this.addressesList();
+    this.routesList();
+    this.configFormGroup()
     const currentUrl = this.route.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
       this.mode = 1;
@@ -46,8 +73,8 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.addreRouteOrderForm = this.theFormBuilder.group({
-      address_id: ['', Validators.required], // ID de la dirección, requerido
-      route_id: ['', Validators.required], // ID de la ruta, requerido
+      address_id: [null, Validators.required], // ID de la dirección, requerido
+      route_id: [null, Validators.required], // ID de la ruta, requerido
     });
   }
 
@@ -73,6 +100,9 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+    this.addreRouteOrder = { ...this.addreRouteOrder, ...this.addreRouteOrder };
+
+    console.log(JSON.stringify(this.addreRouteOrder))
     this.trySend = true;
     if (this.addreRouteOrderForm.valid) {
       this.addreRouteOrderService.create(this.addreRouteOrderForm.value).subscribe(

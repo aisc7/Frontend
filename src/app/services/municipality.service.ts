@@ -14,6 +14,15 @@ export class MunicipalityService {
     return this.http.get<Municipality[]>(`${environment.url_ms_businessAKJ}/municipalities`);
   }
 
+  listByDepartment(department_id: number): Observable<Municipality[]>{
+    return this.http.get<Municipality[]>(`${environment.url_ms_businessAKJ}/municipalities?department_id=${department_id}`);
+  }
+
+  createForDepartment(department_id: number, municipality:Municipality): Observable<Municipality> {
+    return this.http.post<Municipality>(`${environment.url_ms_businessAKJ}/municipalities/department/${department_id}`, municipality);
+  }
+
+
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.url_ms_businessAKJ}/municipalities/${id}`);
   }

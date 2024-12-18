@@ -14,6 +14,10 @@ export class DistributionCenterService {
     return this.http.get<DistributionCenter[]>(`${environment.url_ms_businessAKJ}/distributioncenters`);
   }
 
+  listByMunicipality(municipality_id: number): Observable<DistributionCenter[]>{
+    return this.http.get<DistributionCenter[]>(`${environment.url_ms_businessAKJ}/distributioncenters?municipality_id=${municipality_id}`)
+  }
+
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.url_ms_businessAKJ}/distributioncenters/${id}`);
   }

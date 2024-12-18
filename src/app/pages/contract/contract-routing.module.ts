@@ -9,6 +9,8 @@ const routes: Routes = [
   { path: "update/:id", component: ManageContractComponent }, // Update contract
   {path: "delete/:id", component: ManageContractComponent}, // Delete contract  
   { path: "view/:id", component: ManageContractComponent }, // View contract
+  {path: 'filterByCustomer/:id', component:ListComponent}
+
 ];
 
 @NgModule({

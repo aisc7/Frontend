@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: "update/:id", component: ManageAddressComponent },          // Ruta para actualizar dirección
   {path: "delete/:id", component: ManageAddressComponent},            // Ruta para eliminar dirección
   { path: "view/:id", component: ManageAddressComponent },            // Ruta para ver detalles de una dirección
+  { path: "filterByMunicipality/:id", component: ListComponent}
 ];
 
 @NgModule({

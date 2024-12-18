@@ -3,16 +3,24 @@
     <div class="col-lg-8">
       <div class="card shadow bg-translucent">
         <div class="card-header border-0 text-center">
-          <h3 *ngIf="mode === 1" class="mb-0">Visualizar Relación Vehículo-Conductor</h3>
-          <h3 *ngIf="mode === 2" class="mb-0">Crear Relación Vehículo-Conductor</h3>
-          <h3 *ngIf="mode === 3" class="mb-0">Actualizar Relación Vehículo-Conductor</h3>
+          <h3 *ngIf="mode === 1" class="mb-0">
+            Visualizar Relación Vehículo-Conductor
+          </h3>
+          <h3 *ngIf="mode === 2" class="mb-0">
+            Crear Relación Vehículo-Conductor
+          </h3>
+          <h3 *ngIf="mode === 3" class="mb-0">
+            Actualizar Relación Vehículo-Conductor
+          </h3>
         </div>
         <form class="form" [formGroup]="vehiculoDriverForm">
           <div class="card-body">
             <!-- Campos -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="fecha_asignacion" class="form-label">Fecha de Asignación:</label>
+                <label for="fecha_asignacion" class="form-label"
+                  >Fecha de Asignación:</label
+                >
               </div>
               <div class="col-8">
                 <input
@@ -26,7 +34,9 @@
             </div>
             <div class="row mb-3">
               <div class="col-4">
-                <label for="fecha_desasignacion" class="form-label">Fecha de Desasignación:</label>
+                <label for="fecha_desasignacion" class="form-label"
+                  >Fecha de Desasignación:</label
+                >
               </div>
               <div class="col-8">
                 <input
@@ -38,36 +48,55 @@
                 />
               </div>
             </div>
+
+            <!-- Campo ID del Vehículo -->
             <div class="row mb-3">
-              <div class="col-4">
-                <label for="vehiculo_id" class="form-label">ID del Vehículo:</label>
-              </div>
+              <div class="col-4">Vehiculo:</div>
               <div class="col-8">
-                <input
-                  id="vehiculo_id"
-                  type="number"
+                <select
                   class="form-control"
                   formControlName="vehiculo_id"
-                  placeholder="Ingrese el ID del vehículo"
-                  [readonly]="mode === 1"
-                />
+                  [(ngModel)]="vehicleDriver.vehiculo.id"
+                >
+                  <option *ngFor="let option of vehiculos" [value]="option.id">
+                    Id: {{ option.id }} - Tipo Vehiculo: {{option.tipo_vehiculo}} - Capacidad Peso: {{option.capacidad_peso}} - Capacidad Volumen: {{option.capacidad_volumen}} - Estado: {{option.estado}}
+                  </option>
+                </select>
+                <div
+                  *ngIf="trySend && getTheFormGroup.vehiculo_id.invalid"
+                  class="invalid-feedback"
+                >
+                  Este campo es obligatorio.
+                </div>
               </div>
             </div>
+
+            <!--Conductor-->
             <div class="row mb-3">
-              <div class="col-4">
-                <label for="conductor_id" class="form-label">ID del Conductor:</label>
+              <div class="col-md-4">
+                <label for="conductor_id" class="form-label">Conductor:</label>
               </div>
-              <div class="col-8">
-                <input
+              <div class="col-md-8">
+                <select
                   id="conductor_id"
-                  type="number"
                   class="form-control"
                   formControlName="conductor_id"
-                  placeholder="Ingrese el ID del conductor"
-                  [readonly]="mode === 1"
-                />
+                >
+                  <option *ngFor="let option of conductors" [value]="option.id">
+                    ID: {{ option.id }} | Usuario: {{ option.user_id }} |
+                    Licencia: {{ option.licencia }} | Tipo:
+                    {{ option.tipo_licencia }} | Teléfono: {{ option.telefono }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="trySend && getTheFormGroup.conductor_id.invalid"
+                  class="text-danger"
+                >
+                  Seleccione un conductor
+                </div>
               </div>
             </div>
+
             <!-- Botones -->
             <div class="row">
               <div class="col-8 offset-4 d-flex justify-content-between">
@@ -77,7 +106,7 @@
                   class="btn btn-success"
                   (click)="handleAction()"
                 >
-                  {{ mode === 2 ? 'Crear' : 'Actualizar' }}
+                  {{ mode === 2 ? "Crear" : "Actualizar" }}
                 </button>
               </div>
             </div>

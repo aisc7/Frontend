@@ -6,10 +6,45 @@
     <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Operaciones</h3>
-        </div>
+          <h3 class="mb-0" *ngIf="municipality_id && !vehiculo_id">
+            Operacion del Municipio_Id #{{ municipality_id }}
+          </h3>
+          <h3 class="mb-0" *ngIf="!municipality_id && vehiculo_id">
+            Operaciones del Vehiculo_id #{{ vehicle_id }}
+          </h3>
+          <h3 class="mb-0" *ngIf="!municipality_id && !vehiculo_id">
+            Operaciones
+          </h3>
+
+
         <div class="card-body">
-          <button type="button" class="btn btn-outline-success" (click)="create()">Crear</button>
+        </div>
+        <div class="col-6"></div>
+        <div class="col-3">
+          <button
+            *ngIf="!municipality_id && !vehiculo_id"
+            type="button" class="btn btn-outline-success"
+            (click)="create()"
+          >
+            Crear
+          </button>
+          <button
+            *ngIf="municipality_id && !vehiculo_id"
+            type="button"
+            class="btn btn-success"
+            (click)="createForMunicipality()"
+          >
+            Crear Operacion para Municipio
+          </button>
+          <button
+            *ngIf="vehiculo_id && !municipality_id"
+            type="button"
+            class="btn btn-success"
+            (click)="createForVehiculo()"
+          >
+            Crear Operacion para Vehiculo
+          </button>
+        </div>
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">

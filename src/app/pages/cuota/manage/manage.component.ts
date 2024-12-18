@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CuotaService } from './../../../services/cuota.service';
 import { Cuota } from 'src/app/models/cuota.model';
 import Swal from 'sweetalert2';
+import { Contract } from 'src/app/models/contract.model';
+import { ContractService } from 'src/app/services/contract.service';
 
 @Component({
   selector: 'app-manage-cuota',
@@ -12,20 +14,51 @@ import Swal from 'sweetalert2';
 })
 export class ManageCuotaComponent implements OnInit {
   cuotaForm: FormGroup;
-  cuotaId: number | undefined;
-  mode: number = 0; // 1: View, 2: Create, 3: Update, 4: Delete
+  cuotaId: number 
+  mode: number ; // 1: View, 2: Create, 3: Update, 4: Delete
   trySend: boolean = false;
+  cuota:Cuota;
+  contracts:Contract[];
 
   constructor(
     private formBuilder: FormBuilder,
     private cuotaService: CuotaService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private contractService:ContractService
   ) {
+    this.contracts = [];
     this.configFormGroup();
+    this.cuota={id:0, monto:0, fecha_vencimiento:null, estado_pago:"", contract:{
+      id:null
+    }}
+
   }
 
+  contractsList() {
+    this.contractService.list().subscribe(
+      data => {
+        console.log('Contratos:', data);
+        // Add null checks and default values
+        this.contracts = data.map(contract => ({
+          ...contract,
+          customer: contract.customer || { id: null },
+          fecha_inicio: contract.fecha_inicio || null,
+          fecha_fin: contract.fecha_fin || null,
+          estado: contract.estado || '',
+          detalles_servicio: contract.detalles_servicio || ''
+        }));
+      }, 
+      error => {
+        console.error('Error al cargar los contratos:', error);
+        this.contracts = []; // Ensure contracts is always an array
+      }
+    );
+  }
+  
   ngOnInit(): void {
+    this.contractsList();
+    this.configFormGroup();
     const currentUrl = this.route.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
       this.mode = 1;
@@ -48,7 +81,7 @@ export class ManageCuotaComponent implements OnInit {
       monto: ['', Validators.required],
       fecha_vencimiento: ['', Validators.required],
       estado_pago: ['', Validators.required],
-      contract_id: ['', Validators.required],
+      contract_id: [null, Validators.required],
     });
   }
 
@@ -71,6 +104,7 @@ export class ManageCuotaComponent implements OnInit {
   }
 
   create() {
+    console.log(JSON.stringify(this.cuota))
     this.trySend = true;
     if (this.cuotaForm.valid) {
       this.cuotaService.create(this.cuotaForm.value).subscribe(

@@ -14,6 +14,10 @@ export class CuotaService {
     return this.http.get<Cuota[]>(`${environment.url_ms_businessAKJ}/cuotas`);
   }
 
+  listByContract(contract_id: number): Observable<Cuota[]>{
+    return this.http.get<Cuota[]>(`${environment.url_ms_businessAKJ}/cuotas`);
+  }
+
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.url_ms_businessAKJ}/cuotas/${id}`);
   }

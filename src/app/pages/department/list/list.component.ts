@@ -62,4 +62,8 @@ export class ListComponent implements OnInit {
   update(id: number) {
     this.router.navigate(['departmento/update', id]);
   }
+
+  showMunicipalities(id: number){
+    this.router.navigate(["municipio/filterByDepartment", id]);
+  }
 }

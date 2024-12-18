@@ -7,6 +7,8 @@
           <h3 *ngIf="mode == 2" class="mb-0">Crear Municipio</h3>
           <h3 *ngIf="mode == 3" class="mb-0">Actualizar Municipio</h3>
           <h3 *ngIf="mode == 4" class="mb-0">Eliminar Municipio</h3>
+          <h3 *ngIf="mode == 5" class="mb-0">Crear Municipio Departamento_Id #{{municipality.department.id}}</h3>
+
         </div>
         <form class="form" [formGroup]="municipalityForm">
           <div class="card-body">
@@ -50,23 +52,16 @@
             <!-- Campo ID del Departamento -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="department_id" class="form-label">ID del Departamento:</label>
+                Departamento:
               </div>
               <div class="col-8">
-                <input
-                  id="department_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="department_id"
-                  placeholder="Ingrese el ID del departamento"
-                  [readonly]="mode == 1 || mode == 4"
-                  [class.is-invalid]="trySend && getTheFormGroup.department_id.invalid"
-                />
-                <div *ngIf="trySend && getTheFormGroup.department_id.invalid" class="invalid-feedback">
-                  Este campo es obligatorio.
+                <select class="form-control" formControlName="department_id" [ngModel]="municipality.department.id">
+                  <option *ngFor="let option of departments"  [value]="option.id">Id: {{option.id}} - Nombre: {{option.name}} - Descripción: {{option.description}} </option>
+                </select>
+              </div>
                 </div>
               </div>
-            </div>
+         
 
             <!-- Botones -->
             <div class="row">
@@ -80,11 +75,29 @@
                 >
                   {{ mode == 2 ? 'Crear' : 'Actualizar' }}
                 </button>
+
+                <button
+                *ngIf="mode == 5"
+                type="button"
+                class="btn btn-primary me-2"
+                (click)="createForDepartment()"
+              >
+                Crear para Departamento
+              </button>
+
+               <!-- Eliminar -->
+               <button
+               *ngIf="mode == 4"
+               type="button"
+               class="btn btn-danger"
+               (click)="delete()"
+             >
+               Eliminar
+             </button>
               </div>
-            </div>
-          </div>
+         </div>
         </form>
+      </div>
       </div>
     </div>
   </div>
-</div>

@@ -6,7 +6,20 @@
           <h3 *ngIf="mode === 1" class="mb-0">Visualizar Factura</h3>
           <h3 *ngIf="mode === 2" class="mb-0">Crear Factura</h3>
           <h3 *ngIf="mode === 3" class="mb-0">Actualizar Factura</h3>
+          <div *ngIf="mode === 5">
+            <h3 class="text-center">Procesar Pago de Factura</h3>
+            <p><strong>ID de la Factura:</strong> {{ facturaId }}</p>
+            <p><strong>Fecha de Emisión:</strong> {{ factura.id.fecha_emision }}</p>
+            <p><strong>Monto Total:</strong> {{ factura.id.monto_total }}</p>
+            <p><strong>Estado:</strong> {{ factura.id.estado }}</p>
+          
+            <div class="text-center mt-4">
+              <button type="button" class="btn btn-success" (click)="handlePayment()">Confirmar Pago</button>
+              <button type="button" class="btn btn-secondary" (click)="router.navigate(['/facturas'])">Cancelar</button>
+            </div>
+          </div>
         </div>
+        
         <form class="form" [formGroup]="facturaForm">
           <div class="card-body">
             <!-- Campos -->
@@ -54,36 +67,31 @@
                 />
               </div>
             </div>
+
+            <!--Desplegable cuota-->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="cuota_id" class="form-label">ID de la Cuota:</label>
+                Cuota:
               </div>
               <div class="col-8">
-                <input
-                  id="cuota_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="cuota_id"
-                  placeholder="Ingrese el ID de la cuota asociada"
-                  [readonly]="mode === 1 || mode === 4"
-                />
+                <select class="form-control" formControlName="cuota_id" [ngModel]="factura.cuota.id">
+                  <option *ngFor="let option of cuotas" [value]="option.id">Id:{{option.id}}- Monto:{{option.monto}} - Fecha de Vencimiento: {{option.fecha_vencimiento}} - Estado de pago:{{option.estado_pago}} - Id Contrato: {{option.contract_id}}</option>
+                </select>
+               
               </div>
             </div>
+            <!--Desplegable gasto-->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="spent_id" class="form-label">ID del Gasto:</label>
+                Gasto:
               </div>
               <div class="col-8">
-                <input
-                  id="spent_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="spent_id"
-                  placeholder="Ingrese el ID del gasto asociado"
-                  [readonly]="mode === 1 || mode === 4"
-                />
+                <select class="form-control" formControlName="spent_id" [ngModel]="factura.spent.id">
+                  <option *ngFor="let option of spents" [value]="option.id">Id: {{option.id}} - Descripción: {{option.description}} - Monto: {{option.monto}} - Fecha: {{option.date}} - Id Servicio: {{option.servicio_id}} -  Id Conductor {{option.conductor_id}} - Id Dueño{{option.dueno_id}}</option>
+                </select>
               </div>
             </div>
+            
             <!-- Botones -->
             <div class="row">
               <div class="col-8 offset-4 d-flex justify-content-between">

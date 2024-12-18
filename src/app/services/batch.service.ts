@@ -14,6 +14,10 @@ export class BatchService {
     return this.http.get<Batch[]>(`${environment.url_ms_businessAKJ}/batches`);
   }
 
+  listByRoute(route_id: number): Observable<Batch[]>{
+    return this.http.get<Batch[]>(`${environment.url_ms_businessAKJ}/batches?route_id=${route_id}`)
+  }
+
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.url_ms_businessAKJ}/batches/${id}`);
   }

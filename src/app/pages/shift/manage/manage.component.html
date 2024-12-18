@@ -1,82 +1,133 @@
-<div class="header bg-gradient-warning pb-8 pt-5 pt-md-8"></div>
-<!-- Page content -->
 <div class="container-fluid mt--7">
-  <!-- Table -->
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 *ngIf="mode == 1" class="mb-0">Visualizar</h3>
-          <h3 *ngIf="mode == 2" class="mb-0">Crear</h3>
-          <h3 *ngIf="mode == 3" class="mb-0">Actualizar</h3>
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-8">
+      <div class="card shadow bg-translucent">
+        <div class="card-header border-0 text-center">
+          <h3 *ngIf="mode == 1" class="mb-0">Visualizar Turno</h3>
+          <h3 *ngIf="mode == 2" class="mb-0">Crear Turno</h3>
+          <h3 *ngIf="mode == 3" class="mb-0">Actualizar Turno</h3>
         </div>
+        
         <form class="form" [formGroup]="shiftForm">
           <div class="card-body">
-            <!-- ID -->
-            <div class="row">
-              <div class="col-4">
-                <label>ID:</label>
+            <!-- Campos del Formulario -->
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="shiftId" class="form-label">ID:</label>
               </div>
-              <div class="col-8">
-                <p>{{shiftId}}</p>
+              <div class="col-md-8">
+                <p class="form-control-plaintext">{{shiftId}}</p>
               </div>
             </div>
-            <br />
 
-            <!-- Nombre -->
-            <div class="row">
-              <div class="col-4">
-                <label>Nombre:</label>
+           
+            
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="start_time" class="form-label">Hora de Inicio:</label>
               </div>
-              <div class="col-8">
-                <input *ngIf="mode != 1" type="text" class="form-control" formControlName="name" title="Nombre" placeholder="Ingrese el nombre del turno">
-                <p *ngIf="mode == 1">{{ shiftForm.value.name }}</p>
-                <div *ngIf="getTheFormGroup.name.errors && (getTheFormGroup.name.dirty || getTheFormGroup.name.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.name.errors.required" class="msnError">Requerido</strong>
+              <div class="col-md-8">
+                <ng-container *ngIf="mode != 1; else viewStartTimeMode">
+                  <input
+                    id="start_time"
+                    type="datetime-local"
+                    class="form-control"
+                    formControlName="start_time"
+                  />
+                  <div *ngIf="getTheFormGroup.start_time.errors && (getTheFormGroup.start_time.dirty || getTheFormGroup.start_time.touched || trySend)">
+                    <small *ngIf="getTheFormGroup.start_time.errors.required" class="text-danger">
+                      La hora de inicio es obligatoria
+                    </small>
+                  </div>
+                </ng-container>
+                <ng-template #viewStartTimeMode>
+                  <p class="form-control-plaintext">{{ shiftForm.value.start_time | date:'medium' }}</p>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="end_time" class="form-label">Hora de Fin:</label>
+              </div>
+              <div class="col-md-8">
+                <ng-container *ngIf="mode != 1; else viewEndTimeMode">
+                  <input
+                    id="end_time"
+                    type="datetime-local"
+                    class="form-control"
+                    formControlName="end_time"
+                  />
+                  <div *ngIf="getTheFormGroup.end_time.errors && (getTheFormGroup.end_time.dirty || getTheFormGroup.end_time.touched || trySend)">
+                    <small *ngIf="getTheFormGroup.end_time.errors.required" class="text-danger">
+                      La hora de fin es obligatoria
+                    </small>
+                  </div>
+                </ng-container>
+                <ng-template #viewEndTimeMode>
+                  <p class="form-control-plaintext">{{ shiftForm.value.end_time | date:'medium' }}</p>
+                </ng-template>
+              </div>
+            </div>
+
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="location" class="form-label">Ubicación:</label>
+              </div>
+              <div class="col-md-8">
+                <input
+                  id="location"
+                  type="text"
+                  class="form-control"
+                  formControlName="location"
+                />
+                <div *ngIf="trySend && getTheFormGroup.location.errors">
+                  <small *ngIf="getTheFormGroup.location.errors.required" class="text-danger">
+                    La ubicación es obligatoria
+                  </small>
                 </div>
               </div>
             </div>
-            <br />
 
-            <!-- Hora Inicio -->
-            <div class="row">
-              <div class="col-4">
-                <label for="start_time" class="form-label">Hora Inicio:</label>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label for="conductor_id" class="form-label">Conductor:</label>
               </div>
-              <div class="col-8">
-                <input *ngIf="mode != 1" type="time" class="form-control" formControlName="start_time" title="Hora Inicio" placeholder="Ingrese la hora de inicio">
-                <p *ngIf="mode == 1">{{ shiftForm.value.start_time }}</p>
-                <div *ngIf="getTheFormGroup.start_time.errors && (getTheFormGroup.start_time.dirty || getTheFormGroup.start_time.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.start_time.errors.required" class="msnError">Requerido</strong>
+              <div class="col-md-8">
+                <select
+                  id="conductor_id"
+                  class="form-control"
+                  formControlName="conductor_id"
+                >
+                  <option
+                    *ngFor="let option of conductors"
+                    [value]="option.id"
+                  >
+                    ID: {{option.id}} | Usuario: {{option.user_id}} | Licencia: {{option.licencia}} 
+                    | Tipo: {{option.tipo_licencia}} | Teléfono: {{option.telefono}}
+                  </option>
+                </select>
+                <div *ngIf="trySend && getTheFormGroup.conductor_id.invalid" class="text-danger">
+                  Seleccione un conductor
                 </div>
               </div>
             </div>
-            <br />
 
-            <!-- Hora Fin -->
+            <!-- Botones de Acción -->
             <div class="row">
-              <div class="col-4">
-                <label for="end_time" class="form-label">Hora Fin:</label>
-              </div>
-              <div class="col-8">
-                <input *ngIf="mode != 1" type="time" class="form-control" formControlName="end_time" title="Hora Fin" placeholder="Ingrese la hora de fin">
-                <p *ngIf="mode == 1">{{ shiftForm.value.end_time }}</p>
-                <div *ngIf="getTheFormGroup.end_time.errors && (getTheFormGroup.end_time.dirty || getTheFormGroup.end_time.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.end_time.errors.required" class="msnError">Requerido</strong>
-                </div>
+              <div class="col-md-4"></div>
+              <div class="col-md-8 d-flex justify-content-between">
+                <button
+                  *ngIf="mode == 2 || mode == 3"
+                  type="button"
+                  class="btn btn-success"
+                  (click)="mode == 2 ? create() : update()"
+                >
+                  {{ mode == 2 ? 'Crear' : 'Actualizar' }}
+                </button>
               </div>
             </div>
-            <br />
-
-            <!-- Botón para Crear/Actualizar -->
-            <div class="row">
-              <div class="col-4"></div>
-              <div class="col-8">
-                <button *ngIf="mode == 2" type="button" class="btn btn-success btn-block" (click)="create()"> Crear </button>
-                <button *ngIf="mode == 3" type="button" class="btn btn-success btn-block" (click)="update()"> Actualizar </button>
-              </div>
-            </div>
-
           </div>
         </form>
       </div>

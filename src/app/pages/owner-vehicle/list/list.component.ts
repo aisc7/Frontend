@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OwnerVehicle } from 'src/app/models/owner-vehicle.model';
 import { OwnerVehicleService } from 'src/app/services/owner-vehicle.service';
 import Swal from 'sweetalert2';
@@ -11,15 +11,22 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   ownerVehicles: OwnerVehicle[];
+  vehiculo_id:number;
 
-  constructor(private ownerVehicleService: OwnerVehicleService, private router: Router) {
+  constructor(private ownerVehicleService: OwnerVehicleService, private router: Router, private activatedRoute:ActivatedRoute) {
     console.log('Constructor');
     this.ownerVehicles = [];
   }
 
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
+    this.vehiculo_id = this.activatedRoute.snapshot.params['id'];
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+
+    if(currentUrl.includes('filterByVehiculo')){
+      this.filterByVehiculo();
+    }else{
+      this.list() //lista por defecto 
+    }
   }
 
   list() {
@@ -61,5 +68,12 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['vehiculo-dueno/update', id]);
+  }
+
+  filterByVehiculo(){
+    this.ownerVehicleService.listByVehiculo(this.vehiculo_id).subscribe(data=>{
+      this.ownerVehicles=data;
+      console.log(this.ownerVehicles)
+    })
   }
 }

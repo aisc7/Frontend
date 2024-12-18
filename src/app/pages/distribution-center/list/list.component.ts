@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Action } from 'rxjs/internal/scheduler/Action';
 import { DistributionCenter } from 'src/app/models/distribution-center.model';
 import { DistributionCenterService } from 'src/app/services/distribution-center.service';
 import Swal from 'sweetalert2';
@@ -11,15 +12,22 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   distributionCenters: DistributionCenter[];
+  municipality_id: number;
 
-  constructor(private distributionCenterService: DistributionCenterService, private router: Router) {
+  constructor(private distributionCenterService: DistributionCenterService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor');
     this.distributionCenters = [];
   }
-
+  
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
+    this.municipality_id= this.activatedRoute.snapshot.params['id'];
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+
+    if(currentUrl.includes('filterByMunicipality')){
+      this.filterByMunicipality();
+    }else{
+      this.list() //lista por defecto 
+    }
   }
 
   list() {
@@ -61,5 +69,13 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['centro-distribucion/update', id]);
+  }
+
+  filterByMunicipality(){
+    this.distributionCenterService.listByMunicipality(this.municipality_id).subscribe(data =>{
+      this.distributionCenters = data;
+      console.log(this.distributionCenters);
+      
+    })
   }
 }

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Batch } from 'src/app/models/batch.model';
 import { BatchService } from 'src/app/services/batch.service';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-list',
@@ -10,15 +12,31 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list.component.css'],
 })
 export class ListComponent implements OnInit {
-  batches: Batch[] = []; // Inicializar como arreglo vacío
+  batches: Batch[]  // Inicializar como arreglo vacío
+  route_id: number;
 
-  constructor(private batchService: BatchService, private router: Router) {
+  constructor(private batchService: BatchService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor ejecutado');
+    this.batches = [];
   }
 
   ngOnInit(): void {
-    console.log('ngOnInit ejecutado');
-    this.loadBatches(); // Método para cargar la lista
+    this.route_id = this.activatedRoute.snapshot.params['id'];
+
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+
+    if(currentUrl.includes('filterByRoute')){
+      this.filterByRoute();
+    }else{
+      this.list();
+    }
+  }
+
+  
+  list() {
+    this.batchService.list().subscribe((data) => {
+      this.batches = data;
+    });
   }
 
   // Método para listar lotes desde el servicio
@@ -73,4 +91,16 @@ export class ListComponent implements OnInit {
   update(id: number) {
     this.router.navigate(['lote/update', id]);
   }
+
+ showProducts(id: number){
+  this.router.navigate(["producto/filterByBatch", id])
+ }
+
+ filterByRoute(){
+  this.batchService.listByRoute(this.route_id).subscribe(data =>{
+    this.batches = data;
+    console.log(this.batches);
+    
+  })
+ }
 }

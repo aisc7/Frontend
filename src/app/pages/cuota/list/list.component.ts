@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Cuota } from 'src/app/models/cuota.model';
 import { CuotaService } from 'src/app/services/cuota.service';
 import Swal from 'sweetalert2';
@@ -11,15 +11,22 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   cuotas: Cuota[];
+  contract_id: number;
 
-  constructor(private cuotaService: CuotaService, private router: Router) {
+  constructor(private cuotaService: CuotaService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor');
     this.cuotas = [];
   }
 
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
+    this.contract_id= this.activatedRoute.snapshot.params['id'];
+
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+    if(currentUrl.includes('filterByContract')){
+      this.filterByContract();
+    }else{
+      this.list()
+    }
   }
 
   list() {
@@ -61,5 +68,14 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['cuota/update', id]);
+  }
+
+  filterByContract(){
+    this.cuotaService.listByContract(this.contract_id).subscribe(data=>{
+      this.cuotas = data;
+      console.log(this.cuotas);
+      
+    }
+    )
   }
 }

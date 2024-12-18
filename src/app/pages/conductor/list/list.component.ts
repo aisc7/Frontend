@@ -61,4 +61,16 @@ export class ListComponent implements OnInit {
   update(id: number) {
     this.router.navigate(['conductor/update', id]);
   }
+
+  showShifts(id:number){
+    this.router.navigate(['shifts/filterByConductor', id])
+  }
+
+  showSpents(id:number){
+    this.router.navigate(["gastos/filterByConductor", id])
+  }
+
+  showVehicleDriver(id:number){
+    this.router.navigate(["chofer/filterByConductor", id])
+  }
 }

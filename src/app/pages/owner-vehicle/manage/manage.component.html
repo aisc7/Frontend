@@ -38,36 +38,43 @@
                 />
               </div>
             </div>
+            <!--Vehiculo-->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="vehiculo_id" class="form-label">ID del Vehículo:</label>
+                Vehiculo:
               </div>
               <div class="col-8">
-                <input
-                  id="vehiculo_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="vehiculo_id"
-                  placeholder="Ingrese el ID del vehículo"
-                  [readonly]="mode === 1"
-                />
+               <select class="form-control" formControlName="vehiculo_id" [(ngModel)]="ownerVehiculo.vehiculo.id" >
+                <option *ngFor="let option of vehiculos" [value]="option.id">Id: {{option.id}} - Tipo Vehiculo: {{option.tipo_vehiculo}} - Capacidad Peso: {{option.capacidad_peso}} - Capacidad Volumen: {{option.capacidad_volumen}} - Estado: {{option.estado}}</option>
+               </select>
+                <div *ngIf="trySend && getTheFormGroup.vehiculo_id.invalid" class="invalid-feedback">
+                  Este campo es obligatorio.
+                </div>
               </div>
             </div>
-            <div class="row mb-3">
-              <div class="col-4">
-                <label for="dueno_id" class="form-label">ID del Dueño:</label>
-              </div>
-              <div class="col-8">
-                <input
-                  id="dueno_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="dueno_id"
-                  placeholder="Ingrese el ID del dueño"
-                  [readonly]="mode === 1"
-                />
+
+                     <!--Dueño-->
+          <div class="row mb-3">
+            <div class="col-4">Dueño:</div>
+            <div class="col-8">
+              <select
+                class="form-control"
+                formControlName="dueno_id"
+                [(ngModel)]="ownerVehiculo.dueno.id"
+              >
+                <option *ngFor="let option of duenos" [value]="option.id">
+                  Id: {{ option.id }} - Id Usuario: {{option.user_id}} - Conductor:{{option.conductor_id}} 
+                </option>
+              </select>
+              <div
+                *ngIf="trySend && getTheFormGroup.dueno_id.invalid"
+                class="invalid-feedback"
+              >
+                Este campo es obligatorio.
               </div>
             </div>
+          </div>
+
             <!-- Botones -->
             <div class="row">
               <div class="col-8 offset-4 d-flex justify-content-between">

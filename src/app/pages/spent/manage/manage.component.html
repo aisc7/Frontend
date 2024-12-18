@@ -55,62 +55,80 @@
               </div>
             </div>
             <div class="row mb-3">
-              <div class="col-4">
-                <label for="servicio_id" class="form-label">ID del Servicio:</label>
-              </div>
+              <div class="col-4">Servicio:</div>
               <div class="col-8">
-                <input
-                  id="servicio_id"
-                  type="number"
+                <select
                   class="form-control"
                   formControlName="servicio_id"
-                  placeholder="Ingrese el ID del servicio"
-                  [readonly]="mode === 1"
-                />
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-4">
-                <label for="conductor_id" class="form-label">ID del Conductor:</label>
-              </div>
-              <div class="col-8">
-                <input
-                  id="conductor_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="conductor_id"
-                  placeholder="Ingrese el ID del conductor"
-                  [readonly]="mode === 1"
-                />
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-4">
-                <label for="dueno_id" class="form-label">ID del Dueño:</label>
-              </div>
-              <div class="col-8">
-                <input
-                  id="dueno_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="dueno_id"
-                  placeholder="Ingrese el ID del dueño"
-                  [readonly]="mode === 1"
-                />
-              </div>
-            </div>
-            <!-- Botones -->
-            <div class="row">
-              <div class="col-8 offset-4 d-flex justify-content-between">
-                <button
-                  *ngIf="mode === 2 || mode === 3"
-                  type="button"
-                  class="btn btn-success"
-                  (click)="handleAction()"
+                  [(ngModel)]="spent.servicio.id"
                 >
-                  {{ mode === 2 ? 'Crear' : 'Actualizar' }}
-                </button>
+                  <option *ngFor="let option of servicios" [value]="option.id">
+                    Id: {{ option.id }} - Descripción: {{option.description}} - Costo: {{option.costo}}
+                  </option>
+                </select>
+                <div
+                  *ngIf="trySend && getTheFormGroup.servicio_id.invalid"
+                  class="invalid-feedback"
+                >
+                  Este campo es obligatorio.
+                </div>
               </div>
+            </div>
+          </div>
+          <!--Conductor-->
+          <div class="row mb-3">
+            <div class="col-4">Conductor:</div>
+            <div class="col-8">
+              <select
+                class="form-control"
+                formControlName="conductor_id"
+                [(ngModel)]="spent.conductor.id"
+              >
+                <option *ngFor="let option of conductors" [value]="option.id">
+                  Id: {{ option.id }} - Id Usuario: {{option.user_id}} - Licencia:{{option.licencia}} - Tipo licencia: {{option.tipo_licencia}} - Teléfono: {{option.telefono}}                </option>
+              </select>
+              <div
+                *ngIf="trySend && getTheFormGroup.conductor_id.invalid"
+                class="invalid-feedback"
+              >
+                Este campo es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <!--Dueño-->
+          <div class="row mb-3">
+            <div class="col-4">Dueño:</div>
+            <div class="col-8">
+              <select
+                class="form-control"
+                formControlName="dueno_id"
+                [(ngModel)]="spent.dueno.id"
+              >
+                <option *ngFor="let option of duenos" [value]="option.id">
+                  Id: {{ option.id }} - Id Usuario: {{option.user_id}} - Conductor:{{option.conductor_id}} 
+                </option>
+              </select>
+              <div
+                *ngIf="trySend && getTheFormGroup.dueno_id.invalid"
+                class="invalid-feedback"
+              >
+                Este campo es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones -->
+          <div class="row">
+            <div class="col-8 offset-4 d-flex justify-content-between">
+              <button
+                *ngIf="mode === 2 || mode === 3"
+                type="button"
+                class="btn btn-success"
+                (click)="handleAction()"
+              >
+                {{ mode === 2 ? "Crear" : "Actualizar" }}
+              </button>
             </div>
           </div>
         </form>

@@ -8,7 +8,10 @@ const routes: Routes = [
   { path: "create", component: ManageVehiculoDriverComponent },            // Ruta para crear un conductor de vehículo
   { path: "update/:id", component: ManageVehiculoDriverComponent },        // Ruta para actualizar un conductor específico
   {path : "delete/:id", component: ManageVehiculoDriverComponent},         // Ruta para eliminar un conductor específico
-  { path: "view/:id", component: ManageVehiculoDriverComponent }           // Ruta para ver los detalles de un conductor de vehículo específico
+  { path: "view/:id", component: ManageVehiculoDriverComponent },
+  { path: "filterByVehiculo/:id", component:ListComponent },
+  { path: "filterByConductor/:id", component:ListComponent },
+
 ];
 
 @NgModule({

@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'update/:id', component: ManageCuotaComponent }, // Update cuota
   {path: 'delete/:id', component: ManageCuotaComponent}, // Delete cuota
   { path: 'view/:id', component: ManageCuotaComponent }, // View cuota
+  { path: 'filterByContract/:id', component:ListComponent}
 ];
 
 @NgModule({

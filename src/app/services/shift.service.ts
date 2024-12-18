@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { Shift } from "../models/shift.model";
 
 @Injectable({
   providedIn: "root",
@@ -9,8 +10,12 @@ import { environment } from "src/environments/environment";
 export class ShiftService {
   constructor(private http: HttpClient) {}
 
-  list(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.url_ms_businessAKJ}/shifts`);
+  list(): Observable<Shift[]> {
+    return this.http.get<Shift[]>(`${environment.url_ms_businessAKJ}/shifts`);
+  }
+
+  listByConductor(conductor_id: number): Observable<Shift[]>{
+    return this.http.get<Shift[]>(`${environment.url_ms_businessAKJ}/shifts?conductor_id=${conductor_id}`)
   }
 
   delete(id: number): Observable<void> {

@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { Factura } from "../models/factura.model";
 
 @Injectable({
   providedIn: "root",
@@ -9,8 +10,8 @@ import { environment } from "src/environments/environment";
 export class FacturaService {
   constructor(private http: HttpClient) {}
 
-  list(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.url_ms_businessAKJ}/facturas`);
+  list(): Observable<Factura[]> {
+    return this.http.get<Factura[]>(`${environment.url_ms_businessAKJ}/facturas`);
   }
 
   delete(id: number): Observable<void> {
@@ -29,4 +30,11 @@ export class FacturaService {
   update(id: number, factura: any): Observable<any> {
     return this.http.put<any>(`${environment.url_ms_businessAKJ}/facturas/${id}`, factura);
   }
+
+  payment(id: number): Observable<any> {
+    return this.http.post(`${environment.url_ms_businessAKJ}/facturas/procesarPago/${id}`, {});
+  }
+  
+
+  
 }

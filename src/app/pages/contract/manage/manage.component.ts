@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ContractService } from './../../../services/contract.service';
 import { Contract } from 'src/app/models/contract.model';
 import Swal from 'sweetalert2';
+import { CustomerService } from 'src/app/services/costumer.service';
+import { Customer } from 'src/app/models/costumer.model';
 
 @Component({
   selector: 'app-manage',
@@ -15,17 +17,34 @@ export class ManageContractComponent implements OnInit {
   contractId: number;
   mode: number;
   trySend: boolean = false;
+  contract:Contract;
+  customers:Customer[];
 
   constructor(
     private formBuilder: FormBuilder,
     private contractService: ContractService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private customersService:CustomerService
   ) {
+    this.customers=[];
     this.configFormGroup();
+    this.contract={ id:0, fecha_inicio:null, fecha_fin:null, estado:"", detalles_servicio:"", customer:{
+      id:null
+    } }
+   
+  }
+
+  customersList(){
+    this.customersService.list().subscribe(data=>{
+      this.customers=data;
+    })
   }
 
   ngOnInit(): void {
+    this.customersList();
+    this.configFormGroup();
+
     const currentUrl = this.route.snapshot.url.join('/');
     if (currentUrl.includes('view')) {
       this.mode = 1; // Visualizar
@@ -49,7 +68,7 @@ export class ManageContractComponent implements OnInit {
       fecha_fin: ['', Validators.required],
       estado: ['', Validators.required],
       detalles_servicio: ['', Validators.required],
-      customer_id: ['', Validators.required]
+      customer_id: [null, Validators.required]
     });
   }
 
@@ -75,6 +94,8 @@ export class ManageContractComponent implements OnInit {
   }
 
   create() {
+    this.contract = { ...this.contract, ...this.contractForm.value };
+    console.log(JSON.stringify(this.contract))
     this.contractService.create(this.contractForm.value).subscribe(() => {
       Swal.fire('Creado', 'El contrato ha sido creado correctamente', 'success');
       this.router.navigate(['/contracts']);

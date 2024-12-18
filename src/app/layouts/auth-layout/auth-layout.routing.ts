@@ -5,6 +5,6 @@ import { RegisterComponent } from '../../pages/register/register.component';
 import { NoAuthenticatedGuard } from 'src/app/guards/no-authenticated.guard';
 
 export const AuthLayoutRoutes: Routes = [
-    { path: 'login',     canActivate:[NoAuthenticatedGuard],     component: LoginComponent },
+    { path: 'login',          component: LoginComponent },
     { path: 'register',       component: RegisterComponent }
 ];

@@ -8,7 +8,11 @@ const routes: Routes = [
   { path: 'create', component: ManageRouteComponent },      // Ruta para crear una nueva ruta
   { path: 'update/:id', component: ManageRouteComponent },  // Ruta para actualizar una ruta existente
   {path: 'delete/:id', component: ManageRouteComponent},    // Ruta para eliminar una ruta
-  { path: 'view/:id', component: ManageRouteComponent }     // Ruta para ver los detalles de una ruta
+  { path: 'view/:id', component: ManageRouteComponent } ,
+  { path: 'filterByVehiculo/:id', component:ListComponent} ,
+  { path: 'filterByContract/:id', component:ListComponent} ,
+
+  // Ruta para ver los detalles de una ruta
 ];
 
 @NgModule({

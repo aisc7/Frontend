@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { VehicleDriver } from 'src/app/models/vehicle-driver.model';
 import { VehicleDriverService } from 'src/app/services/vehicle-driver.service';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -11,16 +12,32 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   vehicleDrivers: VehicleDriver[];
+  vehiculo_id:number;
+  conductor_id: number;
 
-  constructor(private vehicleDriverService: VehicleDriverService, private router: Router) {
+  constructor(private vehicleDriverService: VehicleDriverService, private router: Router, private activatedRoute: ActivatedRoute) {
     console.log('Constructor');
     this.vehicleDrivers = [];
   }
 
   ngOnInit(): void {
-    console.log('Ng');
-    this.list();
-  }
+    this.vehiculo_id = this.activatedRoute.snapshot.params['id'];
+    this.conductor_id = this.activatedRoute.snapshot.params['id'];
+
+    const currentUrl = this.activatedRoute.snapshot.url.join('/');
+
+    if(currentUrl.includes('filterByCustomer')){
+      this.filterByVehiculo();
+    }
+    else if(currentUrl.includes('filterByConductor')){
+      this.filterByConductor();
+    }
+    else{
+      this.list() //lista por defecto 
+    }
+ }
+
+  
 
   list() {
     this.vehicleDriverService.list().subscribe((data) => {
@@ -60,5 +77,19 @@ export class ListComponent implements OnInit {
 
   update(id: number) {
     this.router.navigate(['chofer/update', id]);
+  }
+
+  filterByVehiculo(){
+    this.vehicleDriverService.listByVehiculo(this.vehiculo_id).subscribe(data=>{
+      this.vehicleDrivers=data;
+      console.log(this.vehicleDrivers)
+    })
+  }
+
+  filterByConductor(){
+    this.vehicleDriverService.listByConductor(this.conductor_id).subscribe(data=>{
+      this.vehicleDrivers=data;
+      console.log(this.vehicleDrivers)
+    })
   }
 }

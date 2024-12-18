@@ -77,17 +77,12 @@
             <!-- Campo ID del Cliente -->
             <div class="row mb-3">
               <div class="col-4">
-                <label for="customer_id" class="form-label">ID del Cliente:</label>
+                Cliente:
               </div>
               <div class="col-8">
-                <input
-                  id="customer_id"
-                  type="number"
-                  class="form-control"
-                  formControlName="customer_id"
-                  placeholder="Ingrese el ID del cliente"
-                  [readonly]="mode == 1"
-                />
+                <select class="form-control" formControlName="customer_id" [(ngModel)]="contract.customer.id">
+                  <option *ngFor="let option of customers" [value]="option.id">Id: {{option.id}} - Id usuario: {{option.user_id}} - Teléfono: {{option.phone}} - Cantidad de Pedidos: {{option.order_count}}</option>
+                </select>
               </div>
             </div>
 

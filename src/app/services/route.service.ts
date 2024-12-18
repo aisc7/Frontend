@@ -2,6 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { Vehiculo } from "../models/vehiculo.model";
+import { Route } from "../models/route.model";
 
 @Injectable({
   providedIn: "root",
@@ -9,10 +11,18 @@ import { environment } from "src/environments/environment";
 export class RouteService {
   constructor(private http: HttpClient) {}
 
-  list(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.url_ms_businessAKJ}/routes`);
+  list(): Observable<Route[]> {
+    return this.http.get<Route[]>(`${environment.url_ms_businessAKJ}/routes`);
   }
 
+  listByVehiculo(vehiculo_id:number): Observable<Route[]> {
+    return this.http.get<Route[]>(`${environment.url_ms_businessAKJ}/routes?vehiculo_id=${vehiculo_id}`);
+  }
+
+  listByContract(contract_id:number): Observable<Route[]> {
+    return this.http.get<Route[]>(`${environment.url_ms_businessAKJ}/routes?contract_id=${contract_id}`);
+  }
+  
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${environment.url_ms_businessAKJ}/routes/${id}`);
   }
